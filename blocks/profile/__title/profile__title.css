@@ -1,0 +1,19 @@
+.profile__title {
+  font-size: 27px;
+  line-height: 33px;
+  font-weight: 500;
+  margin-top: 26px;
+  margin-bottom: 9px;
+  position: relative;
+}
+
+.profile__title::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: -28px;
+  top:9px;
+  background-image: url(../../../images/pencil.svg);
+  background-size: cover;
+}
