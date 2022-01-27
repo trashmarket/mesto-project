@@ -1,0 +1,8 @@
+.photo-cards__item {
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  min-height: 362px;
+  position: relative;
+}
