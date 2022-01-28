@@ -1,0 +1,17 @@
+.popup__submit {
+  width: 84%;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  margin: 40px auto 0;
+  display: block;
+  min-height: 48px;
+  font-size: 14px;
+  line-height: 17px;
+  cursor: pointer;
+  transition: background-color .5s;
+}
+
+.popup__submit:hover {
+  background-color: #313131;
+}

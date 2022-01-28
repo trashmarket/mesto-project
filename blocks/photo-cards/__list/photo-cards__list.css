@@ -3,12 +3,12 @@
   padding: 0;
   width: 88%;
   margin: 0 auto;
+  display: grid;
 }
 
 @media screen and (min-width: 1280px) {
   .photo-cards__list {
     width: 69%;
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
     row-gap: 17px;
