@@ -6,3 +6,12 @@
   font-size: 14px;
   line-height: 17px;
 }
+
+@media screen and (min-width: 1280px) {
+  .footer__copyright {
+    width: 69%;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 67px auto 0;
+  }
+}
