@@ -17,3 +17,19 @@
   background-image: url(../../../images/pencil.svg);
   background-size: cover;
 }
+
+@media screen and (min-width: 1280px) {
+  .profile__title {
+    font-size: 42px;
+    line-height: 48px;
+    margin-top: 52px;
+    margin-left: 14px;
+  }
+
+  .profile__title::after {
+    width: 24px;
+    height: 24px;
+    right: -47px;
+    top: 14px;
+  }
+}

@@ -1,0 +1,19 @@
+.photo-cards__button {
+  width: 22px;
+  height: 19px;
+  background-image: url(../../../images/heart.svg);
+  position: absolute;
+  right: 20px;
+  bottom: 29px;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+.photo-cards__button:hover {
+  background-image: url(../../../images/grey-heart.svg);
+}
+
+.photo-cards__button:active {
+  background-image: url(../../../images/black-heart.svg);
+}
