@@ -6,3 +6,11 @@
   width: 84%;
   margin: 0 auto 75px;
 }
+
+@media screen and (min-width: 1280px) {
+  .popup__title {
+    font-size: 24px;
+    line-height: 29px;
+    margin-bottom: 48px;
+  }
+}

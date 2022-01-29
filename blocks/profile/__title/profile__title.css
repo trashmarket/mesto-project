@@ -7,7 +7,7 @@
   position: relative;
 }
 
-.profile__title::after {
+/* .profile__title::after {
   content: "";
   width: 18px;
   height: 18px;
@@ -16,7 +16,7 @@
   top:9px;
   background-image: url(../../../images/pencil.svg);
   background-size: cover;
-}
+} */
 
 @media screen and (min-width: 1280px) {
   .profile__title {
@@ -26,10 +26,10 @@
     margin-left: 14px;
   }
 
-  .profile__title::after {
+  /* .profile__title::after {
     width: 24px;
     height: 24px;
     right: -47px;
     top: 14px;
-  }
+  } */
 }

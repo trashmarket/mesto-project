@@ -10,3 +10,12 @@
 .popup__close:hover path {
   fill: #ccc;
 }
+
+@media screen and (min-width: 1280px) {
+  .popup__close {
+    width: 32px;
+    height: 32px;
+    right: 385px;
+    top: 155px;
+  }
+}

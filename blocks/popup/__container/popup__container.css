@@ -7,3 +7,11 @@
   box-sizing: border-box;
   padding-top: 25px;
 }
+
+@media screen and (min-width: 1280px) {
+  .popup__container {
+    width: 34%;
+    margin-top: 197px;
+    padding-top: 32px;
+  }
+}

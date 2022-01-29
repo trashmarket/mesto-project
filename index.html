@@ -24,6 +24,10 @@
             Исследователь океана
           </p>
         </div>
+        <svg class="profile__update-profile" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.5" y="0.5" width="23" height="23" stroke="white"/>
+          <path d="M17 8.32827L9.60377 15.7666L8.28302 14.4194L15.6604 7L17 8.32827ZM7 17L8.96226 16.4118L7.58491 15.0835L7 17Z" fill="white"/>
+        </svg>          
         <form class="profile__form">
           <button class="profile__button" type="submit">
             <svg class="profile__pluse" width="22" height="22" viewBox="0 0 22 22" fill="none"
@@ -102,10 +106,17 @@
   <script>
     let popup__close = document.querySelector('.popup__close');
     let popup = document.querySelector('.popup');
+    let update_profile = document.querySelector('.profile__update-profile');
 
     popup__close.onclick = () => {
-      popup.classList.toggle('popup_active');
+      popup.classList.remove('popup_active');
     }
+
+    update_profile.onclick = () => {
+      popup.classList.add('popup_active');
+    }
+
+
   </script>
 </body>
 </html>
