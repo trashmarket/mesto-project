@@ -1,3 +1,5 @@
 .popup_active {
-  display: none;
+  transform: scale(0);
+  background-color: rgba(0,0,0,0);
+  /* display: none; */
 }
