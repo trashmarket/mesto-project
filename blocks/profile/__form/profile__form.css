@@ -1,7 +1,9 @@
+.profile__form {
+  margin-left: auto;
+}
+
 @media screen and (min-width: 1280px) {
   .profile__form {
-    display: flex;
-    align-items: center;
-    margin-bottom: 43px;
+    margin-top: 37px;
   }
 }

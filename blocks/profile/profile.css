@@ -6,5 +6,8 @@
   .profile {
     width: 69%;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    margin-bottom: 57px;
   }
 }
