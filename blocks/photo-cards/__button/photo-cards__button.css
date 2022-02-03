@@ -11,9 +11,10 @@
 }
 
 .photo-cards__button:hover {
-  background-image: url(../../../images/grey-heart.svg);
+  opacity: 0.5;
 }
 
 .photo-cards__button:active {
+  opacity: 1;
   background-image: url(../../../images/black-heart.svg);
 }
