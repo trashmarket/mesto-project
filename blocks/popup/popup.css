@@ -1,10 +1,11 @@
 .popup {
-  width:100%;
-  min-height:100%;
+  transform: scale(0);
+  width:0;
+  min-height:0;
   background-color: rgba(0,0,0,0);
   overflow: hidden;
   position: fixed;
   top: 0px;
-  transform: scale(0);
+  
   transition: transform 0.3s, background-color .1s; 
 }
