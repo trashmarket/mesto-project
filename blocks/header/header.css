@@ -3,7 +3,7 @@
   margin: 0 auto;
 }
 
-@media screen and (min-width:1280px) {
+@media screen and (min-width:890px) {
   .header {
     width: 69%;
   }

@@ -10,11 +10,12 @@
   opacity: 0.5;
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 890px) {
   .profile__update-profile {
     position: initial;
     width: 24px;
     height: 24px;
-    margin-left: 36px;
+    margin-left: 18px;
+    margin-top: 4px;
   }
 }
