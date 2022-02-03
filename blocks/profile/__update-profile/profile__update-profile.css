@@ -5,6 +5,10 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  background-image: url('../../../images/pencil.svg');
+  background-size: cover;
 }
 .profile__update-profile:hover {
   opacity: 0.5;

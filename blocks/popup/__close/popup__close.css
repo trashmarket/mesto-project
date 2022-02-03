@@ -5,10 +5,12 @@
   right: 18px;
   top: 87px;
   cursor: pointer;
+  opacity: 1;
+  transition: opacity .5s;
 }
 
-.popup__close:hover path {
-  fill: #ccc;
+.popup__close:hover {
+  opacity: 0.5;
 }
 
 @media screen and (min-width: 890px) {

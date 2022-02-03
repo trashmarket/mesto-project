@@ -1,9 +1,0 @@
-.profile__form {
-  margin-left: auto;
-}
-
-@media screen and (min-width: 890px) {
-  .profile__form {
-    margin-top: 27px;
-  }
-}
