@@ -6,7 +6,10 @@
   top: -36px;
   cursor: pointer;
   opacity: 1;
+  background-image: url(../../../images/close-icon.svg);
   transition: opacity .5s;
+  background-color: transparent;
+  border: none;
 }
 
 .popup__close:hover {

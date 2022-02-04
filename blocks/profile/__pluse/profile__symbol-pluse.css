@@ -1,10 +1,10 @@
-.profile__pluse {
+.profile__symbol-pluse {
   width: 16px;
   height: 16px;
 }
 
 @media screen and (min-width: 890px) {
-  .profile__pluse {
+  .profile__symbol-pluse {
     width: 22px;
     height: 22px;
   }

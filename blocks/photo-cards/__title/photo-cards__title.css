@@ -6,7 +6,7 @@
   text-overflow: ellipsis;
   white-space: nowrap; 
   overflow: hidden; 
-  padding: 21px 0 0 21px;
+  padding: 26px 0 0 2px;
   width: 181px;
   position: relative;
 }

@@ -6,12 +6,18 @@
   display: grid;
 }
 
+@media screen and (min-width: 870px) {
+  .photo-cards__list {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    column-gap: 20px;
+  }
+}
+
 @media screen and (min-width: 890px) {
   .photo-cards__list {
     width: 69%;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
     row-gap: 17px;
-    column-gap: 20px;
   }
 }

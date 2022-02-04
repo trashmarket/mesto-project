@@ -15,19 +15,19 @@
   </header>
   <main class="content">
     <section class="profile">
-        <div class="profile__avatar"></div>
-        <div class="profile__wrapper-info">
-          <h1 class="profile__title">
-            Жак-Ив Кусто
-          </h1>
-          <p class="profile__sub-title">
-            Исследователь океана
-          </p>
-        </div>
-        <button type="button" class="profile__update-profile"></button>
-          <button class="profile__button" type="button">
-            <img src="./images/pluse.svg" alt="изображения знака плюс" class="profile__pluse">
-          </button>
+      <div class="profile__avatar"></div>
+      <div class="profile__wrapper-info">
+        <h1 class="profile__title">
+          Жак-Ив Кусто
+        </h1>
+        <p class="profile__sub-title">
+          Исследователь океана
+        </p>
+      </div>
+      <button type="button" class="profile__update-profile"></button>
+      <button class="profile__button" type="button">
+        <img src="./images/pluse.svg" alt="изображения знака плюс" class="profile__symbol-pluse">
+      </button>
     </section>
     <section class="photo-cards">
       <ul class="photo-cards__list">
@@ -83,7 +83,8 @@
   </footer>
   <div class="popup">
     <div class="popup__container">
-      <img src="./images/close-icon.svg" alt="рисунок креста чтобы закрыть форму" class="popup__close">
+      <!-- <img src="./images/close-icon.svg" alt="рисунок креста чтобы закрыть форму" class="popup__close"> -->
+      <button class="popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="formPopup">
         <input type="text" name="name" placeholder="Жак-Ив Кусто" class="popup__input">
@@ -99,7 +100,7 @@
 
     popup__close.onclick = () => {
       popup.style.width = "100%";
-      popup.style.maxHeight = "100%"; 
+      popup.style.maxHeight = "100%";
       popup.classList.remove('popup_active');
     }
 
@@ -110,4 +111,5 @@
 
   </script>
 </body>
+
 </html>
