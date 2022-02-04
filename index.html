@@ -19,12 +19,12 @@
       <div class="profile__wrapper-info">
         <h1 class="profile__title">
           Жак-Ив Кусто
+          <button type="button" class="profile__update-profile"></button>
         </h1>
         <p class="profile__sub-title">
           Исследователь океана
         </p>
       </div>
-      <button type="button" class="profile__update-profile"></button>
       <button class="profile__button" type="button">
         <img src="./images/pluse.svg" alt="изображения знака плюс" class="profile__symbol-pluse">
       </button>
@@ -93,23 +93,6 @@
       </form>
     </div>
   </div>
-  <script>
-    let popup__close = document.querySelector('.popup__close');
-    let popup = document.querySelector('.popup');
-    let update_profile = document.querySelector('.profile__update-profile');
-
-    popup__close.onclick = () => {
-      popup.style.width = "100%";
-      popup.style.maxHeight = "100%";
-      popup.classList.remove('popup_active');
-    }
-
-    update_profile.onclick = () => {
-      popup.classList.add('popup_active');
-    }
-
-
-  </script>
 </body>
 
 </html>

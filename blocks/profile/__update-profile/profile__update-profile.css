@@ -1,7 +1,4 @@
 .profile__update-profile {
-  position: absolute;
-  top: 193px;
-  right: 37px;
   width: 18px;
   height: 18px;
   cursor: pointer;
@@ -16,10 +13,9 @@
 
 @media screen and (min-width: 890px) {
   .profile__update-profile {
-    position: initial;
     width: 24px;
     height: 24px;
-    margin-left: 18px;
+    margin-left: 10px;
     margin-top: 4px;
     margin-right: 9px;
   }

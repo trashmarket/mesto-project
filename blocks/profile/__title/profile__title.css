@@ -8,19 +8,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 189px;
+  width: 231px;
+  margin-left: 45px;
 }
-
-/* .profile__title::after {
-  content: "";
-  width: 18px;
-  height: 18px;
-  position: absolute;
-  right: -28px;
-  top:9px;
-  background-image: url(../../../images/pencil.svg);
-  background-size: cover;
-} */
 
 @media screen and (min-width: 890px) {
   .profile__title {
@@ -28,13 +18,6 @@
     line-height: 48px;
     margin-top: 57px;
     margin-left: 31px;
-    width: 294px;
+    width: 369px;
   }
-
-  /* .profile__title::after {
-    width: 24px;
-    height: 24px;
-    right: -47px;
-    top: 14px;
-  } */
 }
