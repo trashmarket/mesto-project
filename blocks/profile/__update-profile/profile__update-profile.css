@@ -22,11 +22,3 @@
     margin-right: 9px;
   }
 }
-
-@media screen and (min-width: 1280px) {
-  .profile__update-profile {
-    margin-left: 16px;
-    margin-top: 73px;
-    margin-right: 9px;
-  }
-}
