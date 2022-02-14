@@ -6,16 +6,30 @@ const profileTitle = document.querySelector('.profile__title');
 const profileSubTitle = document.querySelector('.profile__sub-title');
 const title = popupInputs[0];
 const subtitle = popupInputs[1];
+const elementStringPopup = popup.className.split(' ')[0];
 
-const showOrHide = function (event, popup) {
-  let elementString = popup.className.split(' ')[0];
+const toggle = function (popup, selector) {
+  popup.classList.toggle(selector);
+}
 
-  if (event.target.closest('.' + elementString)) {
-    popup.classList.remove('popup_active');
-    title.value = profileTitle.textContent.trim();
-    subtitle.value = profileSubTitle.textContent.trim();
-  } else {
-    popup.classList.add('popup_active')
+const showOrHide = function (event, elementString, popup) {
+  if (elementString === "popup"){
+    if (event.target.closest('.' + elementString)) {
+      toggle(popup, 'popup_active');
+      title.value = profileTitle.textContent.trim();
+      subtitle.value = profileSubTitle.textContent.trim();
+    } else {
+      toggle(popup, 'popup_active');
+    }
+  }
+  if (elementString === 'popup_add-card') {
+    if (event.target.closest('.' + elementString)) {
+      const inputs = popup.querySelectorAll('.popup__input');
+      toggle(popup, 'popup_active');
+      inputs.forEach(input => input.value = '');
+    } else {
+      toggle(popup, 'popup_active');
+    }
   }
 }
 
@@ -28,11 +42,11 @@ const formSubmitHandler = function (event) {
 }
 
 profileButtonPopup.addEventListener('click', function (event) {
-  showOrHide(event, popup)
+  showOrHide(event, elementStringPopup, popup)
 });
 
 popupClose.addEventListener('click', function (event) {
-  showOrHide(event, popup)
+  showOrHide(event, elementStringPopup, popup)
 });
 
 popup.addEventListener('submit', formSubmitHandler);
@@ -79,4 +93,19 @@ cardsArr.forEach(item => {
   cardTitle.textContent = title;
 
   photeCardsList.append(card);
+})
+
+// new form
+
+const popupAddCard = document.querySelector('.popup_add-card');
+const buttonAddForm = document.querySelector('.profile__button');
+const elementStringPopupAddCard = popupAddCard.className.split(' ')[1];
+const buttonClosePopupAddCard = popupAddCard.querySelector('.popup__close');
+
+buttonAddForm.addEventListener('click', function(event) {
+  showOrHide(event, elementStringPopupAddCard, popupAddCard);
+});
+
+buttonClosePopupAddCard.addEventListener('click', function(event) {
+  showOrHide(event, elementStringPopupAddCard, popupAddCard);
 })
