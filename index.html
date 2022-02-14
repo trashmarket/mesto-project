@@ -33,49 +33,6 @@
     </section>
     <section class="photo-cards">
       <ul class="photo-cards__list">
-        <li class="photo-cards__item">
-          <button class="photo-cards__trash-button"></button>
-          <img src="images/karachaivsk.jpg" alt="Старая церковь среди гор" class="photo-cards__img">
-          <div class="photo-cards__wrapper-pattern">
-            <h2 class="photo-cards__title">Карачаевск</h2>
-            <button class="photo-cards__button" type="button"></button>
-          </div>
-        </li>
-        <li class="photo-cards__item">
-          <img src="images/fild.jpg" alt="Гора Эльбрус в долеке" class="photo-cards__img">
-          <div class="photo-cards__wrapper-pattern">
-            <h2 class="photo-cards__title">Гора Эльбрус</h2>
-            <button class="photo-cards__button" type="button"></button>
-          </div>
-        </li>
-        <li class="photo-cards__item">
-          <img src="images/mauntin.jpg" alt="гора и лес" class="photo-cards__img">
-          <div class="photo-cards__wrapper-pattern">
-            <h2 class="photo-cards__title">Домбай</h2>
-            <button class="photo-cards__button" type="button"></button>
-          </div>
-        </li>
-        <li class="photo-cards__item">
-          <img src="images/fild.jpg" alt="Гора Эльбрус в долеке" class="photo-cards__img">
-          <div class="photo-cards__wrapper-pattern">
-            <h2 class="photo-cards__title">Гора Эльбрус</h2>
-            <button class="photo-cards__button" type="button"></button>
-          </div>
-        </li>
-        <li class="photo-cards__item">
-          <img src="images/mauntin.jpg" alt="гора и лес" class="photo-cards__img">
-          <div class="photo-cards__wrapper-pattern">
-            <h2 class="photo-cards__title">Домбай</h2>
-            <button class="photo-cards__button" type="button"></button>
-          </div>
-        </li>
-        <li class="photo-cards__item">
-          <img src="images/karachaivsk.jpg" alt="Старая церковь среди гор" class="photo-cards__img">
-          <div class="photo-cards__wrapper-pattern">
-            <h2 class="photo-cards__title">Карачаево-Черкеск</h2>
-            <button class="photo-cards__button" type="button"></button>
-          </div>
-        </li>
       </ul>
     </section>
   </main>
@@ -95,6 +52,27 @@
       </form>
     </div>
   </div>
+  <div class="popup popup_add-card">
+    <div class="popup__container">
+      <button class="popup__close" type="button"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form" name="formPopup">
+        <input type="text" name="name" placeholder="Название" class="popup__input">
+        <input type="text" name="descriptions" placeholder="Ссылка на картинку" class="popup__input">
+        <button type="submit" class="popup__submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <template id="card">
+    <li class="photo-cards__item">
+      <button class="photo-cards__trash-button"></button>
+      <img src="images/karachaivsk.jpg" alt="Старая церковь среди гор" class="photo-cards__img">
+      <div class="photo-cards__wrapper-pattern">
+        <h2 class="photo-cards__title">Карачаевск</h2>
+        <button class="photo-cards__button" type="button"></button>
+      </div>
+    </li>
+  </template>
   <script src="./script/script.js"></script>
 </body>
 
