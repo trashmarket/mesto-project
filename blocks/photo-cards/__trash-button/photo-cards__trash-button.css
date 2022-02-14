@@ -1,0 +1,10 @@
+.photo-cards__trash-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 18px;
+  height: 19px;
+  background-image: url(../../../images/trash-can.svg);
+  background-color: transparent;
+  border: none;
+}

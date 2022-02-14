@@ -15,6 +15,7 @@
 @import url(../blocks/profile/__symbol-pluse/profile__symbol-pluse.css);
 @import url(../blocks/photo-cards/__list/photo-cards__list.css);
 @import url(../blocks/photo-cards/__item/photo-cards__item.css);
+@import url(../blocks/photo-cards/__trash-button/photo-cards__trash-button.css);
 @import url(../blocks/photo-cards/__img/photo-cards__img.css);
 @import url(../blocks/photo-cards/__wrapper-pattern/photo-cards__wrapper-pattern.css);
 @import url(../blocks/photo-cards/__title/photo-cards__title.css);

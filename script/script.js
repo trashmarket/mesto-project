@@ -36,3 +36,5 @@ popupClose.addEventListener('click', function (event) {
 });
 
 popup.addEventListener('submit', formSubmitHandler);
+
+//card
