@@ -146,7 +146,7 @@ const listenTolist = function (event) {
     const like = event.target;
     toggle(like, 'photo-cards__button_active');
   }
-  if (event.target.closest('.photo-cards__trash-button')){
+  if (event.target.closest('.photo-cards__trash-button')) {
     const card = event.target.parentElement;
     card.remove();
   }
