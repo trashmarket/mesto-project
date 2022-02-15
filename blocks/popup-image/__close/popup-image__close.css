@@ -8,6 +8,7 @@
   border: none;
   background-image: url(../../../images/close-Icon-mobile.svg);
   opacity: 1;
+  cursor: pointer;
 }
 
 .popup-image__close:hover {
