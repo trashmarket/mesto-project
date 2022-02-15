@@ -127,6 +127,7 @@ const appendFormCard = function(event) {
   const link = popupAddCardInputs[1].value;
   if (title === '' || link === '') {
     toggle(popupAddCard, 'popup_active');
+    popupInputCleaner(popupAddCardInputs);
     return;
   } 
   appendNewCard(link, title);
@@ -136,15 +137,22 @@ const appendFormCard = function(event) {
 
 popupAddCard.addEventListener('submit', appendFormCard);
 
-// like
+// like && trash can
 
 const generalContainer = document.querySelector('.photo-cards__list');
 
-const addBlackheartOrRemove = function (event) {
+const listenTolist = function (event) {
   if (event.target.closest('.photo-cards__button')) {
     const like = event.target;
     toggle(like, 'photo-cards__button_active');
   }
+  if (event.target.closest('.photo-cards__trash-button')){
+    const card = event.target.parentElement;
+    card.remove();
+  }
 }
 
-generalContainer.addEventListener('click', addBlackheartOrRemove);
+generalContainer.addEventListener('click', listenTolist);
+
+
+
