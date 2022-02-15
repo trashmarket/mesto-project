@@ -137,3 +137,14 @@ const appendFormCard = function(event) {
 popupAddCard.addEventListener('submit', appendFormCard);
 
 // like
+
+const generalContainer = document.querySelector('.photo-cards__list');
+
+const addBlackheartOrRemove = function (event) {
+  if (event.target.closest('.photo-cards__button')) {
+    const like = event.target;
+    toggle(like, 'photo-cards__button_active');
+  }
+}
+
+generalContainer.addEventListener('click', addBlackheartOrRemove);
