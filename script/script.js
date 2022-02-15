@@ -26,7 +26,7 @@ const showOrHide = function (event, elementString, popup) {
       toggle(popup, 'popup_active');
     }
   }
-  if (elementString === 'popup_add-card') {
+  if (elementString === 'popup_type_add-card') {
     if (event.target.closest('.' + elementString)) {
       const inputs = popup.querySelectorAll('.popup__input');
       toggle(popup, 'popup_active');
@@ -34,6 +34,9 @@ const showOrHide = function (event, elementString, popup) {
     } else {
       toggle(popup, 'popup_active');
     }
+  }
+  if (elementString === 'popup-image') {
+    toggle(popup, 'popup-image_active');
   }
 }
 
@@ -108,7 +111,7 @@ cardsArr.forEach(item => {
 
 // new form
 
-const popupAddCard = document.querySelector('.popup_add-card');
+const popupAddCard = document.querySelector('.popup_type_add-card');
 const buttonAddForm = document.querySelector('.profile__button');
 const elementStringPopupAddCard = popupAddCard.className.split(' ')[1];
 const buttonClosePopupAddCard = popupAddCard.querySelector('.popup__close');
@@ -140,6 +143,16 @@ popupAddCard.addEventListener('submit', appendFormCard);
 // like && trash can
 
 const generalContainer = document.querySelector('.photo-cards__list');
+const popupImage = document.querySelector('.popup-image');
+
+popupImage.addEventListener('click', function(event){
+  showOrHide(event, 'popup-image', this);
+})
+
+const makerPopupImg = function (title, link) {
+  popupImage.querySelector('.popup-image__subtitle').textContent = title;
+  popupImage.querySelector('.popup-image__image').src = link;
+}
 
 const listenTolist = function (event) {
   if (event.target.closest('.photo-cards__button')) {
@@ -150,6 +163,16 @@ const listenTolist = function (event) {
     const card = event.target.parentElement;
     card.remove();
   }
+
+  if (event.target.closest('.photo-cards__img')) {
+    const card = event.target.parentElement;
+    const title = card.querySelector('.photo-cards__title').textContent;
+    const linkImg = card.querySelector('.photo-cards__img').src;
+
+    makerPopupImg(title, linkImg);
+    toggle(popupImage, 'popup-image_active');
+  }
+
 }
 
 generalContainer.addEventListener('click', listenTolist);
