@@ -36,7 +36,9 @@ const showOrHide = function (event, elementString, popup) {
     }
   }
   if (elementString === 'popup-image') {
-    toggle(popup, 'popup-image_active');
+    if (event.target.closest('.popup-image__close')) {
+      toggle(popup, 'popup-image_active');
+    }
   }
 }
 
