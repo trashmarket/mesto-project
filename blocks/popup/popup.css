@@ -8,5 +8,8 @@
   left: 0;
   background-color: rgba(0,0,0,0);
   opacity: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
   transition: visibility .3s, background-color .3s, opacity .3s; 
 }

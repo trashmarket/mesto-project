@@ -1,7 +1,7 @@
 .popup__input {
   border: none;
   border-bottom: 1px solid #ccc;
-  width: 84%;
+  width: 75vw;
   margin: 0 auto;
   display: block;
   padding-bottom: 8px;
@@ -15,4 +15,10 @@
 
 .popup__input:first-child {
   margin-bottom: 30px;
+}
+
+@media screen and (min-width: 890px) {
+  .popup__input {
+    width: 29vw;
+  }
 }
