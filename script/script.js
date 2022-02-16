@@ -1,15 +1,23 @@
-const popup = document.querySelector('.popup');
+const popupProfile = document.querySelector('.profile-popup');
 const profileButtonPopup = document.querySelector('.profile__update-profile');
-const popupClose = popup.querySelector('.popup__close');
-const popupInputs = popup.querySelectorAll('.popup__input');
+const popupCloseButton = popupProfile.querySelector('.popup__close');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubTitle = document.querySelector('.profile__sub-title');
-const title = popupInputs[0];
-const subtitle = popupInputs[1];
-const elementStringPopup = popup.className.split(' ')[0];
+const title = popupProfile.querySelector('.profile-popup-title');
+const subtitle = popupProfile.querySelector('.profile-popup-subtitle');
 
-const toggle = function (popup, selector) {
-  popup.classList.toggle(selector);
+const popupOpen = function (popup) {
+  popup.classList.add('popup_active')
+}
+
+const popupClose = function (popup) {
+  popup.classList.remove('popup_active');
+}
+
+const popupProfileClose = function (event) {
+  popupClose(popupProfile);
+  title.value = profileTitle.textContent.trim();
+  subtitle.value = profileSubTitle.textContent.trim();
 }
 
 const popupInputCleaner = function (inputs) {
@@ -17,15 +25,7 @@ const popupInputCleaner = function (inputs) {
 }
 
 const showOrHide = function (event, elementString, popup) {
-  if (elementString === "popup"){
-    if (event.target.closest('.' + elementString)) {
-      toggle(popup, 'popup_active');
-      title.value = profileTitle.textContent.trim();
-      subtitle.value = profileSubTitle.textContent.trim();
-    } else {
-      toggle(popup, 'popup_active');
-    }
-  }
+
   if (elementString === 'popup_type_add-card') {
     if (event.target.closest('.' + elementString)) {
       const inputs = popup.querySelectorAll('.popup__input');
@@ -42,23 +42,21 @@ const showOrHide = function (event, elementString, popup) {
   }
 }
 
-const formSubmitHandler = function (event) {
+const changeProfile = function (event) {
   event.preventDefault();
 
   profileTitle.textContent = title.value;
   profileSubTitle.textContent = subtitle.value;
-  toggle(popup, 'popup_active');
+  popupClose(popupProfile);
 }
 
 profileButtonPopup.addEventListener('click', function (event) {
-  showOrHide(event, elementStringPopup, popup)
+  popupOpen(popupProfile);
 });
 
-popupClose.addEventListener('click', function (event) {
-  showOrHide(event, elementStringPopup, popup)
-});
+popupCloseButton.addEventListener('click', popupProfileClose);
 
-popup.addEventListener('submit', formSubmitHandler);
+popupProfile.addEventListener('submit', changeProfile);
 
 //card
 
@@ -95,6 +93,7 @@ const appendNewCard = function(link, title, type) {
   const card = cardTemplate.cloneNode(true);
   const cardImg = card.querySelector('.photo-cards__img');
   const cardTitle = card.querySelector('.photo-cards__title');
+  cardImg.alt = title;
   cardImg.src = link;
   cardTitle.textContent = title;
   if (type === 'arr'){
