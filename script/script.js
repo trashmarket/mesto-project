@@ -36,8 +36,8 @@ const showOrHide = function (event, elementString, popup) {
     }
   }
   if (elementString === 'popup-image') {
-    if (event.target.closest('.popup-image__close')) {
-      toggle(popup, 'popup-image_active');
+    if (event.target.closest('.popup__close')) {
+      toggle(popup, 'popup_active');
     }
   }
 }
@@ -152,8 +152,8 @@ popupImage.addEventListener('click', function(event){
 })
 
 const makerPopupImg = function (title, link) {
-  popupImage.querySelector('.popup-image__subtitle').textContent = title;
-  popupImage.querySelector('.popup-image__image').src = link;
+  popupImage.querySelector('.popup__subtitle').textContent = title;
+  popupImage.querySelector('.popup__image').src = link;
 }
 
 const listenTolist = function (event) {
@@ -172,7 +172,7 @@ const listenTolist = function (event) {
     const linkImg = card.querySelector('.photo-cards__img').src;
 
     makerPopupImg(title, linkImg);
-    toggle(popupImage, 'popup-image_active');
+    toggle(popupImage, 'popup_active');
   }
 
 }
