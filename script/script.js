@@ -20,7 +20,7 @@ const popupProfileClose = function (event) {
   subtitle.value = profileSubTitle.textContent.trim();
 }
 
-const popupInputCleaner = function (inputs) {
+const CleanePopupInput = function (inputs) {
   inputs.forEach(item => item.value = '');
 }
 
@@ -84,6 +84,17 @@ const appendNewCard = function(link, title, type) {
   const card = cardTemplate.cloneNode(true);
   const cardImg = card.querySelector('.photo-cards__img');
   const cardTitle = card.querySelector('.photo-cards__title');
+  const likeButton = card.querySelector('.photo-cards__button');
+  const trashButton = card.querySelector('.photo-cards__trash-button');
+  const item = card.querySelector('.photo-cards__item')
+
+  trashButton.addEventListener('click', function(event, card) {
+    //const item = card.querySelector('.photo-cards__item') <= не могли бы объяснить с чем связано такое поведение внутри обработчика если обращаться к переменной card то запишиться undefined а если просто передать item  ну или card то все хорошо ?
+    removeCard(item);
+  });
+  likeButton.addEventListener('click', listenHeartButton);
+  cardImg.addEventListener('click', listenImg);
+
   cardImg.alt = title;
   cardImg.src = link;
   cardTitle.textContent = title;
@@ -111,7 +122,7 @@ const popupAddCardInputText = popupAddCard.querySelector('.popup__name-new-card'
 const popupAddCardInputLink = popupAddCard.querySelector('.popup__link-new-card');
 const openPopupAddCard = function (event) {
   popupOpen(popupAddCard)
-  popupInputCleaner(popupAddCardInputs);
+  CleanePopupInput(popupAddCardInputs);
 }
 
 buttonAddForm.addEventListener('click', openPopupAddCard);
@@ -127,7 +138,7 @@ const appendFormCard = function(event) {
   if (title === '' || link === '') return; 
   appendNewCard(link, title);
   popupClose(popupAddCard);
-  popupInputCleaner(popupAddCardInputs);
+  CleanePopupInput(popupAddCardInputs);
 }
 
 popupAddCard.addEventListener('submit', appendFormCard);
@@ -136,38 +147,39 @@ popupAddCard.addEventListener('submit', appendFormCard);
 
 const generalContainer = document.querySelector('.photo-cards__list');
 const popupImage = document.querySelector('.popup-image');
+const popupImageButton = popupImage.querySelector('.popup__close');
 
-popupImage.addEventListener('click', function(event){
-  showOrHide(event, 'popup-image', this);
+
+
+popupImageButton.addEventListener('click', function(event){
+  popupClose(popupImage);
 })
 
-const makerPopupImg = function (title, link) {
+function makerPopupImg(title, link) {
   popupImage.querySelector('.popup__subtitle').textContent = title;
   popupImage.querySelector('.popup__image').src = link;
 }
 
-const listenTolist = function (event) {
-  if (event.target.closest('.photo-cards__button')) {
-    const like = event.target;
-    toggle(like, 'photo-cards__button_active');
-  }
-  if (event.target.closest('.photo-cards__trash-button')) {
-    const card = event.target.parentElement;
-    card.remove();
-  }
+function listenHeartButton(event) {
+  const like = event.target;
 
-  if (event.target.closest('.photo-cards__img')) {
-    const card = event.target.parentElement;
-    const title = card.querySelector('.photo-cards__title').textContent;
-    const linkImg = card.querySelector('.photo-cards__img').src;
-
-    makerPopupImg(title, linkImg);
-    toggle(popupImage, 'popup_active');
-  }
-
+  like.classList.toggle('photo-cards__button_active');
 }
 
-generalContainer.addEventListener('click', listenTolist);
+function removeCard(card) {
+  console.log(card);
+  card.remove();
+}
+
+function listenImg(event) {
+  const card = event.target.parentElement;
+  const title = card.querySelector('.photo-cards__title').textContent;
+  const linkImg = card.querySelector('.photo-cards__img').src;
+
+  makerPopupImg(title, linkImg);
+  popupOpen(popupImage);
+}
+
 
 
 
