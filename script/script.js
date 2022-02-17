@@ -25,16 +25,6 @@ const popupInputCleaner = function (inputs) {
 }
 
 const showOrHide = function (event, elementString, popup) {
-
-  if (elementString === 'popup_type_add-card') {
-    if (event.target.closest('.' + elementString)) {
-      const inputs = popup.querySelectorAll('.popup__input');
-      toggle(popup, 'popup_active');
-      popupInputCleaner(inputs);
-    } else {
-      toggle(popup, 'popup_active');
-    }
-  }
   if (elementString === 'popup-image') {
     if (event.target.closest('.popup__close')) {
       toggle(popup, 'popup_active');
@@ -86,6 +76,7 @@ const cardsArr = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
 const cardTemplate = document.querySelector('#card').content;
 const photeCardsList = document.querySelector('.photo-cards__list');
 
@@ -114,28 +105,28 @@ cardsArr.forEach(item => {
 
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const buttonAddForm = document.querySelector('.profile__button');
-const elementStringPopupAddCard = popupAddCard.className.split(' ')[1];
 const buttonClosePopupAddCard = popupAddCard.querySelector('.popup__close');
 const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
-buttonAddForm.addEventListener('click', function(event) {
-  showOrHide(event, elementStringPopupAddCard, popupAddCard);
-});
+const popupAddCardInputText = popupAddCard.querySelector('.popup__name-new-card');
+const popupAddCardInputLink = popupAddCard.querySelector('.popup__link-new-card');
+const openPopupAddCard = function (event) {
+  popupOpen(popupAddCard)
+  popupInputCleaner(popupAddCardInputs);
+}
+
+buttonAddForm.addEventListener('click', openPopupAddCard);
 
 buttonClosePopupAddCard.addEventListener('click', function(event) {
-  showOrHide(event, elementStringPopupAddCard, popupAddCard);
+  popupClose(popupAddCard);
 })
 
 const appendFormCard = function(event) {
   event.preventDefault();
-  const title = popupAddCardInputs[0].value;
-  const link = popupAddCardInputs[1].value;
-  if (title === '' || link === '') {
-    toggle(popupAddCard, 'popup_active');
-    popupInputCleaner(popupAddCardInputs);
-    return;
-  } 
+  const title = popupAddCardInputText.value;
+  const link = popupAddCardInputLink.value;
+  if (title === '' || link === '') return; 
   appendNewCard(link, title);
-  toggle(popupAddCard, 'popup_active');
+  popupClose(popupAddCard);
   popupInputCleaner(popupAddCardInputs);
 }
 
