@@ -88,7 +88,7 @@ const appendNewCard = function(link, title, type) {
     removeCard(item);
   });
   likeButton.addEventListener('click', listenHeartButton);
-  cardImg.addEventListener('click', listenImg);
+  cardImg.addEventListener('click', (event) => listenImg(link, title));
 
   cardImg.alt = title;
   cardImg.src = link;
@@ -126,7 +126,7 @@ buttonClosePopupAddCard.addEventListener('click', function(event) {
   closePopup(popupAddCard);
 })
 
-const appendFormCard = function(event) {
+const handleCardFormSubmit = function(event) {
   event.preventDefault();
   const title = popupAddCardInputText.value;
   const link = popupAddCardInputLink.value;
@@ -136,23 +136,24 @@ const appendFormCard = function(event) {
   cleaneInputs(popupAddCardInputs);
 }
 
-popupAddCard.addEventListener('submit', appendFormCard);
+popupAddCard.addEventListener('submit', handleCardFormSubmit);
 
 // like && trash can
 
 const generalContainer = document.querySelector('.photo-cards__list');
 const popupImage = document.querySelector('.popup-image');
 const popupImageButton = popupImage.querySelector('.popup__close');
-
-
+const subTitleImage = popupImage.querySelector('.popup__subtitle'); 
+const popupContentImage = popupImage.querySelector('.popup__image')
 
 popupImageButton.addEventListener('click', function(event){
   closePopup(popupImage);
 })
 
 function makerPopupImg(title, link) {
-  popupImage.querySelector('.popup__subtitle').textContent = title;
-  popupImage.querySelector('.popup__image').src = link;
+  subTitleImage.textContent = title;
+  popupContentImage.src = link;
+  popupContentImage.alt = title;
 }
 
 function listenHeartButton(event) {
@@ -165,12 +166,10 @@ function removeCard(card) {
   card.remove();
 }
 
-function listenImg(event) {
-  const card = event.target.parentElement;
-  const title = card.querySelector('.photo-cards__title').textContent;
-  const linkImg = card.querySelector('.photo-cards__img').src;
-
-  makerPopupImg(title, linkImg);
+function listenImg(linkImg, titleimg) {
+  const title = titleimg;
+  const link = linkImg;
+  makerPopupImg(title, link);
   openPopup(popupImage);
 }
 
