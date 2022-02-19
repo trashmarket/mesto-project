@@ -3,48 +3,44 @@ const profileButtonPopup = document.querySelector('.profile__update-profile');
 const popupCloseButton = popupProfile.querySelector('.popup__close');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubTitle = document.querySelector('.profile__sub-title');
-const title = popupProfile.querySelector('.profile-popup-title');
-const subtitle = popupProfile.querySelector('.profile-popup-subtitle');
+const titleProfilePopup = popupProfile.querySelector('.profile-popup-title');
+const subtitleProfilePopup = popupProfile.querySelector('.profile-popup-subtitle');
 
-const popupOpen = function (popup) {
+const openPopup = function (popup) {
   popup.classList.add('popup_active')
 }
 
-const popupClose = function (popup) {
+const closePopup = function (popup) {
   popup.classList.remove('popup_active');
 }
 
-const popupProfileClose = function (event) {
-  popupClose(popupProfile);
-  title.value = profileTitle.textContent.trim();
-  subtitle.value = profileSubTitle.textContent.trim();
+const closePopupProfile = function (event) {
+  closePopup(popupProfile);
 }
 
-const CleanePopupInput = function (inputs) {
+const cleaneInputs = function (inputs) {
   inputs.forEach(item => item.value = '');
-}
-
-const showOrHide = function (event, elementString, popup) {
-  if (elementString === 'popup-image') {
-    if (event.target.closest('.popup__close')) {
-      toggle(popup, 'popup_active');
-    }
-  }
 }
 
 const changeProfile = function (event) {
   event.preventDefault();
 
-  profileTitle.textContent = title.value;
-  profileSubTitle.textContent = subtitle.value;
-  popupClose(popupProfile);
+  profileTitle.textContent = titleProfilePopup.value;
+  profileSubTitle.textContent = subtitleProfilePopup.value;
+  closePopup(popupProfile);
 }
 
 profileButtonPopup.addEventListener('click', function (event) {
-  popupOpen(popupProfile);
+  restoreInputs();
+  openPopup(popupProfile);
 });
 
-popupCloseButton.addEventListener('click', popupProfileClose);
+function restoreInputs() {
+  titleProfilePopup.value = profileTitle.textContent.trim();
+  subtitleProfilePopup.value = profileSubTitle.textContent.trim();
+}
+
+popupCloseButton.addEventListener('click', closePopupProfile);
 
 popupProfile.addEventListener('submit', changeProfile);
 
@@ -88,8 +84,7 @@ const appendNewCard = function(link, title, type) {
   const trashButton = card.querySelector('.photo-cards__trash-button');
   const item = card.querySelector('.photo-cards__item')
 
-  trashButton.addEventListener('click', function(event, card) {
-    //const item = card.querySelector('.photo-cards__item') <= не могли бы объяснить с чем связано такое поведение внутри обработчика если обращаться к переменной card то запишиться undefined а если просто передать item  ну или card то все хорошо ?
+  trashButton.addEventListener('click', function(event) {
     removeCard(item);
   });
   likeButton.addEventListener('click', listenHeartButton);
@@ -121,14 +116,14 @@ const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
 const popupAddCardInputText = popupAddCard.querySelector('.popup__name-new-card');
 const popupAddCardInputLink = popupAddCard.querySelector('.popup__link-new-card');
 const openPopupAddCard = function (event) {
-  popupOpen(popupAddCard)
-  CleanePopupInput(popupAddCardInputs);
+  openPopup(popupAddCard)
+  cleaneInputs(popupAddCardInputs);
 }
 
 buttonAddForm.addEventListener('click', openPopupAddCard);
 
 buttonClosePopupAddCard.addEventListener('click', function(event) {
-  popupClose(popupAddCard);
+  closePopup(popupAddCard);
 })
 
 const appendFormCard = function(event) {
@@ -137,8 +132,8 @@ const appendFormCard = function(event) {
   const link = popupAddCardInputLink.value;
   if (title === '' || link === '') return; 
   appendNewCard(link, title);
-  popupClose(popupAddCard);
-  CleanePopupInput(popupAddCardInputs);
+  closePopup(popupAddCard);
+  cleaneInputs(popupAddCardInputs);
 }
 
 popupAddCard.addEventListener('submit', appendFormCard);
@@ -152,7 +147,7 @@ const popupImageButton = popupImage.querySelector('.popup__close');
 
 
 popupImageButton.addEventListener('click', function(event){
-  popupClose(popupImage);
+  closePopup(popupImage);
 })
 
 function makerPopupImg(title, link) {
@@ -167,7 +162,6 @@ function listenHeartButton(event) {
 }
 
 function removeCard(card) {
-  console.log(card);
   card.remove();
 }
 
@@ -177,7 +171,7 @@ function listenImg(event) {
   const linkImg = card.querySelector('.photo-cards__img').src;
 
   makerPopupImg(title, linkImg);
-  popupOpen(popupImage);
+  openPopup(popupImage);
 }
 
 
