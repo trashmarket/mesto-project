@@ -10,7 +10,7 @@
 
 <body class="page">
   <header class="header">
-    <img src="images/logo.svg" alt="логотип" class="logo header__logo">
+    <img src="<%=require('./images/logo.svg')%>" alt="логотип" class="logo header__logo">
   </header>
   <main class="content">
     <section class="profile">
@@ -27,7 +27,7 @@
         <button type="button" class="profile__update-profile"></button>
       </div>
       <button class="profile__button" type="button">
-        <img src="./images/pluse.svg" alt="изображения знака плюс" class="profile__symbol-pluse">
+        <img src="<%=require('./images/pluse.svg')%>" alt="изображения знака плюс" class="profile__symbol-pluse">
       </button>
     </section>
     <section class="photo-cards">
@@ -65,14 +65,14 @@
   <div class="popup popup-image popup_type_show-image">
     <div class="popup__container popup__container_type_show-image">
       <button class="popup__close" type="button"></button>
-      <img src="./images/fild.jpg" alt="#" class="popup__image">
+      <img src="<%require('./images/fild.jpg')%>" alt="#" class="popup__image">
       <p class="popup__subtitle">Горный Алтай</p>
     </div>
   </div>
   <template id="card">
     <li class="photo-cards__item">
       <button class="photo-cards__trash-button"></button>
-      <img src="images/karachaivsk.jpg" alt="Старая церковь среди гор" class="photo-cards__img">
+      <img src="<%require('./images/karachaivsk.jpg')%>" alt="Старая церковь среди гор" class="photo-cards__img">
       <div class="photo-cards__wrapper-pattern">
         <h2 class="photo-cards__title">Карачаевск</h2>
         <button class="photo-cards__button" type="button"></button>
