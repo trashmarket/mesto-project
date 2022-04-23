@@ -1,4 +1,6 @@
 import './pages/index.css';
+const popups = document.querySelectorAll('.popup');
+const popupsContainers = document.querySelectorAll('.popup__container');
 const popupProfile = document.querySelector('.profile-popup');
 const profileButtonPopup = document.querySelector('.profile__update-profile');
 const popupCloseButton = popupProfile.querySelector('.popup__close');
@@ -7,8 +9,12 @@ const profileSubTitle = document.querySelector('.profile__sub-title');
 const titleProfilePopup = popupProfile.querySelector('.profile-popup-title');
 const subtitleProfilePopup = popupProfile.querySelector('.profile-popup-subtitle');
 
+popupsContainers.forEach(container => container.addEventListener('click', (event) => event.stopPropagation()));
+
+popups.forEach(popup => popup.addEventListener('click', () => closePopup(popup)));
+
 const openPopup = function (popup) {
-  popup.classList.add('popup_active')
+  popup.classList.add('popup_active');
 }
 
 const closePopup = function (popup) {
