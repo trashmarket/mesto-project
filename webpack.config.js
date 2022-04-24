@@ -16,7 +16,7 @@ module.exports = {
         compress: true,
         port: 8080,
         open: true,
-        hot: true
+        hot: false
     },
     module: {
         rules: [ // rules — это массив правил

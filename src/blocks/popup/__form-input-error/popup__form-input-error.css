@@ -4,7 +4,11 @@
   color: #FF0000;
   display: block;
   font-size: 12px;
-  line-height: 15px;
+  line-height: 14px;
+  min-height: 28px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .3s;
 }
 
 @media screen and (min-width: 890px) {

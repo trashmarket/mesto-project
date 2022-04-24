@@ -45,13 +45,11 @@
       <button class="popup__close" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="formPopup">
-        <input type="text" name="name" value ="Жак-Ив Кусто" placeholder="Имя" minlength="2" maxlength="40" class="popup__input profile-popup-title popup__input_type_error">
+        <input type="text" name="name" value ="Жак-Ив Кусто" placeholder="Имя" minlength="2" maxlength="40" class="popup__input profile-popup-title ">
         <span class="popup__form-input-error">
-          Минимально допустимое количество символов: 7. Длина текста сейчас: 6.
         </span>
         <input type="text" name="descriptions" value ="Исследователь океана" placeholder="О себе" minlength="2" maxlength="40" class="popup__input profile-popup-subtitle">
         <span class="popup__form-input-error">
-          Минимально допустимое количество символов: 7. Длина текста сейчас: 6.
         </span>
         <button type="submit" class="popup__submit">Сохранить</button>
       </form>
@@ -63,7 +61,11 @@
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form" name="formPopup">
         <input type="text" name="name" placeholder="Название" minlength="2" maxlength="30" class="popup__input popup__name-new-card">
+        <span class="popup__form-input-error">
+        </span>
         <input type="url" name="descriptions" placeholder="Ссылка на картинку" class="popup__input popup__link-new-card">
+        <span class="popup__form-input-error">
+        </span>
         <button type="submit" class="popup__submit">Сохранить</button>
       </form>
     </div>
