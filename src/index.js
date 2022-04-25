@@ -1,16 +1,18 @@
 import './pages/index.css';
-import {enableValidation} from './components/validate.js'
+import {enableValidationForm, pressEscape} from './components/validate.js';
+import {openPopup, closePopup} from './components/modal.js';
+import {enableProfilePopup} from './components/popupProfile.js'
 const popups = document.querySelectorAll('.popup');
 const popupsContainers = document.querySelectorAll('.popup__container');
 const popupProfile = document.querySelector('.profile-popup');
-const profileButtonPopup = document.querySelector('.profile__update-profile');
-const popupCloseButton = popupProfile.querySelector('.popup__close');
+const profileUpdateButton = document.querySelector('.profile__update-profile');
+const popupUpdateCloseButton = popupProfile.querySelector('.popup__close');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubTitle = document.querySelector('.profile__sub-title');
 const titleProfilePopup = popupProfile.querySelector('.profile-popup-title');
 const subtitleProfilePopup = popupProfile.querySelector('.profile-popup-subtitle');
 
-enableValidation({
+enableValidationForm({
   form: '.popup__form',
   error: '-error',
   inputSelector: '.popup__input',
@@ -20,42 +22,24 @@ enableValidation({
 })
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      const popup = document.querySelector('.popup_active');
-
-      popup.classList.remove('popup_active');
-    }
+  pressEscape(event.key);
 })
 
 popupsContainers.forEach(container => container.addEventListener('click', (event) => event.stopPropagation()));
 
 popups.forEach(popup => popup.addEventListener('click', () => closePopup(popup)));
 
-const openPopup = function (popup) {
-  popup.classList.add('popup_active');
-}
-
-const closePopup = function (popup) {
-  popup.classList.remove('popup_active');
-}
-
-const closePopupProfile = function (event) {
-  closePopup(popupProfile);
-}
-
 const cleaneInputs = function (inputs) {
   inputs.forEach(item => item.value = '');
 }
 
-const changeProfile = function (event) {
-  event.preventDefault();
-
+const changeProfile = function (profileTitle, profileSubTitle) {
   profileTitle.textContent = titleProfilePopup.value;
   profileSubTitle.textContent = subtitleProfilePopup.value;
   closePopup(popupProfile);
 }
 
-profileButtonPopup.addEventListener('click', function (event) {
+profileUpdateButton.addEventListener('click', function (event) {
   restoreInputs();
   openPopup(popupProfile);
 });
@@ -65,9 +49,12 @@ function restoreInputs() {
   subtitleProfilePopup.value = profileSubTitle.textContent.trim();
 }
 
-popupCloseButton.addEventListener('click', closePopupProfile);
+popupUpdateCloseButton.addEventListener('click', () => closePopup(popupProfile));
 
-popupProfile.addEventListener('submit', changeProfile);
+popupProfile.addEventListener('submit', (event) => {
+  event.preventDefault();
+  changeProfile(profileTitle, profileSubTitle);
+});
 
 //card
 

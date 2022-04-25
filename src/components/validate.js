@@ -31,7 +31,6 @@ const checkInputValidity = (form, input, errorSection, inputTypeError) => {
 }
 
 const hasInvalidInput = (inputList) => {
-  console.log(inputList);
   return inputList.some(input => !input.validity.valid)
 }
 
@@ -45,10 +44,20 @@ const toggleButtonState = (inputList, button, inactiveButton) => {
   }
 }
 
-export const enableValidation = ({form, error, inputSelector, inputTypeError, buttonSelector, inactiveButton}) => {
+ const enableValidationForm = ({form, error, inputSelector, inputTypeError, buttonSelector, inactiveButton}) => {
   const formList = document.querySelectorAll(form);
 
   formList.forEach((form) => {
     setEventListener(form, inputSelector, error, inputTypeError, buttonSelector, inactiveButton);
   })
 }
+
+const pressEscape = (key) => {
+  if (key === 'Escape') {
+    const popup = document.querySelector('.popup_active');
+
+    popup.classList.remove('popup_active');
+  }
+}
+
+export {enableValidationForm, pressEscape};
