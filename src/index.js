@@ -4,7 +4,8 @@ import {openPopup, closePopup} from './components/modal.js';
 import {enableProfilePopup} from './components/popupProfile.js';
 import {cleaneInputs} from './components/utils.js';
 import {cardsArr} from './components/cards-arr.js';
-import {appendNewCard} from './components/append-new-card.js'
+import {appendNewCard} from './components/append-new-card.js';
+import {setParamCard} from './components/set-param-card.js';
 
 const popups = document.querySelectorAll('.popup');
 const popupsContainers = document.querySelectorAll('.popup__container');
@@ -35,25 +36,8 @@ popups.forEach(popup => popup.addEventListener('click', () => closePopup(popup))
 
 //card
 
-const cardTemplate = document.querySelector('#card').content;
-const photeCardsList = document.querySelector('.photo-cards__list');
-const popupImage = document.querySelector('.popup_type_show-image');
-const subTitleImage = popupImage.querySelector('.popup__subtitle'); 
-const popupContentImage = popupImage.querySelector('.popup__image');
-const popupImageButton = popupImage.querySelector('.popup__close');
-
 cardsArr.forEach(item => {
-  appendNewCard({
-    link: item.link,
-    title: item.name,
-    type: 'arr',
-    cardTemplate: cardTemplate,
-    photeCardsList: photeCardsList,
-    subTitleImage: subTitleImage,
-    popupContentImage: popupContentImage,
-    popupImage: popupImage,
-    popupImageButton: popupImageButton
-  });
+  appendNewCard(setParamCard('arr', item.link, item.name));
 })
 
 // new form
@@ -82,17 +66,7 @@ const handleCardFormSubmit = function(event) {
   const link = popupAddCardInputLink.value;
   if (title === '' || link === '') return; 
   // link, title, null, cardTemplate, photeCardsList, subTitleImage, popupContentImage, popupImage, popupImageButton
-  appendNewCard({
-    link: link,
-    title: title,
-    type: null,
-    cardTemplate: cardTemplate,
-    photeCardsList: photeCardsList,
-    subTitleImage: subTitleImage,
-    popupContentImage: popupContentImage,
-    popupImage: popupImage,
-    popupImageButton: popupImageButton
-  });
+  appendNewCard(setParamCard(null, link, title));
   closePopup(popupAddCard);
   cleaneInputs(popupAddCardInputs);
 }

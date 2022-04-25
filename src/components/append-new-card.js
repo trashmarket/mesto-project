@@ -1,6 +1,10 @@
 import {openPopup, closePopup} from './modal.js'
 
-export const appendNewCard = ({ link, title, type, cardTemplate, photeCardsList, subTitleImage, popupContentImage, popupImage, popupImageButton }) => {
+export const appendNewCard = ({ link, title, type, cardTemplate, photeCardsList, popupImage, }) => {
+  const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
+  const popupContentImageCard = popupImage.querySelector('.popup__image');
+  const popupImageButtonCard = popupImage.querySelector('.popup__close');
+
   const card = cardTemplate.cloneNode(true);
   console.log(card)
   const cardImg = card.querySelector('.photo-cards__img');
@@ -9,7 +13,7 @@ export const appendNewCard = ({ link, title, type, cardTemplate, photeCardsList,
   const trashButton = card.querySelector('.photo-cards__trash-button');
   const item = card.querySelector('.photo-cards__item')
 
-  popupImageButton.addEventListener('click', function(event){
+  popupImageButtonCard.addEventListener('click', function(event){
     closePopup(popupImage);
   })
 
@@ -17,7 +21,7 @@ export const appendNewCard = ({ link, title, type, cardTemplate, photeCardsList,
     removeCard(item);
   });
   likeButton.addEventListener('click', listenHeartButton);
-  cardImg.addEventListener('click', (event) => listenImg(link, title, subTitleImage, popupContentImage, popupImage));
+  cardImg.addEventListener('click', (event) => listenImg(link, title, subTitleImageCard, popupContentImageCard, popupImage));
 
   cardImg.alt = title;
   cardImg.src = link;
