@@ -6,7 +6,7 @@ export const appendNewCard = ({ link, title, type, cardTemplate, photeCardsList,
   const popupImageButtonCard = popupImage.querySelector('.popup__close');
 
   const card = cardTemplate.cloneNode(true);
-  console.log(card)
+  
   const cardImg = card.querySelector('.photo-cards__img');
   const cardTitle = card.querySelector('.photo-cards__title');
   const likeButton = card.querySelector('.photo-cards__button');

@@ -1,11 +1,11 @@
 import './pages/index.css';
 import {enableValidationForm, pressEscape} from './components/validate.js';
-import {openPopup, closePopup} from './components/modal.js';
+import {closePopup} from './components/modal.js';
 import {enableProfilePopup} from './components/popupProfile.js';
-import {cleaneInputs} from './components/utils.js';
 import {cardsArr} from './components/cards-arr.js';
 import {appendNewCard} from './components/append-new-card.js';
 import {setParamCard} from './components/set-param-card.js';
+import {createNewCard} from './components/popup-add-card.js';
 
 const popups = document.querySelectorAll('.popup');
 const popupsContainers = document.querySelectorAll('.popup__container');
@@ -44,33 +44,5 @@ cardsArr.forEach(item => {
 
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const buttonAddForm = document.querySelector('.profile__button');
-const buttonClosePopupAddCard = popupAddCard.querySelector('.popup__close');
-const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
-const popupAddCardInputText = popupAddCard.querySelector('.popup__name-new-card');
-const popupAddCardInputLink = popupAddCard.querySelector('.popup__link-new-card');
 
-const openPopupAddCard = function (event) {
-  openPopup(popupAddCard)
-  cleaneInputs(popupAddCardInputs);
-}
-
-buttonAddForm.addEventListener('click', openPopupAddCard);
-
-buttonClosePopupAddCard.addEventListener('click', function(event) {
-  closePopup(popupAddCard);
-})
-
-const handleCardFormSubmit = function(event) {
-  event.preventDefault();
-  const title = popupAddCardInputText.value;
-  const link = popupAddCardInputLink.value;
-  if (title === '' || link === '') return; 
-  // link, title, null, cardTemplate, photeCardsList, subTitleImage, popupContentImage, popupImage, popupImageButton
-  appendNewCard(setParamCard(null, link, title));
-  closePopup(popupAddCard);
-  cleaneInputs(popupAddCardInputs);
-}
-
-popupAddCard.addEventListener('submit', handleCardFormSubmit);
-
-// like && trash can
+createNewCard(popupAddCard, buttonAddForm);
