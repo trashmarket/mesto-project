@@ -5,6 +5,7 @@
   margin: 0 auto;
   display: block;
   padding-bottom: 8px;
+  outline: none;
 }
 
 .popup__input::placeholder {

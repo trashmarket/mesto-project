@@ -1,4 +1,5 @@
 import './pages/index.css';
+import {enableValidation} from './components/validate.js'
 const popups = document.querySelectorAll('.popup');
 const popupsContainers = document.querySelectorAll('.popup__container');
 const popupProfile = document.querySelector('.profile-popup');
@@ -8,6 +9,15 @@ const profileTitle = document.querySelector('.profile__title');
 const profileSubTitle = document.querySelector('.profile__sub-title');
 const titleProfilePopup = popupProfile.querySelector('.profile-popup-title');
 const subtitleProfilePopup = popupProfile.querySelector('.profile-popup-subtitle');
+
+enableValidation({
+  form: '.popup__form',
+  error: '-error',
+  inputSelector: '.popup__input',
+  inputTypeError: '.popup__input_type_error',
+  buttonSelector: '.popup__submit',
+  inactiveButton: 'popup__submit_inactive'
+})
 
 popupsContainers.forEach(container => container.addEventListener('click', (event) => event.stopPropagation()));
 
