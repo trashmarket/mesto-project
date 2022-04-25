@@ -21,6 +21,13 @@ enableValidationForm({
   inactiveButton: 'popup__submit_inactive'
 })
 
+enableProfilePopup({
+  popupProfile: document.querySelector('.profile-popup'),
+  profileUpdateButton: document.querySelector('.profile__update-profile'),
+  profileTitle: document.querySelector('.profile__title'),
+  profileSubTitle: document.querySelector('.profile__sub-title')
+})
+
 document.addEventListener('keydown', (event) => {
   pressEscape(event.key);
 })
@@ -33,28 +40,28 @@ const cleaneInputs = function (inputs) {
   inputs.forEach(item => item.value = '');
 }
 
-const changeProfile = function (profileTitle, profileSubTitle) {
-  profileTitle.textContent = titleProfilePopup.value;
-  profileSubTitle.textContent = subtitleProfilePopup.value;
-  closePopup(popupProfile);
-}
+// const changeProfile = function (profileTitle, profileSubTitle) {
+//   profileTitle.textContent = titleProfilePopup.value;
+//   profileSubTitle.textContent = subtitleProfilePopup.value;
+//   closePopup(popupProfile);
+// }
 
-profileUpdateButton.addEventListener('click', function (event) {
-  restoreInputs();
-  openPopup(popupProfile);
-});
+// profileUpdateButton.addEventListener('click', function (event) {
+//   restoreInputs();
+//   openPopup(popupProfile);
+// });
 
-function restoreInputs() {
-  titleProfilePopup.value = profileTitle.textContent.trim();
-  subtitleProfilePopup.value = profileSubTitle.textContent.trim();
-}
+// function restoreInputs() {
+//   titleProfilePopup.value = profileTitle.textContent.trim();
+//   subtitleProfilePopup.value = profileSubTitle.textContent.trim();
+// }
 
-popupUpdateCloseButton.addEventListener('click', () => closePopup(popupProfile));
+// popupUpdateCloseButton.addEventListener('click', () => closePopup(popupProfile));
 
-popupProfile.addEventListener('submit', (event) => {
-  event.preventDefault();
-  changeProfile(profileTitle, profileSubTitle);
-});
+// popupProfile.addEventListener('submit', (event) => {
+//   event.preventDefault();
+//   changeProfile(profileTitle, profileSubTitle);
+// });
 
 //card
 
