@@ -19,6 +19,14 @@ enableValidation({
   inactiveButton: 'popup__submit_inactive'
 })
 
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      const popup = document.querySelector('.popup_active');
+
+      popup.classList.remove('popup_active');
+    }
+})
+
 popupsContainers.forEach(container => container.addEventListener('click', (event) => event.stopPropagation()));
 
 popups.forEach(popup => popup.addEventListener('click', () => closePopup(popup)));
