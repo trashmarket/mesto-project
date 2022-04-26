@@ -1,14 +1,14 @@
 import './pages/index.css';
-import {enableValidationForm, pressEscape} from './components/validate.js';
+import {enableValidationForm} from './components/validate.js';
 import {closePopup} from './components/modal.js';
 import {enableProfilePopup} from './components/popupProfile.js';
 import {cardsArr} from './components/cards-arr.js';
 import {appendNewCard} from './components/append-new-card.js';
 import {setParamCard} from './components/set-param-card.js';
 import {createNewCard} from './components/popup-add-card.js';
-
+import {clickLayout} from './components/click-layout.js';
+import {clickPopupCloseButton} from './components/click-popup-close-button.js';
 const popups = document.querySelectorAll('.popup');
-const popupsContainers = document.querySelectorAll('.popup__container');
 
 enableValidationForm({
   form: '.popup__form',
@@ -16,23 +16,27 @@ enableValidationForm({
   inputSelector: '.popup__input',
   inputTypeError: '.popup__input_type_error',
   buttonSelector: '.popup__submit',
-  inactiveButton: 'popup__submit_inactive'
+  inactiveButton: 'popup__submit_inactive',
+  popupErrorActive: 'popup__input_type_error_active'
 })
 
+const profileUpdateButton = document.querySelector('.profile__update-profile');
+const popupsCloseButton = document.querySelectorAll('.popup__close');
+const popupProfile = document.querySelector('.profile-popup');
+
+profileUpdateButton.addEventListener('click', () => {
 enableProfilePopup({
-  popupProfile: document.querySelector('.profile-popup'),
-  profileUpdateButton: document.querySelector('.profile__update-profile'),
+  popupProfile: popupProfile,
   profileTitle: document.querySelector('.profile__title'),
-  profileSubTitle: document.querySelector('.profile__sub-title')
-})
+  profileSubTitle: document.querySelector('.profile__sub-title'),
+  profilePopupTitle: popupProfile.querySelector('.profile-popup-title'),
+  profilePopupSubtitle: popupProfile.querySelector('.profile-popup-subtitle')
+})})
 
-document.addEventListener('keydown', (event) => {
-  pressEscape(event.key);
-})
-
-popupsContainers.forEach(container => container.addEventListener('click', (event) => event.stopPropagation()));
-
-popups.forEach(popup => popup.addEventListener('click', () => closePopup(popup)));
+popups.forEach(popup => {
+  popup.addEventListener('click', clickLayout);
+  popup.querySelector('.popup__close').addEventListener('click', clickPopupCloseButton)
+});
 
 //card
 

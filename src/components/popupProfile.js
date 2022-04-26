@@ -1,21 +1,15 @@
 import {openPopup, closePopup} from './modal.js'
 
-const enableProfilePopup = ({popupProfile, profileUpdateButton, profileTitle, profileSubTitle}) => {
-const popupUpdateCloseButton = popupProfile.querySelector('.popup__close');
-const titleProfilePopup = popupProfile.querySelector('.profile-popup-title');
-const subtitleProfilePopup = popupProfile.querySelector('.profile-popup-subtitle');
+const enableProfilePopup = ({popupProfile, profileTitle, profileSubTitle, profilePopupTitle, profilePopupSubtitle}) => {
 
-profileUpdateButton.addEventListener('click', function (event) {
-  restoreInputs(titleProfilePopup, subtitleProfilePopup, profileTitle, profileSubTitle);
-  openPopup(popupProfile);
+restoreInputs(profilePopupTitle, profilePopupSubtitle, profileTitle, profileSubTitle);
 
-popupUpdateCloseButton.addEventListener('click', () => closePopup(popupProfile));
+openPopup(popupProfile);
 
 popupProfile.addEventListener('submit', (event) => {
   event.preventDefault();
-  changeProfile(profileTitle, profileSubTitle, titleProfilePopup, subtitleProfilePopup, popupProfile);
+  changeProfile(profileTitle, profileSubTitle, profilePopupTitle, profilePopupSubtitle, popupProfile);
  });
-})
 }
 
 const restoreInputs = (titleProfilePopup, subtitleProfilePopup, profileTitle, profileSubTitle) => {
