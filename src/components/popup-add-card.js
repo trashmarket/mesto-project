@@ -1,7 +1,7 @@
 import {openPopup, closePopup} from './modal.js';
 import {appendNewCard} from './append-new-card.js'
 import {setParamCard} from './set-param-card.js'
-import {cleaneInputs} from './utils.js';
+import {cleaneInputs, controlInputsAfterclick} from './utils.js';
 import {toggleButtonState} from './validate.js';
 
 const openPopupAddCard = (popupAddCard, popupAddCardInputs) => {

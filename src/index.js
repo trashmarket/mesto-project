@@ -1,5 +1,5 @@
 import './pages/index.css';
-import {enableValidationForm} from './components/validate.js';
+import {enableValidationForm, checkInputValidity} from './components/validate.js';
 import {enableProfilePopup, changeProfile} from './components/popupProfile.js';
 import {cardsArr} from './components/cards-arr.js';
 import {appendNewCard} from './components/append-new-card.js';
@@ -7,19 +7,13 @@ import {setParamCard} from './components/set-param-card.js';
 import {openPopupAddCard, handleCardFormSubmit} from './components/popup-add-card.js';
 import {clickLayout} from './components/click-layout.js';
 import {clickPopupCloseButton} from './components/click-popup-close-button.js';
-import {setParamsProfilePopup} from './components/set-params-profile-popup.js'
-import {setParamsPopupaddCards} from './components/set-params-popupadd-card'
+import {setParamsProfilePopup} from './components/set-params-profile-popup.js';
+import {setParamsPopupaddCards} from './components/set-params-popupadd-card';
+import {setValidateForm} from './components/set-params-validate-form';
+
 const popups = document.querySelectorAll('.popup');
 
-enableValidationForm({
-  form: '.popup__form',
-  error: '-error',
-  inputSelector: '.popup__input',
-  inputTypeError: '.popup__input_type_error',
-  buttonSelector: '.popup__submit',
-  inactiveButton: 'popup__submit_inactive',
-  popupErrorActive: 'popup__input_type_error_active'
-})
+enableValidationForm(setValidateForm());
 
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
@@ -35,7 +29,10 @@ popupProfile.addEventListener('submit', (event) => {
 
 popups.forEach(popup => {
   popup.addEventListener('click', clickLayout);
-  popup.querySelector('.popup__close').addEventListener('click', clickPopupCloseButton)
+  popup.querySelector('.popup__close').addEventListener('click',(event) => {
+    clickPopupCloseButton(event);
+
+  })
 });
 
 //card
@@ -52,7 +49,7 @@ const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
 
 popupAddCard.addEventListener('submit',(event) => {
   event.preventDefault();
-  
+
   const button = event.currentTarget.querySelector('.popup__submit');
 
   handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, button));
