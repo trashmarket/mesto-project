@@ -6,7 +6,7 @@ const setEventListener = (form, inputSelector, error, inputTypeError, buttonSele
   inputs.forEach(input => input.addEventListener('input', () => {
     toggleButtonState(inputs, button, inactiveButton);
     const errorSection = form.querySelector("." + input.id + error);
-    checkInputValidity(form, input, errorSection, inputTypeError, popupErrorActive);
+    checkInputValidity(input, errorSection, popupErrorActive);
   }))
 }
 
@@ -22,7 +22,7 @@ const hideErrorMessage = (errorSection, input, popupErrorActive) => {
   input.classList.remove('popup__input_type_error');
 }
  
-const checkInputValidity = (form, input, errorSection, inputTypeError, popupErrorActive) => {
+const checkInputValidity = (input, errorSection, popupErrorActive) => {
   if (!input.validity.valid) {
     showErrorMessage(errorSection, input.validationMessage, input, popupErrorActive);
   } else {
@@ -52,4 +52,4 @@ const toggleButtonState = (inputList, button, inactiveButton) => {
   })
 }
 
-export {enableValidationForm};
+export {enableValidationForm, toggleButtonState};
