@@ -12,4 +12,12 @@ const controlInputsAfterclickProfile = (inputs, popup) => {
   })
 }
 
-export {cleaneInputs, controlInputsAfterclickProfile}
+const controlInputsAfterclickAddCard = (inputs, popup) => {
+  inputs.forEach(input => {
+    const errorSection = popup.querySelector("." + input.id + "-error");
+    input.classList.remove('popup__input_type_error');
+    errorSection.classList.remove('popup__input_type_error_active');
+  })
+}
+
+export {cleaneInputs, controlInputsAfterclickProfile, controlInputsAfterclickAddCard}
