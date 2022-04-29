@@ -4,6 +4,8 @@ export const setParamsProfilePopup = (popup) =>({
   profileSubTitle: document.querySelector('.profile__sub-title'),
   profilePopupTitle: popup.querySelector('.profile-popup-title'),
   profilePopupSubtitle: popup.querySelector('.profile-popup-subtitle'),
+  profilePopupInputs: [...popup.querySelectorAll('.popup__input')],
   buttonSelector: '.popup__submit',
-  inactiveButton: 'popup__submit_inactive'
+  inactiveButton: 'popup__submit_inactive',
+  selectorErrorInput: 'popup__input_type_error'
 })

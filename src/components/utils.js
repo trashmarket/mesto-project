@@ -5,10 +5,11 @@ import {checkInputValidity} from './validate'
   });
 }
 
-const controlInputsAfterclickProfile = (inputs, popup) => {
+const controlInputsAfterclickProfile = (inputs, popup, selectorErrorInput) => {
   inputs.forEach(input => {
     const errorSection = popup.querySelector("." + input.id + "-error");
     checkInputValidity(input, errorSection, 'popup__input_type_error_active')
+    input.classList.remove(selectorErrorInput)
   })
 }
 

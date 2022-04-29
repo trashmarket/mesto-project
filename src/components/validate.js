@@ -6,27 +6,27 @@ const setEventListener = (form, inputSelector, error, inputTypeError, buttonSele
   inputs.forEach(input => input.addEventListener('input', () => {
     toggleButtonState(inputs, button, inactiveButton);
     const errorSection = form.querySelector("." + input.id + error);
-    checkInputValidity(input, errorSection, popupErrorActive);
+    checkInputValidity(input, errorSection, popupErrorActive, inputTypeError);
   }))
 }
 
-const showErrorMessage = (errorSection, errorText, input, popupErrorActive) => {
+const showErrorMessage = (errorSection, errorText, input, popupErrorActive, inputTypeError) => {
   errorSection.classList.add(popupErrorActive);
   errorSection.textContent = errorText;
-  input.classList.add('popup__input_type_error');
+  input.classList.add(inputTypeError);
 }
 
-const hideErrorMessage = (errorSection, input, popupErrorActive) => {
+const hideErrorMessage = (errorSection, input, popupErrorActive, inputTypeError) => {
   errorSection.classList.remove(popupErrorActive);
   errorSection.textContent = '';
-  input.classList.remove('popup__input_type_error');
+  input.classList.remove(inputTypeError);
 }
  
-const checkInputValidity = (input, errorSection, popupErrorActive) => {
+const checkInputValidity = (input, errorSection, popupErrorActive, inputTypeError) => {
   if (!input.validity.valid) {
-    showErrorMessage(errorSection, input.validationMessage, input, popupErrorActive);
+    showErrorMessage(errorSection, input.validationMessage, input, popupErrorActive, inputTypeError);
   } else {
-    hideErrorMessage(errorSection, input, popupErrorActive);
+    hideErrorMessage(errorSection, input, popupErrorActive, inputTypeError);
   }
 }
 

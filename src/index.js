@@ -31,7 +31,6 @@ popups.forEach(popup => {
   popup.addEventListener('click', clickLayout);
   popup.querySelector('.popup__close').addEventListener('click',(event) => {
     clickPopupCloseButton(event);
-
   })
 });
 
