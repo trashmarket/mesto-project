@@ -1,5 +1,5 @@
 import './pages/index.css';
-import {enableValidationForm, checkInputValidity} from './components/validate.js';
+import {enableValidationForm} from './components/validate.js';
 import {enableProfilePopup, changeProfile} from './components/popupProfile.js';
 import {cardsArr} from './components/cards-arr.js';
 import {createCard} from './components/create-card.js';
@@ -10,13 +10,21 @@ import {clickPopupCloseButton} from './components/click-popup-close-button.js';
 import {setParamsProfilePopup} from './components/set-params-profile-popup.js';
 import {setParamsPopupaddCards} from './components/set-params-popupadd-card';
 import {setValidateForm} from './components/set-params-validate-form';
+import {setParamsTemplateCards} from './components/set-prams-template-card';
+import {cloneCardTemplate, searchElementOfCurrentTarget} from './components/utils.js'
 
 const popups = document.querySelectorAll('.popup');
-
-enableValidationForm(setValidateForm());
-
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
+//card
+const photoCardsList = document.querySelector('.photo-cards__list');
+const cardTemplate = document.querySelector('#card').content
+// new form
+const popupAddCard = document.querySelector('.popup_type_add-card');
+const buttonAddForm = document.querySelector('.profile__button');
+const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
+
+enableValidationForm(setValidateForm());
 
 profileUpdateButton.addEventListener('click', () => {
 enableProfilePopup(setParamsProfilePopup(popupProfile))
@@ -34,24 +42,14 @@ popups.forEach(popup => {
   })
 });
 
-//card
-const photoCardsList = document.querySelector('.photo-cards__list');
 cardsArr.forEach(item => {
-  photoCardsList.append(createCard(setParamCard(item.link, item.name)));
+  photoCardsList.append(createCard(setParamCard(item.link, item.name), setParamsTemplateCards(cloneCardTemplate(cardTemplate))));
 })
-
-// new form
-
-const popupAddCard = document.querySelector('.popup_type_add-card');
-const buttonAddForm = document.querySelector('.profile__button');
-const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
 
 popupAddCard.addEventListener('submit',(event) => {
   event.preventDefault();
 
-  const button = event.currentTarget.querySelector('.popup__submit');
-
-  photoCardsList.prepend(handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, button)));
+  photoCardsList.prepend(handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(event, '.popup__submit')), cloneCardTemplate(cardTemplate)));
 });
 
 buttonAddForm.addEventListener('click',() => openPopupAddCard(popupAddCard, popupAddCardInputs));

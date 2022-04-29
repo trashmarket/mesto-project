@@ -21,4 +21,8 @@ const controlInputsAfterclickAddCard = (inputs, popup) => {
   })
 }
 
-export {cleaneInputs, controlInputsAfterclickProfile, controlInputsAfterclickAddCard}
+const cloneCardTemplate = (card) => card.cloneNode(true);
+
+const searchElementOfCurrentTarget = (event, selector) => event.currentTarget.querySelector(selector);
+
+export {cleaneInputs, controlInputsAfterclickProfile, controlInputsAfterclickAddCard, cloneCardTemplate, searchElementOfCurrentTarget}
