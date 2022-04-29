@@ -1,6 +1,6 @@
 import {openPopup, closePopup} from './modal.js'
 
-export const appendNewCard = ({ link, title, type, cardTemplate, photeCardsList, popupImage, }) => {
+export const createCard = ({ link, title, cardTemplate, popupImage, }) => {
   const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
   const popupContentImageCard = popupImage.querySelector('.popup__image');
   const popupImageButtonCard = popupImage.querySelector('.popup__close');
@@ -26,11 +26,8 @@ export const appendNewCard = ({ link, title, type, cardTemplate, photeCardsList,
   cardImg.alt = title;
   cardImg.src = link;
   cardTitle.textContent = title;
-  if (type === 'arr'){
-    photeCardsList.append(card); 
-  } else {
-    photeCardsList.prepend(card);
-  }
+
+  return card;
 };
 
 const removeCard = (card) => {

@@ -1,5 +1,5 @@
 import {openPopup, closePopup} from './modal.js';
-import {appendNewCard} from './append-new-card.js'
+import {createCard} from './create-card.js'
 import {setParamCard} from './set-param-card.js'
 import {cleaneInputs, controlInputsAfterclickAddCard} from './utils.js';
 import {toggleButtonState} from './validate.js';
@@ -15,10 +15,10 @@ const handleCardFormSubmit = ({popupCard, popupButton, popupAddCardInputs, popup
   const link = popupAddCardInputLink.value;
   if (title === '' || link === '') return; 
   
-  appendNewCard(setParamCard(null, link, title));
   closePopup(popupCard);
   cleaneInputs(popupAddCardInputs);
   toggleButtonState([...popupAddCardInputs], popupButton, selectorActive)
+  return createCard(setParamCard(link, title));
 }
 
 export {handleCardFormSubmit, openPopupAddCard};

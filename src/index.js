@@ -2,7 +2,7 @@ import './pages/index.css';
 import {enableValidationForm, checkInputValidity} from './components/validate.js';
 import {enableProfilePopup, changeProfile} from './components/popupProfile.js';
 import {cardsArr} from './components/cards-arr.js';
-import {appendNewCard} from './components/append-new-card.js';
+import {createCard} from './components/create-card.js';
 import {setParamCard} from './components/set-param-card.js';
 import {openPopupAddCard, handleCardFormSubmit} from './components/popup-add-card.js';
 import {clickLayout} from './components/click-layout.js';
@@ -35,9 +35,9 @@ popups.forEach(popup => {
 });
 
 //card
-
+const photoCardsList = document.querySelector('.photo-cards__list');
 cardsArr.forEach(item => {
-  appendNewCard(setParamCard('arr', item.link, item.name));
+  photoCardsList.append(createCard(setParamCard(item.link, item.name)));
 })
 
 // new form
@@ -51,7 +51,7 @@ popupAddCard.addEventListener('submit',(event) => {
 
   const button = event.currentTarget.querySelector('.popup__submit');
 
-  handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, button));
+  photoCardsList.prepend(handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, button)));
 });
 
 buttonAddForm.addEventListener('click',() => openPopupAddCard(popupAddCard, popupAddCardInputs));
