@@ -1,13 +1,11 @@
 import {openPopup, closePopup} from './modal.js'
-
+const popupImage = document.querySelector('.popup_type_show-image');
+const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
+const popupContentImageCard = popupImage.querySelector('.popup__image');
 export const createCard =
  ({ 
     link,
     title,
-    popupImage,
-    seltorSubtitle,
-    selectotContentImageCard,
-    selctorImageButtonCard
   },
   {
     card,
@@ -17,17 +15,11 @@ export const createCard =
     trashButton,
     item
   }) => {
-  const subTitleImageCard = popupImage.querySelector(seltorSubtitle);
-  const popupContentImageCard = popupImage.querySelector(selectotContentImageCard);
-  const popupImageButtonCard = popupImage.querySelector(selctorImageButtonCard);
-
-  popupImageButtonCard.addEventListener('click', function(event){
-    closePopup(popupImage);
-  })
   
   trashButton.addEventListener('click', function(event) {
     removeCard(item);
   });
+  
   likeButton.addEventListener('click', listenHeartButton);
 
   cardImg.addEventListener('click', (event) => listenImg(link, title, subTitleImageCard, popupContentImageCard, popupImage));
