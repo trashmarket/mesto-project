@@ -15,6 +15,18 @@ export const showError = (rej) => {
   console.log(rej)
 }
 
+export const editingProfile = (name, about) => {
+  return fetch(`${config.baseurl}/users/me`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: name,
+      about: about
+    })
+  })
+  .then(checkRes)
+}
+
 export const getUser = () => {
   return fetch(`${config.baseurl}/users/me`, {
     headers: config.headers

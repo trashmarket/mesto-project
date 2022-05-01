@@ -13,6 +13,7 @@ import {setValidateForm} from './components/set-params-validate-form';
 import {setParamsTemplateCards} from './components/set-prams-template-card';
 import {cloneCardTemplate, searchElementOfCurrentTarget} from './components/utils.js'
 import {getCards, showError} from './components/api.js';
+
 const popups = document.querySelectorAll('.popup');
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
@@ -32,7 +33,7 @@ enableProfilePopup(setParamsProfilePopup(popupProfile))
 
 popupProfile.addEventListener('submit', (event) => {
   event.preventDefault();
-  changeProfile(setParamsProfilePopup(popupProfile));
+  changeProfile();
  });
 
 popups.forEach(popup => {
@@ -43,9 +44,10 @@ popups.forEach(popup => {
 });
 
 getCards().then((res => {
-  console.log(res);
+  // console.log(res);
   res.forEach(item => {
-    photoCardsList.append(createCard(setParamCard(item.link, item.name),
+    photoCardsList.append(
+     createCard(setParamCard(item.link, item.name),
      setParamsTemplateCards(cloneCardTemplate(cardTemplate)))
      );
   })
