@@ -56,7 +56,7 @@ getCards().then((res => {
 popupAddCard.addEventListener('submit',(event) => {
   event.preventDefault();
 
-  photoCardsList.prepend(handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(event, '.popup__submit')), cloneCardTemplate(cardTemplate)));
+  handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(event, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
 });
 
 buttonAddForm.addEventListener('click',() => openPopupAddCard(popupAddCard, popupAddCardInputs));
