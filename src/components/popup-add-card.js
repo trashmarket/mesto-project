@@ -1,5 +1,5 @@
 import {openPopup, closePopup} from './modal.js';
-import {createCard} from './create-card.js'
+import {createCard} from './create-card.js';
 import {setParamCard} from './set-param-card.js';
 import {setParamsTemplateCards} from './set-prams-template-card.js'
 import {cleaneInputs, controlInputsAfterclickAddCard} from './utils.js';
@@ -27,9 +27,17 @@ const handleCardFormSubmit = ({
 
   closePopup(popupCard);
   cleaneInputs(popupAddCardInputs);
-  toggleButtonState([...popupAddCardInputs], popupButton, selectorActive)
-  addNewCard(title, link).then(res => {
-    photoCardsList.prepend(createCard({link: res.link, title: res.name}, setParamsTemplateCards(carde)));
+  toggleButtonState([...popupAddCardInputs], popupButton, selectorActive);
+  addNewCard(title, link)
+  .then(res => {
+    photoCardsList.prepend(
+    createCard(setParamCard(
+      res.link,
+      res.name,
+      res.owner._id,
+      res.likes,
+      res._id
+    ), setParamsTemplateCards(carde)));
   }).catch(showError);
 }
 

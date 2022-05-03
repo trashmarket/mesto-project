@@ -44,10 +44,15 @@ popups.forEach(popup => {
 });
 
 getCards().then((res => {
-  // console.log(res);
   res.forEach(item => {
     photoCardsList.append(
-     createCard(setParamCard(item.link, item.name),
+     createCard(setParamCard(
+       item.link,
+       item.name,
+       item.owner._id,
+       item.likes,
+       item._id
+     ),
      setParamsTemplateCards(cloneCardTemplate(cardTemplate)))
      );
   })

@@ -15,6 +15,27 @@ export const showError = (rej) => {
   console.log(rej)
 }
 
+export const deleteLike = (cardId) => {
+  return fetch(`${config.baseurl}/cards/likes/${cardId}`,{
+    method: 'DELETE',
+    headers: config.headers
+  }).then(checkRes)
+}
+
+export const putLike = (cardId) => {
+  return fetch(`${config.baseurl}/cards/likes/${cardId}`,{
+    method: 'PUT',
+    headers: config.headers
+  }).then(checkRes)
+}
+
+export const deleteCard = (id) => {
+  return fetch(`${config.baseurl}/cards/${id}`,{
+    method: 'DELETE',
+    headers: config.headers
+  }).then(checkRes)
+}
+
 export const addNewCard = (name, link) => {
   return fetch(`${config.baseurl}/cards`,{
     method: 'POST',

@@ -1,4 +1,6 @@
-import {openPopup, closePopup} from './modal.js'
+import {openPopup, closePopup} from './modal.js';
+import {myId} from './popupProfile';
+import {deleteCard, showError, putLike, deleteLike} from './api.js'
 const popupImage = document.querySelector('.popup_type_show-image');
 const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
 const popupContentImageCard = popupImage.querySelector('.popup__image');
@@ -6,6 +8,10 @@ export const createCard =
  ({ 
     link,
     title,
+    ownerId,
+    likes,
+    idCard,
+    selectorActiveLike
   },
   {
     card,
@@ -13,20 +19,35 @@ export const createCard =
     cardTitle,
     likeButton,
     trashButton,
-    item
+    item,
+    outputLikes
   }) => {
   
-  trashButton.addEventListener('click', function(event) {
-    removeCard(item);
+  if (ownerId.includes(myId)) {
+    trashButton.addEventListener('click', function(event) {
+      removeCard(item);
+      deleteCard(idCard).catch(showError);
+    });
+  } else {
+    trashButton.remove();
+  }
+
+  const booleMylike = likes.some(person => person._id.includes(myId));
+
+  (!booleMylike) ? addClassOrRemove(likeButton, null, selectorActiveLike) : addClassOrRemove(likeButton, selectorActiveLike, null)
+
+  outputLikes.textContent = (likes.length) ? likes.length : '';
+
+  likeButton.addEventListener('click', () => {
+    listenHeartButton(likeButton, likes, idCard, selectorActiveLike, outputLikes)
   });
-  
-  likeButton.addEventListener('click', listenHeartButton);
 
   cardImg.addEventListener('click', (event) => listenImg(link, title, subTitleImageCard, popupContentImageCard, popupImage));
 
   cardImg.alt = title;
   cardImg.src = link;
   cardTitle.textContent = title;
+
 
   return card;
 };
@@ -35,10 +56,27 @@ const removeCard = (card) => {
   card.remove();
 }
 
-const listenHeartButton = (event) => {
-  const like = event.target;
+const addClassOrRemove = (element , addClass, removeClass) => {
+  if (addClass) {
+    element.classList.add(addClass);
+  } else {
+    element.classList.remove(removeClass);
+  }
+}
 
-  like.classList.toggle('photo-cards__button_active');
+const listenHeartButton = (likeButton, likes, idCard, selectorActiveLike, outputLikes) => {
+  let arrNewLike = likes
+  const booleLike = likes.some(person => person._id.includes(myId))
+  console.log(booleLike);
+  if(!booleLike) {
+    putLike(idCard).then(card => {
+
+    }).catch(showError)
+  } else {
+    deleteLike(idCard).then(card => {
+
+    }).catch(showError);
+  }
 }
 
 const makerPopupImg = (title, link , subTitleImage, popupContentImage) => {
