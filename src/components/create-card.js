@@ -65,16 +65,26 @@ const addClassOrRemove = (element , addClass, removeClass) => {
 }
 
 const listenHeartButton = (likeButton, likes, idCard, selectorActiveLike, outputLikes) => {
-  let arrNewLike = likes
-  const booleLike = likes.some(person => person._id.includes(myId))
-  console.log(booleLike);
-  if(!booleLike) {
-    putLike(idCard).then(card => {
+  // const booleLike = likes.some(person => person._id.includes(myId))
+  // console.log(booleLike);
+  // if(!booleLike) {
+  //   putLike(idCard).then(card => {
 
-    }).catch(showError)
+  //   }).catch(showError)
+  // } else {
+  //   deleteLike(idCard).then(card => {
+
+  //   }).catch(showError);
+  // }
+  if (!likeButton.classList.contains(selectorActiveLike)) {
+    putLike(idCard).then(card => {
+      likeButton.classList.add(selectorActiveLike);
+      outputLikes.textContent = card.likes.length;
+    }).catch(showError);
   } else {
     deleteLike(idCard).then(card => {
-
+      likeButton.classList.remove(selectorActiveLike);
+      outputLikes.textContent = card.likes.length;
     }).catch(showError);
   }
 }
