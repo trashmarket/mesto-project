@@ -42,7 +42,7 @@ export const createCard =
   outputLikes.textContent = (likes.length) ? likes.length : '';
 
   const handleLike = () => {
-    listenHeartButton(likes, idCard, card, item)
+    listenHeartButton(likeButton, idCard, selectorActiveLike, outputLikes)
   }
 
   likeButton.removeEventListener('click', handleLike);
@@ -72,33 +72,28 @@ const addClassOrRemove = (element , addClass, removeClass) => {
   }
 }
 
-const listenHeartButton = (likes, idCard, cardTemplate, item) => {
-  const booleLike = likes.some(person => person._id.includes(myId))
-  if(!booleLike) {
+
+const listenHeartButton = (likeButton, idCard, selectorActiveLike, outputLikes) => {
+  // const booleLike = likes.some(person => person._id.includes(myId))
+  // console.log(booleLike);
+  // if(!booleLike) {
+  //   putLike(idCard).then(card => {
+
+  //   }).catch(showError)
+  // } else {
+  //   deleteLike(idCard).then(card => {
+
+  //   }).catch(showError);
+  // }
+  if (!likeButton.classList.contains(selectorActiveLike)) {
     putLike(idCard).then(card => {
-      createCard(
-      setParamCard(
-        card.link,
-        card.name,
-        card.owner._id,
-        card.likes,
-        card._id
-      ),
-      setParamsTemplateCards(item)
-      )
-    }).catch(showError)
+      likeButton.classList.add(selectorActiveLike);
+      outputLikes.textContent = card.likes.length;
+    }).catch(showError);
   } else {
     deleteLike(idCard).then(card => {
-      createCard(
-        setParamCard(
-          card.link,
-          card.name,
-          card.owner._id,
-          card.likes,
-          card._id
-        ),
-        setParamsTemplateCards(item)
-        )
+      likeButton.classList.remove(selectorActiveLike);
+      outputLikes.textContent = card.likes.length;
     }).catch(showError);
   }
 }
