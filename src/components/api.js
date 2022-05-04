@@ -13,10 +13,11 @@ const checkRes = (res) => {
 
 export const reloadAvatar = (link) => {
   return fetch(`${config.baseurl}/users/me/avatar`,{
+    method: 'PATCH',
     headers: config.headers,
-    body: {
+    body: JSON.stringify({
       avatar: link
-    }
+    })
   }).then(checkRes)
 }
 

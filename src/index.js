@@ -1,7 +1,6 @@
 import './pages/index.css';
 import {enableValidationForm} from './components/validate.js';
-import {enableProfilePopup, changeProfile, getUserId} from './components/popupProfile.js';
-import {cardsArr} from './components/cards-arr.js';
+import {enableProfilePopup, changeProfile, getUserId, profileAvatar} from './components/popupProfile.js'; 
 import {createCard} from './components/create-card.js';
 import {setParamCard} from './components/set-param-card.js';
 import {openPopupAddCard, handleCardFormSubmit} from './components/popup-add-card.js';
@@ -13,8 +12,8 @@ import {setValidateForm} from './components/set-params-validate-form';
 import {setParamsTemplateCards} from './components/set-prams-template-card';
 import {cloneCardTemplate, searchElementOfCurrentTarget} from './components/utils.js'
 import {getCards, showError, addNewCard} from './components/api.js';
-import {removeCard, listenHeartButton} from './components/create-card.js'
-
+import {removeCard, listenHeartButton} from './components/create-card.js';
+import {enablePopupAatar, popupAvatar, chengeAvatar} from './components/popup-avatar.js';
 const popups = document.querySelectorAll('.popup');
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
@@ -27,12 +26,23 @@ const buttonAddForm = document.querySelector('.profile__button');
 const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
 const popupAddCardInputText = document.querySelector('.popup__name-new-card');
 const popupAddCardInputLink = document.querySelector('.popup__link-new-card');
+const popupAddSubmit = popupAddCard.querySelector('.popup__submit')
+// avatar
 
-let myId = null
+let myId = null;
 
 getUserId().then(res => myId = res);
 
 enableValidationForm(setValidateForm());
+
+profileAvatar.addEventListener('click', () => {
+  enablePopupAatar(setParamsProfilePopup());
+})
+
+popupAvatar.addEventListener('submit', (event) => {
+  event.preventDefault();
+  chengeAvatar(profileAvatar);
+})
 
 profileUpdateButton.addEventListener('click', () => {
 enableProfilePopup(setParamsProfilePopup(popupProfile))
@@ -49,7 +59,7 @@ popups.forEach(popup => {
     clickPopupCloseButton(event);
   })
 });
-console.log(myId)
+
 getCards().then((res => {
   res.forEach(item => {
     const template = cloneCardTemplate(cardTemplate);
@@ -83,7 +93,7 @@ popupAddCard.addEventListener('submit',(event) => {
   const title = popupAddCardInputText.value;
   const link = popupAddCardInputLink.value;
   handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(event, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
-  console.log(link);
+  popupAddSubmit.textContent = 'Сохранение...'
   addNewCard(title, link)
   .then(item => {
     const template = cloneCardTemplate(cardTemplate);
@@ -108,7 +118,7 @@ popupAddCard.addEventListener('submit',(event) => {
     likeButton.addEventListener('click', () => {
       listenHeartButton(likeButton, item._id, 'photo-cards__button_active', outputLikes);
     });
-  }).catch(showError);
+  }).catch(showError).finally(() => popupAddSubmit.textContent = 'Сохраненить')
 });
 
 buttonAddForm.addEventListener('click',() => openPopupAddCard(popupAddCard, popupAddCardInputs));

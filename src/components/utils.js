@@ -1,4 +1,4 @@
-import {checkInputValidity} from './validate'
+import {checkInputValidity} from './validate.js'
  const cleaneInputs = function (inputs) {
   inputs.forEach(item => {
     item.value = '';
@@ -9,6 +9,14 @@ const controlInputsAfterclickProfile = (inputs, popup, selectorErrorInput) => {
   inputs.forEach(input => {
     const errorSection = popup.querySelector("." + input.id + "-error");
     checkInputValidity(input, errorSection, 'popup__input_type_error_active')
+    input.classList.remove(selectorErrorInput)
+  })
+}
+
+const controlInputAvatarPopup = (inputs, popup, selectorErrorInput) => {
+  inputs.forEach(input => {
+    const errorSection = popup.querySelector("." + input.id + "-error");
+    errorSection.classList.remove('.popup__input_type_error_active');
     input.classList.remove(selectorErrorInput)
   })
 }
@@ -25,4 +33,4 @@ const cloneCardTemplate = (card) => card.cloneNode(true);
 
 const searchElementOfCurrentTarget = (event, selector) => event.currentTarget.querySelector(selector);
 
-export {cleaneInputs, controlInputsAfterclickProfile, controlInputsAfterclickAddCard, cloneCardTemplate, searchElementOfCurrentTarget}
+export {cleaneInputs, controlInputsAfterclickProfile, controlInputsAfterclickAddCard, cloneCardTemplate, searchElementOfCurrentTarget, controlInputAvatarPopup}

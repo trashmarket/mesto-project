@@ -1,7 +1,5 @@
 import {openPopup, closePopup} from './modal.js';
 import {deleteCard, showError, putLike, deleteLike} from './api.js';
-import {setParamCard} from './set-param-card.js';
-import {setParamsTemplateCards} from './set-prams-template-card.js';
 const popupImage = document.querySelector('.popup_type_show-image');
 const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
 const popupContentImageCard = popupImage.querySelector('.popup__image');
@@ -11,7 +9,6 @@ export const createCard =
     title,
     ownerId,
     likes,
-    idCard,
     selectorActiveLike,
     myId
   },
@@ -21,7 +18,6 @@ export const createCard =
     cardTitle,
     likeButton,
     trashButton,
-    item,
     outputLikes
   }) => {
   

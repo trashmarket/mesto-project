@@ -5,6 +5,29 @@
   height: 120px;
   margin: 33px auto 0;
   background-size: cover;
+  position: relative;
+  cursor: pointer;
+}
+
+.profile__avatar::before{
+  content: "";
+  width: 120px;
+  height: 120px;
+  background-color: rgba(0,0, 0, 0);
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+  opacity: 0;
+  background-image: url(../../../images/pecile-avatar.svg) ;
+  background-repeat: no-repeat;
+  background-position: center ;
+  transition: background-color 0.5s, visibility .5s, opacity .5s;
+}
+
+ .profile__avatar:hover::before {
+  background-color: rgba(0,0, 0, 0.8);
+  visibility: visible;
+  opacity: 1;
 }
 
 @media screen and (min-width: 890px) {

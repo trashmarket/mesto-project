@@ -5,7 +5,7 @@ import {getUser, showError, editingProfile} from './api.js';
 
 const popupProfile = document.querySelector('.profile-popup');
 const profileTitle = document.querySelector('.profile__title');
-const profileAvatar = document.querySelector('.profile__avatar');
+export const profileAvatar = document.querySelector('.profile__avatar');
 const profileSubTitle = document.querySelector('.profile__sub-title');
 const profilePopupTitle = popupProfile.querySelector('.profile-popup-title');
 const profilePopupSubtitle = popupProfile.querySelector('.profile-popup-subtitle');
@@ -24,15 +24,6 @@ export const getUserId = () => {
     }
   ).catch(showError);  
 }
-
-// getUser().then(
-//   (res) => {
-//     profileTitle.textContent = res.name;
-//     profileSubTitle.textContent = res.about;
-//     profileAvatar.style.backgroundImage = `url(${res.avatar})`;
-//     myId = res._id  
-//   }
-// ).catch(showError);
 
 const enableProfilePopup = ({inactiveButton, selectorErrorInput}) => {
 restoreInputs();
