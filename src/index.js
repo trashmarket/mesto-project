@@ -1,6 +1,6 @@
 import './pages/index.css';
 import {enableValidationForm} from './components/validate.js';
-import {enableProfilePopup, changeProfile} from './components/popupProfile.js';
+import {enableProfilePopup, changeProfile, getUserId} from './components/popupProfile.js';
 import {cardsArr} from './components/cards-arr.js';
 import {createCard} from './components/create-card.js';
 import {setParamCard} from './components/set-param-card.js';
@@ -12,7 +12,8 @@ import {setParamsPopupaddCards} from './components/set-params-popupadd-card';
 import {setValidateForm} from './components/set-params-validate-form';
 import {setParamsTemplateCards} from './components/set-prams-template-card';
 import {cloneCardTemplate, searchElementOfCurrentTarget} from './components/utils.js'
-import {getCards, showError} from './components/api.js';
+import {getCards, showError, addNewCard} from './components/api.js';
+import {removeCard, listenHeartButton} from './components/create-card.js'
 
 const popups = document.querySelectorAll('.popup');
 const profileUpdateButton = document.querySelector('.profile__update-profile');
@@ -24,6 +25,12 @@ const cardTemplate = document.querySelector('#card').content
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const buttonAddForm = document.querySelector('.profile__button');
 const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
+const popupAddCardInputText = document.querySelector('.popup__name-new-card');
+const popupAddCardInputLink = document.querySelector('.popup__link-new-card');
+
+let myId = null
+
+getUserId().then(res => myId = res);
 
 enableValidationForm(setValidateForm());
 
@@ -42,26 +49,66 @@ popups.forEach(popup => {
     clickPopupCloseButton(event);
   })
 });
-
+console.log(myId)
 getCards().then((res => {
   res.forEach(item => {
+    const template = cloneCardTemplate(cardTemplate);
+    const trashButton = template.querySelector('.photo-cards__trash-button');
+    const itemCard = template.querySelector('.photo-cards__item');
+    const likeButton = template.querySelector('.photo-cards__button');
+    const outputLikes = template.querySelector('.photo-cards__count');
     photoCardsList.append(
      createCard(setParamCard(
        item.link,
        item.name,
        item.owner._id,
        item.likes,
-       item._id
+       item._id,
+       myId
      ),
-     setParamsTemplateCards(cloneCardTemplate(cardTemplate)))
+     setParamsTemplateCards(template))
      );
+    trashButton.addEventListener('click', () => {
+      removeCard(itemCard, item._id);
+    });
+
+    likeButton.addEventListener('click', () => {
+      listenHeartButton(likeButton, item._id, 'photo-cards__button_active', outputLikes);
+    });
   })
 })).catch(showError);
 
 popupAddCard.addEventListener('submit',(event) => {
   event.preventDefault();
-
+  const title = popupAddCardInputText.value;
+  const link = popupAddCardInputLink.value;
   handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(event, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
+  console.log(link);
+  addNewCard(title, link)
+  .then(item => {
+    const template = cloneCardTemplate(cardTemplate);
+    const trashButton = template.querySelector('.photo-cards__trash-button');
+    const likeButton = template.querySelector('.photo-cards__button');
+    const itemCard = template.querySelector('.photo-cards__item');
+    const outputLikes = template.querySelector('.photo-cards__count');
+    photoCardsList.prepend(
+    createCard(setParamCard(
+      item.link,
+      item.name,
+      item.owner._id,
+      item.likes,
+      item._id,
+      myId
+    ), setParamsTemplateCards(template)));
+
+    trashButton.addEventListener('click', () => {
+      removeCard(itemCard, item._id);
+    });
+
+    likeButton.addEventListener('click', () => {
+      listenHeartButton(likeButton, item._id, 'photo-cards__button_active', outputLikes);
+    });
+  }).catch(showError);
 });
 
 buttonAddForm.addEventListener('click',() => openPopupAddCard(popupAddCard, popupAddCardInputs));

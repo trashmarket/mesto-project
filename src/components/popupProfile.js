@@ -12,16 +12,27 @@ const profilePopupSubtitle = popupProfile.querySelector('.profile-popup-subtitle
 const profilePopupInputs = [...popupProfile.querySelectorAll('.popup__input')] 
 const button = popupProfile.querySelector('.popup__submit');
 
-export let myId = null;
 
-getUser().then(
-  (res) => {
-    profileTitle.textContent = res.name;
-    profileSubTitle.textContent = res.about;
-    profileAvatar.style.backgroundImage = `url(${res.avatar})`;
-    myId = res._id  
-  }
-).catch(showError);
+
+export const getUserId = () => {
+ return getUser().then(
+     (res) => {
+      profileTitle.textContent = res.name;
+      profileSubTitle.textContent = res.about;
+      profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+      return res._id;  
+    }
+  ).catch(showError);  
+}
+
+// getUser().then(
+//   (res) => {
+//     profileTitle.textContent = res.name;
+//     profileSubTitle.textContent = res.about;
+//     profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+//     myId = res._id  
+//   }
+// ).catch(showError);
 
 const enableProfilePopup = ({inactiveButton, selectorErrorInput}) => {
 restoreInputs();

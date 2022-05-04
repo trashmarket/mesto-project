@@ -1,5 +1,4 @@
 import {openPopup, closePopup} from './modal.js';
-import {myId} from './popupProfile';
 import {deleteCard, showError, putLike, deleteLike} from './api.js';
 import {setParamCard} from './set-param-card.js';
 import {setParamsTemplateCards} from './set-prams-template-card.js';
@@ -13,7 +12,8 @@ export const createCard =
     ownerId,
     likes,
     idCard,
-    selectorActiveLike
+    selectorActiveLike,
+    myId
   },
   {
     card,
@@ -25,28 +25,12 @@ export const createCard =
     outputLikes
   }) => {
   
-  if (ownerId.includes(myId)) {
-    trashButton.addEventListener('click', function(event) {
-      removeCard(item);
-      deleteCard(idCard).catch(showError);
-    });
-  } else {
-    if (trashButton){
-      trashButton.remove();
-    }
-  }
-  
+  if (!ownerId.includes(myId)) trashButton.remove();
+
   const booleMylike = likes.some(person => person._id.includes(myId));
   (!booleMylike) ? addClassOrRemove(likeButton, null, selectorActiveLike) : addClassOrRemove(likeButton, selectorActiveLike, null)
 
   outputLikes.textContent = (likes.length) ? likes.length : '';
-
-  const handleLike = () => {
-    listenHeartButton(likeButton, idCard, selectorActiveLike, outputLikes)
-  }
-
-  likeButton.removeEventListener('click', handleLike);
-  likeButton.addEventListener('click', handleLike);
 
   cardImg.addEventListener('click', (event) => listenImg(link, title, subTitleImageCard, popupContentImageCard, popupImage));
 
@@ -54,15 +38,13 @@ export const createCard =
   cardImg.src = link;
   cardTitle.textContent = title;
 
-
   return card;
 };
 
-
-
-const removeCard = (card) => {
-  card.remove();
-}
+export const removeCard = (item, idCard) => {
+  item.remove();
+  deleteCard(idCard).catch(showError);
+} 
 
 const addClassOrRemove = (element , addClass, removeClass) => {
   if (addClass) {
@@ -73,27 +55,16 @@ const addClassOrRemove = (element , addClass, removeClass) => {
 }
 
 
-const listenHeartButton = (likeButton, idCard, selectorActiveLike, outputLikes) => {
-  // const booleLike = likes.some(person => person._id.includes(myId))
-  // console.log(booleLike);
-  // if(!booleLike) {
-  //   putLike(idCard).then(card => {
-
-  //   }).catch(showError)
-  // } else {
-  //   deleteLike(idCard).then(card => {
-
-  //   }).catch(showError);
-  // }
+export const listenHeartButton = (likeButton, idCard, selectorActiveLike, outputLikes) => {
   if (!likeButton.classList.contains(selectorActiveLike)) {
     putLike(idCard).then(card => {
       likeButton.classList.add(selectorActiveLike);
-      outputLikes.textContent = card.likes.length;
+      outputLikes.textContent = card.likes.length ? card.likes.length : '';
     }).catch(showError);
   } else {
     deleteLike(idCard).then(card => {
       likeButton.classList.remove(selectorActiveLike);
-      outputLikes.textContent = card.likes.length;
+      outputLikes.textContent = card.likes.length ? card.likes.length : '';
     }).catch(showError);
   }
 }

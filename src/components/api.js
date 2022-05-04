@@ -11,6 +11,15 @@ const checkRes = (res) => {
    return Promise.reject(`Ошибка: ${res.status}`);
 }
 
+export const reloadAvatar = (link) => {
+  return fetch(`${config.baseurl}/users/me/avatar`,{
+    headers: config.headers,
+    body: {
+      avatar: link
+    }
+  }).then(checkRes)
+}
+
 export const showError = (rej) => {
   console.log(rej)
 }

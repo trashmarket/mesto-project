@@ -21,24 +21,13 @@ const handleCardFormSubmit = ({
   selectorActive,
   photoCardsList
 }, carde) => {
-  const title = popupAddCardInputText.value;
-  const link = popupAddCardInputLink.value;
-  if (title === '' || link === '') return; 
+  // const title = popupAddCardInputText.value;
+  // const link = popupAddCardInputLink.value;
+  // if (title === '' || link === '') return; 
 
   closePopup(popupCard);
   cleaneInputs(popupAddCardInputs);
   toggleButtonState([...popupAddCardInputs], popupButton, selectorActive);
-  addNewCard(title, link)
-  .then(res => {
-    photoCardsList.prepend(
-    createCard(setParamCard(
-      res.link,
-      res.name,
-      res.owner._id,
-      res.likes,
-      res._id
-    ), setParamsTemplateCards(carde)));
-  }).catch(showError);
 }
 
 export {handleCardFormSubmit, openPopupAddCard};
