@@ -1,4 +1,4 @@
-import {openPopup, closePopup} from './modal.js';
+import {openPopup} from './modal.js';
 import {controlInputAvatarPopup} from './utils.js';
 import {toggleButtonState} from './validate.js';
 import {reloadAvatar, showError} from './api.js';

@@ -14,6 +14,7 @@ import {cloneCardTemplate, searchElementOfCurrentTarget} from './components/util
 import {getCards, showError, addNewCard} from './components/api.js';
 import {removeCard, listenHeartButton} from './components/create-card.js';
 import {enablePopupAatar, popupAvatar, chengeAvatar} from './components/popup-avatar.js';
+
 const popups = document.querySelectorAll('.popup');
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
@@ -26,12 +27,8 @@ const buttonAddForm = document.querySelector('.profile__button');
 const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
 const popupAddCardInputText = document.querySelector('.popup__name-new-card');
 const popupAddCardInputLink = document.querySelector('.popup__link-new-card');
-const popupAddSubmit = popupAddCard.querySelector('.popup__submit')
+const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 // avatar
-
-let myId = null;
-
-getUserId().then(res => myId = res);
 
 enableValidationForm(setValidateForm());
 
@@ -60,33 +57,35 @@ popups.forEach(popup => {
   })
 });
 
-getCards().then((res => {
-  res.forEach(item => {
-    const template = cloneCardTemplate(cardTemplate);
-    const trashButton = template.querySelector('.photo-cards__trash-button');
-    const itemCard = template.querySelector('.photo-cards__item');
-    const likeButton = template.querySelector('.photo-cards__button');
-    const outputLikes = template.querySelector('.photo-cards__count');
-    photoCardsList.append(
-     createCard(setParamCard(
-       item.link,
-       item.name,
-       item.owner._id,
-       item.likes,
-       item._id,
-       myId
-     ),
-     setParamsTemplateCards(template))
-     );
-    trashButton.addEventListener('click', () => {
-      removeCard(itemCard, item._id);
-    });
-
-    likeButton.addEventListener('click', () => {
-      listenHeartButton(likeButton, item._id, 'photo-cards__button_active', outputLikes);
-    });
-  })
-})).catch(showError);
+getUserId().then(myId => {
+  getCards().then((res => {
+    res.forEach(item => {
+      const template = cloneCardTemplate(cardTemplate);
+      const trashButton = template.querySelector('.photo-cards__trash-button');
+      const itemCard = template.querySelector('.photo-cards__item');
+      const likeButton = template.querySelector('.photo-cards__button');
+      const outputLikes = template.querySelector('.photo-cards__count');
+      photoCardsList.append(
+       createCard(setParamCard(
+         item.link,
+         item.name,
+         item.owner._id,
+         item.likes,
+         item._id,
+         myId
+       ),
+       setParamsTemplateCards(template))
+       );
+      trashButton.addEventListener('click', () => {
+        removeCard(itemCard, item._id);
+      });
+  
+      likeButton.addEventListener('click', () => {
+        listenHeartButton(likeButton, item._id, 'photo-cards__button_active', outputLikes);
+      });
+    })
+  })).catch(showError);
+}).catch(showError);
 
 popupAddCard.addEventListener('submit',(event) => {
   event.preventDefault();
@@ -108,7 +107,7 @@ popupAddCard.addEventListener('submit',(event) => {
       item.owner._id,
       item.likes,
       item._id,
-      myId
+      item.owner._id
     ), setParamsTemplateCards(template)));
 
     trashButton.addEventListener('click', () => {

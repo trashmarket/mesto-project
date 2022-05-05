@@ -1,4 +1,3 @@
-import {openPopup, closePopup} from './modal.js';
 import {deleteCard, showError, putLike, deleteLike} from './api.js';
 const popupImage = document.querySelector('.popup_type_show-image');
 const subTitleImageCard = popupImage.querySelector('.popup__subtitle');

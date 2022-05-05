@@ -10,7 +10,7 @@ const profileSubTitle = document.querySelector('.profile__sub-title');
 const profilePopupTitle = popupProfile.querySelector('.profile-popup-title');
 const profilePopupSubtitle = popupProfile.querySelector('.profile-popup-subtitle');
 const profilePopupInputs = [...popupProfile.querySelectorAll('.popup__input')] 
-const button = popupProfile.querySelector('.popup__submit');
+const buttonProfile = popupProfile.querySelector('.popup__submit');
 
 
 
@@ -27,7 +27,7 @@ export const getUserId = () => {
 
 const enableProfilePopup = ({inactiveButton, selectorErrorInput}) => {
 restoreInputs();
-toggleButtonState(profilePopupInputs, button, inactiveButton);
+toggleButtonState(profilePopupInputs, buttonProfile, inactiveButton);
 controlInputsAfterclickProfile(profilePopupInputs, popupProfile, selectorErrorInput);
 openPopup(popupProfile);
 }
@@ -38,11 +38,12 @@ const restoreInputs = () => {
 }
 
 const changeProfile = () => {
+  buttonProfile.textContent = 'Сохранение...';
   editingProfile(profilePopupTitle.value, profilePopupSubtitle.value)
   .then(res => {
     profileTitle.textContent = res.name;
     profileSubTitle.textContent = res.about;
-  }).catch(showError);
+  }).catch(showError).finally(() => buttonProfile.textContent = 'Сохраненить')
 
   closePopup(popupProfile);
 }
