@@ -10,7 +10,7 @@ import {setParamsProfilePopup} from './components/set-params-profile-popup.js';
 import {setParamsPopupaddCards} from './components/set-params-popupadd-card';
 import {setValidateForm} from './components/set-params-validate-form';
 import {setParamsTemplateCards} from './components/set-prams-template-card';
-import {cloneCardTemplate, searchElementOfCurrentTarget} from './components/utils.js'
+import {cloneCardTemplate, searchElementOfCurrentTarget, creatElement} from './components/utils.js'
 import {getCards, showError, addNewCard} from './components/api.js';
 import {removeCard, listenHeartButton} from './components/create-card.js';
 import {enablePopupAatar, popupAvatar, chengeAvatar} from './components/popup-avatar.js';
@@ -60,11 +60,6 @@ popups.forEach(popup => {
 getUserId().then(myId => {
   getCards().then((res => {
     res.forEach(item => {
-      const template = cloneCardTemplate(cardTemplate);
-      const trashButton = template.querySelector('.photo-cards__trash-button');
-      const itemCard = template.querySelector('.photo-cards__item');
-      const likeButton = template.querySelector('.photo-cards__button');
-      const outputLikes = template.querySelector('.photo-cards__count');
       photoCardsList.append(
        createCard(setParamCard(
          item.link,
@@ -74,15 +69,9 @@ getUserId().then(myId => {
          item._id,
          myId
        ),
-       setParamsTemplateCards(template))
+       setParamsTemplateCards(cloneCardTemplate(cardTemplate))
+       )
        );
-      trashButton.addEventListener('click', () => {
-        removeCard(itemCard, item._id);
-      });
-  
-      likeButton.addEventListener('click', () => {
-        listenHeartButton(likeButton, item._id, 'photo-cards__button_active', outputLikes);
-      });
     })
   })).catch(showError);
 }).catch(showError);
@@ -91,15 +80,10 @@ popupAddCard.addEventListener('submit',(event) => {
   event.preventDefault();
   const title = popupAddCardInputText.value;
   const link = popupAddCardInputLink.value;
-  handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(event, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
-  popupAddSubmit.textContent = 'Сохранение...'
+
+  popupAddSubmit.textContent = 'Сохранение...';
   addNewCard(title, link)
   .then(item => {
-    const template = cloneCardTemplate(cardTemplate);
-    const trashButton = template.querySelector('.photo-cards__trash-button');
-    const likeButton = template.querySelector('.photo-cards__button');
-    const itemCard = template.querySelector('.photo-cards__item');
-    const outputLikes = template.querySelector('.photo-cards__count');
     photoCardsList.prepend(
     createCard(setParamCard(
       item.link,
@@ -108,16 +92,14 @@ popupAddCard.addEventListener('submit',(event) => {
       item.likes,
       item._id,
       item.owner._id
-    ), setParamsTemplateCards(template)));
-
-    trashButton.addEventListener('click', () => {
-      removeCard(itemCard, item._id);
-    });
-
-    likeButton.addEventListener('click', () => {
-      listenHeartButton(likeButton, item._id, 'photo-cards__button_active', outputLikes);
-    });
-  }).catch(showError).finally(() => popupAddSubmit.textContent = 'Сохраненить')
+    ),
+     setParamsTemplateCards(cloneCardTemplate(cardTemplate))
+    )); 
+  }
+  ).catch(showError).finally(() => {
+    popupAddSubmit.textContent = 'Сохранить'
+    handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
+  })
 });
 
 buttonAddForm.addEventListener('click',() => openPopupAddCard(popupAddCard, popupAddCardInputs));

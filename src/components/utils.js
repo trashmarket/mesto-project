@@ -29,8 +29,23 @@ const controlInputsAfterclickAddCard = (inputs, popup) => {
   })
 }
 
+const creatElement = (children, parentTag, parentSelector) => {
+  const elementDom = document.createElement(parentTag);
+  elementDom.className = parentSelector;
+  elementDom.append(children);
+  return elementDom;
+}
+
 const cloneCardTemplate = (card) => card.cloneNode(true);
 
-const searchElementOfCurrentTarget = (event, selector) => event.currentTarget.querySelector(selector);
+const searchElementOfCurrentTarget = (popupAddCard, selector) => popupAddCard.querySelector(selector);
 
-export {cleaneInputs, controlInputsAfterclickProfile, controlInputsAfterclickAddCard, cloneCardTemplate, searchElementOfCurrentTarget, controlInputAvatarPopup}
+export {
+        cleaneInputs,
+        controlInputsAfterclickProfile,
+        controlInputsAfterclickAddCard,
+        cloneCardTemplate,
+        searchElementOfCurrentTarget,
+        controlInputAvatarPopup,
+        creatElement
+      }

@@ -9,6 +9,7 @@ export const createCard =
     title,
     ownerId,
     likes,
+    idCard,
     selectorActiveLike,
     myId
   },
@@ -18,6 +19,7 @@ export const createCard =
     cardTitle,
     likeButton,
     trashButton,
+    item,
     outputLikes
   }) => {
   
@@ -28,6 +30,13 @@ export const createCard =
 
   outputLikes.textContent = (likes.length) ? likes.length : '';
   
+  trashButton.addEventListener('click', () => {
+    removeCard(item, idCard);
+  });
+
+  likeButton.addEventListener('click', () => {
+    listenHeartButton(likeButton, idCard, selectorActiveLike, outputLikes);
+  });
   
   cardImg.addEventListener('click', (event) => listenImg(link, title, subTitleImageCard, popupContentImageCard, popupImage));
 
@@ -40,7 +49,9 @@ export const createCard =
 
 export const removeCard = (item, idCard) => {
   item.remove();
-  deleteCard(idCard).catch(showError);
+  deleteCard(idCard)
+  .then(()=>item.remove())
+  .catch(showError);
 } 
 
 const addClassOrRemove = (element , addClass, removeClass) => {

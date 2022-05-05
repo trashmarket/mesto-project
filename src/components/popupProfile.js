@@ -43,7 +43,7 @@ const changeProfile = () => {
   .then(res => {
     profileTitle.textContent = res.name;
     profileSubTitle.textContent = res.about;
-  }).catch(showError).finally(() => buttonProfile.textContent = 'Сохраненить')
+  }).catch(showError).finally(() => buttonProfile.textContent = 'Сохранить')
 
   closePopup(popupProfile);
 }
