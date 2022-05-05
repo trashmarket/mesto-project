@@ -1,4 +1,5 @@
 import {deleteCard, showError, putLike, deleteLike} from './api.js';
+import {openPopup} from './modal.js'
 const popupImage = document.querySelector('.popup_type_show-image');
 const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
 const popupContentImageCard = popupImage.querySelector('.popup__image');
@@ -26,7 +27,8 @@ export const createCard =
   (!booleMylike) ? addClassOrRemove(likeButton, null, selectorActiveLike) : addClassOrRemove(likeButton, selectorActiveLike, null)
 
   outputLikes.textContent = (likes.length) ? likes.length : '';
-
+  
+  
   cardImg.addEventListener('click', (event) => listenImg(link, title, subTitleImageCard, popupContentImageCard, popupImage));
 
   cardImg.alt = title;

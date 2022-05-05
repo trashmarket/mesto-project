@@ -1,4 +1,4 @@
-import {openPopup} from './modal.js';
+import {openPopup, closePopup} from './modal.js';
 import {controlInputAvatarPopup} from './utils.js';
 import {toggleButtonState} from './validate.js';
 import {reloadAvatar, showError} from './api.js';
@@ -12,7 +12,8 @@ const chengeAvatar = (profileAvatar) => {
   buttonAvatar.textContent = 'Сохранение...'
   reloadAvatar(popupLinkAvatar.value).then(res => {
     profileAvatar.style.backgroundImage = `url(${res.avatar})`;
-  }).catch(showError).finally(() => buttonAvatar.textContent = 'Сохраненить')
+  }).catch(showError).finally(() => buttonAvatar.textContent = 'Сохраненить');
+  closePopup(popupAvatar);
 }
 
 const enablePopupAatar = ({inactiveButton, selectorErrorInput}) => {
