@@ -48,7 +48,6 @@ export const createCard =
 };
 
 export const removeCard = (item, idCard) => {
-  item.remove();
   deleteCard(idCard)
   .then(()=>item.remove())
   .catch(showError);

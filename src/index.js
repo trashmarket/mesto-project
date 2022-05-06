@@ -95,10 +95,10 @@ popupAddCard.addEventListener('submit',(event) => {
     ),
      setParamsTemplateCards(cloneCardTemplate(cardTemplate))
     )); 
+    handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
   }
   ).catch(showError).finally(() => {
     popupAddSubmit.textContent = 'Сохранить'
-    handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
   })
 });
 

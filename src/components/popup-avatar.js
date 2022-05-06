@@ -13,7 +13,7 @@ const chengeAvatar = (profileAvatar) => {
   reloadAvatar(popupLinkAvatar.value).then(res => {
     profileAvatar.style.backgroundImage = `url(${res.avatar})`;
     closePopup(popupAvatar);
-  }).catch(showError).finally(() => buttonAvatar.textContent = 'Сохраненить');
+  }).catch(showError).finally(() => buttonAvatar.textContent = 'Сохранить');
 }
 
 const enablePopupAatar = ({inactiveButton, selectorErrorInput}) => {
