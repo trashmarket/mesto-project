@@ -1,5 +1,5 @@
 const config = {
-  baseurl: 'https://nomoreparties.co/v1/plus-cohort-9',
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-9',
   headers: {
     authorization: '269d00fb-9633-4d7c-a362-c3582f6daca7',
     'Content-Type': 'application/json'
@@ -12,7 +12,7 @@ const checkRes = (res) => {
 }
 
 export const reloadAvatar = (link) => {
-  return fetch(`${config.baseurl}/users/me/avatar`,{
+  return fetch(`${config.baseUrl}/users/me/avatar`,{
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({
@@ -26,28 +26,28 @@ export const showError = (rej) => {
 }
 
 export const deleteLike = (cardId) => {
-  return fetch(`${config.baseurl}/cards/likes/${cardId}`,{
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`,{
     method: 'DELETE',
     headers: config.headers
   }).then(checkRes)
 }
 
 export const putLike = (cardId) => {
-  return fetch(`${config.baseurl}/cards/likes/${cardId}`,{
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`,{
     method: 'PUT',
     headers: config.headers
   }).then(checkRes)
 }
 
 export const deleteCard = (id) => {
-  return fetch(`${config.baseurl}/cards/${id}`,{
+  return fetch(`${config.baseUrl}/cards/${id}`,{
     method: 'DELETE',
     headers: config.headers
   }).then(checkRes)
 }
 
 export const addNewCard = (name, link) => {
-  return fetch(`${config.baseurl}/cards`,{
+  return fetch(`${config.baseUrl}/cards`,{
     method: 'POST',
     headers: config.headers,
     body: JSON.stringify({
@@ -59,7 +59,7 @@ export const addNewCard = (name, link) => {
 }
 
 export const editingProfile = (name, about) => {
-  return fetch(`${config.baseurl}/users/me`, {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({
@@ -71,14 +71,14 @@ export const editingProfile = (name, about) => {
 }
 
 export const getUser = () => {
-  return fetch(`${config.baseurl}/users/me`, {
+  return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
     .then(checkRes)
 }
 
 export const getCards = () => {
-  return fetch(`${config.baseurl}/cards`, {
+  return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
   .then(checkRes)
