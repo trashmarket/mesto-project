@@ -31,6 +31,8 @@ const popupAddCardInputLink = document.querySelector('.popup__link-new-card');
 const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 // avatar
 
+const api = new Api();
+
 enableValidationForm(setValidateForm());
 
 profileAvatar.addEventListener('click', () => {
