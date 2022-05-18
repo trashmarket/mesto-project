@@ -1,5 +1,7 @@
-import {deleteCard, showError, putLike, deleteLike} from './api.js';
-import {openPopup} from './modal.js'
+// import {deleteCard, showError, putLike, deleteLike} from './api.js';
+import {openPopup} from './modal.js';
+import Api from './api.js';
+const request = new Api;
 const popupImage = document.querySelector('.popup_type_show-image');
 const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
 const popupContentImageCard = popupImage.querySelector('.popup__image');
@@ -48,9 +50,9 @@ export const createCard =
 };
 
 export const removeCard = (item, idCard) => {
-  deleteCard(idCard)
+  request.deleteCard(idCard)
   .then(()=>item.remove())
-  .catch(showError);
+  
 } 
 
 const addClassOrRemove = (element , addClass, removeClass) => {
@@ -64,15 +66,15 @@ const addClassOrRemove = (element , addClass, removeClass) => {
 
 export const listenHeartButton = (likeButton, idCard, selectorActiveLike, outputLikes) => {
   if (!likeButton.classList.contains(selectorActiveLike)) {
-    putLike(idCard).then(card => {
+    request.putLike(idCard).then(card => {
       likeButton.classList.add(selectorActiveLike);
       outputLikes.textContent = card.likes.length ? card.likes.length : '';
-    }).catch(showError);
+    });
   } else {
-    deleteLike(idCard).then(card => {
+    request.deleteLike(idCard).then(card => {
       likeButton.classList.remove(selectorActiveLike);
       outputLikes.textContent = card.likes.length ? card.likes.length : '';
-    }).catch(showError);
+    });
   }
 }
 
