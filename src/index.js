@@ -13,7 +13,7 @@ import {setParamsTemplateCards} from './components/set-prams-template-card';
 import {cloneCardTemplate, searchElementOfCurrentTarget, creatElement} from './components/utils.js'
 // import {getCards, showError, addNewCard} from './components/api.js';
 import Api from './components/api.js';
-import {removeCard, listenHeartButton} from './components/create-card.js';
+// import {removeCard, listenHeartButton} from './components/create-card.js';
 import {enablePopupAatar, popupAvatar, chengeAvatar} from './components/popup-avatar.js';
 
 const popups = document.querySelectorAll('.popup');
@@ -60,8 +60,8 @@ popups.forEach(popup => {
   })
 });
 
-getUserId().then(myId => {
-  getCards().then((res => {
+getUserId(api.getUser.bind(api)).then(myId => {
+  api.getCards().then((res => {
     res.forEach(item => {
       photoCardsList.append(
        createCard(setParamCard(
@@ -76,8 +76,8 @@ getUserId().then(myId => {
        )
        );
     })
-  })).catch(showError);
-}).catch(showError);
+  }))
+});
 
 popupAddCard.addEventListener('submit',(event) => {
   event.preventDefault();
@@ -85,7 +85,7 @@ popupAddCard.addEventListener('submit',(event) => {
   const link = popupAddCardInputLink.value;
 
   popupAddSubmit.textContent = 'Сохранение...';
-  addNewCard(title, link)
+  api.addNewCard(title, link)
   .then(item => {
     photoCardsList.prepend(
     createCard(setParamCard(
@@ -100,7 +100,7 @@ popupAddCard.addEventListener('submit',(event) => {
     )); 
     handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
   }
-  ).catch(showError).finally(() => {
+  ).finally(() => {
     popupAddSubmit.textContent = 'Сохранить'
   })
 });

@@ -14,7 +14,7 @@ const buttonProfile = popupProfile.querySelector('.popup__submit');
 
 
 
-export const getUserId = () => {
+export const getUserId = (getUser) => {
  return getUser().then(
      (res) => {
       profileTitle.textContent = res.name;
@@ -22,7 +22,7 @@ export const getUserId = () => {
       profileAvatar.style.backgroundImage = `url(${res.avatar})`;
       return res._id;  
     }
-  ).catch(showError);  
+  );  
 }
 
 const enableProfilePopup = ({inactiveButton, selectorErrorInput}) => {

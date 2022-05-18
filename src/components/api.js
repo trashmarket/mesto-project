@@ -106,7 +106,7 @@ export default class Api {
      body: JSON.stringify({
        avatar: link
      })
-   }).then(_checkRes)
+   }).then(this._checkRes).catch(this.showError)
   }
 
   showError(rej) {
@@ -117,21 +117,21 @@ export default class Api {
    return fetch(`${this._option.baseUrl}/cards/likes/${cardId}`,{
      method: 'DELETE',
      headers: this._option.headers
-   }).then(_checkRes)
+   }).then(this._checkRes).catch(this.showError)
   }
 
   putLike(cardId) {
    return fetch(`${this._option.baseUrl}/cards/likes/${cardId}`,{
      method: 'PUT',
      headers: this._option.headers
-   }).then(_checkRes)
+   }).then(this._checkRes).catch(this.showError)
   }
 
   deleteCard(id) {
    return fetch(`${this._option.baseUrl}/cards/${id}`,{
      method: 'DELETE',
      headers: this._option.headers
-   }).then(_checkRes)
+   }).then(this._checkRes).catch(this.showError)
   }
 
   addNewCard(name, link) {
@@ -143,7 +143,7 @@ export default class Api {
        link: link
      })
    })
-   .then(_checkRes)
+   .then(this._checkRes).catch(this.showError)
   }
 
   editingProfile(name, about) {
@@ -155,20 +155,20 @@ export default class Api {
        about: about
      })
    })
-   .then(_checkRes)
+   .then(this._checkRes).catch(this.showError)
   }
 
   getUser() {
    return fetch(`${this._option.baseUrl}/users/me`, {
      headers: this._option.headers
    })
-    .then(_checkRes)
+    .then(this._checkRes).catch(this.showError)
   }
 
   getCards() {
    return fetch(`${this._option.baseUrl}/cards`, {
      headers: this._option.headers
    })
-   .then(_checkRes)
+   .then(this._checkRes).catch(this.showError)
   }
 }
