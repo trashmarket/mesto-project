@@ -1,4 +1,4 @@
-import {deleteCard, showError, putLike, deleteLike} from './api.js';
+// import {deleteCard, showError, putLike, deleteLike} from './api.js';
 import {openPopup} from './modal.js'
 const popupImage = document.querySelector('.popup_type_show-image');
 const subTitleImageCard = popupImage.querySelector('.popup__subtitle');

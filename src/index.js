@@ -11,7 +11,8 @@ import {setParamsPopupaddCards} from './components/set-params-popupadd-card';
 import {setValidateForm} from './components/set-params-validate-form';
 import {setParamsTemplateCards} from './components/set-prams-template-card';
 import {cloneCardTemplate, searchElementOfCurrentTarget, creatElement} from './components/utils.js'
-import {getCards, showError, addNewCard} from './components/api.js';
+// import {getCards, showError, addNewCard} from './components/api.js';
+import Api from './components/api.js';
 import {removeCard, listenHeartButton} from './components/create-card.js';
 import {enablePopupAatar, popupAvatar, chengeAvatar} from './components/popup-avatar.js';
 

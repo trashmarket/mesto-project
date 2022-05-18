@@ -1,7 +1,7 @@
 import {openPopup, closePopup} from './modal.js';
 import {controlInputsAfterclickProfile} from './utils.js';
 import {toggleButtonState} from './validate.js';
-import {getUser, showError, editingProfile} from './api.js';
+// import {getUser, showError, editingProfile} from './api.js';
 
 const popupProfile = document.querySelector('.profile-popup');
 const profileTitle = document.querySelector('.profile__title');
