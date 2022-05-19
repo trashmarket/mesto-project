@@ -1,7 +1,7 @@
 import {openPopup, closePopup} from './modal.js';
 import {controlInputAvatarPopup} from './utils.js';
 import {toggleButtonState} from './validate.js';
-import {reloadAvatar, showError} from './api.js';
+// import {reloadAvatar, showError} from './api.js';
 
 const popupAvatar = document.querySelector('.popup_type_add-avatar');
 const inputs = [...popupAvatar.querySelectorAll('.popup__input')];
