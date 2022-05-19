@@ -1,7 +1,7 @@
 import './pages/index.css';
 import {enableValidationForm} from './components/validate.js';
-import {enableProfilePopup, changeProfile, getUserId, profileAvatar} from './components/popupProfile.js'; 
-import {createCard} from './components/create-card.js';
+import {enableProfilePopup, changeProfile, getUserId, profileAvatar} from './components/popupProfile.js';
+import СreateCard from './components/create-card.js';
 import {setParamCard} from './components/set-param-card.js';
 import {openPopupAddCard, handleCardFormSubmit} from './components/popup-add-card.js';
 import {clickLayout} from './components/click-layout.js';
@@ -11,8 +11,9 @@ import {setParamsPopupaddCards} from './components/set-params-popupadd-card';
 import {setValidateForm} from './components/set-params-validate-form';
 import {setParamsTemplateCards} from './components/set-prams-template-card';
 import {cloneCardTemplate, searchElementOfCurrentTarget, creatElement} from './components/utils.js'
-import {getCards, showError, addNewCard} from './components/api.js';
-import {removeCard, listenHeartButton} from './components/create-card.js';
+// import {getCards, showError, addNewCard} from './components/api.js';
+import Api from './components/api.js';
+// import {removeCard, listenHeartButton} from './components/create-card.js';
 import {enablePopupAatar, popupAvatar, chengeAvatar} from './components/popup-avatar.js';
 
 const popups = document.querySelectorAll('.popup');
@@ -29,6 +30,8 @@ const popupAddCardInputText = document.querySelector('.popup__name-new-card');
 const popupAddCardInputLink = document.querySelector('.popup__link-new-card');
 const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 // avatar
+
+const api = new Api();
 
 enableValidationForm(setValidateForm());
 
@@ -57,24 +60,25 @@ popups.forEach(popup => {
   })
 });
 
-getUserId().then(myId => {
-  getCards().then((res => {
+getUserId(api.getUser.bind(api)).then(myId => {
+  api.getCards().then((res => {
     res.forEach(item => {
+      const cardNew = new СreateCard(setParamCard(
+        item.link,
+        item.name,
+        item.owner._id,
+        item.likes,
+        item._id,
+        myId
+      ),
+      setParamsTemplateCards(cloneCardTemplate(cardTemplate))
+      )
       photoCardsList.append(
-       createCard(setParamCard(
-         item.link,
-         item.name,
-         item.owner._id,
-         item.likes,
-         item._id,
-         myId
-       ),
-       setParamsTemplateCards(cloneCardTemplate(cardTemplate))
-       )
+      cardNew.create()
        );
     })
-  })).catch(showError);
-}).catch(showError);
+  }))
+});
 
 popupAddCard.addEventListener('submit',(event) => {
   event.preventDefault();
@@ -82,22 +86,24 @@ popupAddCard.addEventListener('submit',(event) => {
   const link = popupAddCardInputLink.value;
 
   popupAddSubmit.textContent = 'Сохранение...';
-  addNewCard(title, link)
+  api.addNewCard(title, link)
   .then(item => {
+    const cardNew = new СreateCard(setParamCard(
+        item.link,
+        item.name,
+        item.owner._id,
+        item.likes,
+        item._id,
+        item.owner._id
+      ),
+      setParamsTemplateCards(cloneCardTemplate(cardTemplate))
+      )
     photoCardsList.prepend(
-    createCard(setParamCard(
-      item.link,
-      item.name,
-      item.owner._id,
-      item.likes,
-      item._id,
-      item.owner._id
-    ),
-     setParamsTemplateCards(cloneCardTemplate(cardTemplate))
-    )); 
+      cardNew.create()
+    );
     handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
   }
-  ).catch(showError).finally(() => {
+  ).finally(() => {
     popupAddSubmit.textContent = 'Сохранить'
   })
 });
