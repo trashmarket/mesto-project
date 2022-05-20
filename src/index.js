@@ -1,5 +1,5 @@
 import './pages/index.css';
-import {enableValidationForm} from './components/validate.js';
+import FormValidator from './components/validate.js';
 import {enableProfilePopup, changeProfile, getUserId, profileAvatar} from './components/popupProfile.js';
 import СreateCard from './components/create-card.js';
 import {setParamCard} from './components/set-param-card.js';
@@ -10,7 +10,7 @@ import {setParamsProfilePopup} from './components/set-params-profile-popup.js';
 import {setParamsPopupaddCards} from './components/set-params-popupadd-card';
 import {setValidateForm} from './components/set-params-validate-form';
 import {setParamsTemplateCards} from './components/set-prams-template-card';
-import {cloneCardTemplate, searchElementOfCurrentTarget, creatElement} from './components/utils.js'
+import {cloneCardTemplate, searchElementOfCurrentTarget, getForm} from './components/utils.js'
 // import {getCards, showError, addNewCard} from './components/api.js';
 import Api from './components/api.js';
 // import {removeCard, listenHeartButton} from './components/create-card.js';
@@ -21,7 +21,7 @@ const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
 //card
 const photoCardsList = document.querySelector('.photo-cards__list');
-const cardTemplate = document.querySelector('#card').content
+const cardTemplate = document.querySelector('#card').content;
 // new form
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const buttonAddForm = document.querySelector('.profile__button');
@@ -33,7 +33,22 @@ const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 
 const api = new Api();
 
-enableValidationForm(setValidateForm());
+
+
+const profileFormValid = new FormValidator(setValidateForm(), getForm('.profile-popup'));
+
+profileFormValid.enableValidationForm();
+
+const cardFormValid = new FormValidator(setValidateForm(), getForm('.popup_type_add-card'));
+
+cardFormValid.enableValidationForm();
+
+const avatarFormValid = new FormValidator(setValidateForm(), getForm('.popup_type_add-avatar'));
+
+avatarFormValid.enableValidationForm();
+
+
+// enableValidationForm(setValidateForm());
 
 profileAvatar.addEventListener('click', () => {
   enablePopupAatar(setParamsProfilePopup());
@@ -45,7 +60,10 @@ popupAvatar.addEventListener('submit', (event) => {
 })
 
 profileUpdateButton.addEventListener('click', () => {
-enableProfilePopup(setParamsProfilePopup(popupProfile))
+enableProfilePopup(
+ setParamsProfilePopup(popupProfile),
+ profileFormValid.checkInputValidity.bind(profileFormValid)
+ )
 })
 
 popupProfile.addEventListener('submit', (event) => {
