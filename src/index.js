@@ -1,7 +1,7 @@
 import './pages/index.css';
 import {enableValidationForm} from './components/validate.js';
-import {enableProfilePopup, changeProfile, getUserId, profileAvatar} from './components/popupProfile.js'; 
-import {createCard} from './components/create-card.js';
+import {enableProfilePopup, changeProfile, getUserId, profileAvatar} from './components/popupProfile.js';
+import СreateCard from './components/create-card.js';
 import {setParamCard} from './components/set-param-card.js';
 import {openPopupAddCard, handleCardFormSubmit} from './components/popup-add-card.js';
 import {clickLayout} from './components/click-layout.js';
@@ -63,17 +63,18 @@ popups.forEach(popup => {
 getUserId(api.getUser.bind(api)).then(myId => {
   api.getCards().then((res => {
     res.forEach(item => {
+      const cardNew = new СreateCard(setParamCard(
+        item.link,
+        item.name,
+        item.owner._id,
+        item.likes,
+        item._id,
+        myId
+      ),
+      setParamsTemplateCards(cloneCardTemplate(cardTemplate))
+      )
       photoCardsList.append(
-       createCard(setParamCard(
-         item.link,
-         item.name,
-         item.owner._id,
-         item.likes,
-         item._id,
-         myId
-       ),
-       setParamsTemplateCards(cloneCardTemplate(cardTemplate))
-       )
+      cardNew.create()
        );
     })
   }))
@@ -87,17 +88,19 @@ popupAddCard.addEventListener('submit',(event) => {
   popupAddSubmit.textContent = 'Сохранение...';
   api.addNewCard(title, link)
   .then(item => {
+    const cardNew = new СreateCard(setParamCard(
+        item.link,
+        item.name,
+        item.owner._id,
+        item.likes,
+        item._id,
+        item.owner._id
+      ),
+      setParamsTemplateCards(cloneCardTemplate(cardTemplate))
+      )
     photoCardsList.prepend(
-    createCard(setParamCard(
-      item.link,
-      item.name,
-      item.owner._id,
-      item.likes,
-      item._id,
-      item.owner._id
-    ),
-     setParamsTemplateCards(cloneCardTemplate(cardTemplate))
-    )); 
+      cardNew.create()
+    );
     handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
   }
   ).finally(() => {
