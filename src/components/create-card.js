@@ -9,6 +9,7 @@ const popupContentImageCard = popupImage.querySelector('.popup__image');
 
 
 
+
 export default class СreateCard {
   constructor(paramCard, templateCards) {
 
@@ -29,13 +30,16 @@ export default class СreateCard {
     this.outputLikes = templateCards.outputLikes;
 
 
+
   }
+
 
 
 
   _removeCard(item, idCard) {
     request.deleteCard(idCard)
     .then(()=>item.remove())
+
 
   }
 
