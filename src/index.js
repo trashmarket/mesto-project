@@ -1,20 +1,19 @@
 import './pages/index.css';
 import FormValidator from './components/validate.js';
-import {enableProfilePopup, changeProfile, getUserId, profileAvatar} from './components/popupProfile.js';
-import СreateCard from './components/create-card.js';
-import {setParamCard} from './components/set-param-card.js';
-import {openPopupAddCard, handleCardFormSubmit} from './components/popup-add-card.js';
-import {clickLayout} from './components/click-layout.js';
-import {clickPopupCloseButton} from './components/click-popup-close-button.js';
-import {setParamsProfilePopup} from './components/set-params-profile-popup.js';
-import {setParamsPopupaddCards} from './components/set-params-popupadd-card';
-import {setValidateForm} from './components/set-params-validate-form';
-import {setParamsTemplateCards} from './components/set-prams-template-card';
-import {cloneCardTemplate, searchElementOfCurrentTarget, getForm} from './components/utils.js'
+import { enableProfilePopup, changeProfile, getUserId, profileAvatar } from './components/popupProfile.js';
+import { openPopupAddCard, handleCardFormSubmit } from './components/popup-add-card.js';
+import { clickLayout } from './components/click-layout.js';
+import { clickPopupCloseButton } from './components/click-popup-close-button.js';
+import { setParamsProfilePopup } from './components/set-params-profile-popup.js';
+import { setParamsPopupaddCards } from './components/set-params-popupadd-card';
+import { setValidateForm } from './components/set-params-validate-form';
+import { cloneCardTemplate, searchElementOfCurrentTarget, getForm } from './components/utils.js'
 // import {getCards, showError, addNewCard} from './components/api.js';
 import Api from './components/api.js';
 // import {removeCard, listenHeartButton} from './components/create-card.js';
-import {enablePopupAatar, popupAvatar, chengeAvatar} from './components/popup-avatar.js';
+import { enablePopupAatar, popupAvatar, chengeAvatar } from './components/popup-avatar.js';
+import Section from './components/section';
+import { renderCards } from './components/section.js';
 
 const popups = document.querySelectorAll('.popup');
 const profileUpdateButton = document.querySelector('.profile__update-profile');
@@ -60,16 +59,16 @@ popupAvatar.addEventListener('submit', (event) => {
 })
 
 profileUpdateButton.addEventListener('click', () => {
-enableProfilePopup(
- setParamsProfilePopup(popupProfile),
- profileFormValid.checkInputValidity.bind(profileFormValid)
- )
+  enableProfilePopup(
+    setParamsProfilePopup(popupProfile),
+    profileFormValid.checkInputValidity.bind(profileFormValid)
+  )
 })
 
 popupProfile.addEventListener('submit', (event) => {
   event.preventDefault();
   changeProfile();
- });
+});
 
 popups.forEach(popup => {
   popup.addEventListener('click', clickLayout);
@@ -78,52 +77,35 @@ popups.forEach(popup => {
   })
 });
 
+
+
+
+
 getUserId(api.getUser.bind(api)).then(myId => {
   api.getCards().then((res => {
-    res.forEach(item => {
-      const cardNew = new СreateCard(setParamCard(
-        item.link,
-        item.name,
-        item.owner._id,
-        item.likes,
-        item._id,
-        myId
-      ),
-      setParamsTemplateCards(cloneCardTemplate(cardTemplate))
-      )
-      photoCardsList.append(
-      cardNew.create()
-       );
-    })
+    const section = new Section({ data: res, id: myId, renderData: renderCards, }, photoCardsList)
+    section.rendererCards();
   }))
 });
 
-popupAddCard.addEventListener('submit',(event) => {
+
+popupAddCard.addEventListener('submit', (event) => {
   event.preventDefault();
   const title = popupAddCardInputText.value;
   const link = popupAddCardInputLink.value;
 
   popupAddSubmit.textContent = 'Сохранение...';
   api.addNewCard(title, link)
-  .then(item => {
-    const cardNew = new СreateCard(setParamCard(
-        item.link,
-        item.name,
-        item.owner._id,
-        item.likes,
-        item._id,
-        item.owner._id
-      ),
-      setParamsTemplateCards(cloneCardTemplate(cardTemplate))
-      )
-    photoCardsList.prepend(
-      cardNew.create()
-    );
-    handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
-  }
-  ).finally(() => {
-    popupAddSubmit.textContent = 'Сохранить'
-  })
+    .then(item => {
+
+      const section = new Section({ data: item, renderData: renderCards }, photoCardsList)
+      section.addItem();
+
+      handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
+    }
+    ).finally(() => {
+      popupAddSubmit.textContent = 'Сохранить'
+    })
 });
 
-buttonAddForm.addEventListener('click',() => openPopupAddCard(popupAddCard, popupAddCardInputs));
+buttonAddForm.addEventListener('click', () => openPopupAddCard(popupAddCard, popupAddCardInputs));

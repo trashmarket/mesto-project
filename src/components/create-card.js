@@ -1,4 +1,3 @@
-// import {deleteCard, showError, putLike, deleteLike} from './api.js';
 import {openPopup} from './modal.js';
 import Api from './api.js';
 const request = new Api;
