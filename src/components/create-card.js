@@ -1,5 +1,7 @@
 import {openPopup} from './modal.js';
 import Api from './api.js';
+import PopupWithImage from './PopupWithImage'
+
 const request = new Api;
 const popupImage = document.querySelector('.popup_type_show-image');
 const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
@@ -65,17 +67,10 @@ export default class СreateCard {
     }
   }
 
-  _makerPopupImg(title, link , subTitleImage, popupContentImage) {
-    subTitleImage.textContent = title;
-    popupContentImage.src = link;
-    popupContentImage.alt = title;
-  }
-
   _listenImg(linkImg, titleimg, subTitleImage, popupContentImage, popupImage) {
-    const title = titleimg;
-    const link = linkImg;
-    this._makerPopupImg(title, link, subTitleImage, popupContentImage);
-    openPopup(popupImage);
+    const popup = new PopupWithImage('.popup-image', linkImg, titleimg);
+    
+    popup.open();
   }
 
   create() {
