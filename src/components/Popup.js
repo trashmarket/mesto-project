@@ -1,3 +1,6 @@
+import { clickLayout } from '../components/click-layout.js';
+import { clickPopupCloseButton } from '../components/click-popup-close-button.js';
+
 export default class Popup {
   constructor (selector) {
     this.selector = selector;
@@ -16,8 +19,16 @@ export default class Popup {
   }
 
   close() {
-    console.log('hello');
     document.querySelector(this.selector).classList.remove('popup_active');
     document.removeEventListener('keydown', this._handleEscClose)
   }
+
+
+  setEventListeners() {
+    document.querySelector(this.selector).addEventListener('click', clickLayout);
+    document.querySelector(this.selector).querySelector('.popup__close').addEventListener('click', (event) => {
+    clickPopupCloseButton(event);
+  })
+  }
+
 }

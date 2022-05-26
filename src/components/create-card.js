@@ -1,4 +1,4 @@
-import {openPopup} from './modal.js';
+import { openPopup } from './modal.js';
 import Api from './api.js';
 import PopupWithImage from './PopupWithImage'
 
@@ -11,7 +11,7 @@ const popupContentImageCard = popupImage.querySelector('.popup__image');
 
 
 
-export default class СreateCard {
+export default class Card {
   constructor(paramCard, templateCards) {
 
     this.link = paramCard.link;
@@ -30,21 +30,18 @@ export default class СreateCard {
     this.item = templateCards.item;
     this.outputLikes = templateCards.outputLikes;
 
-
-
   }
-
 
 
 
   _removeCard(item, idCard) {
     request.deleteCard(idCard)
-    .then(()=>item.remove())
+      .then(() => item.remove())
 
 
   }
 
-  _addClassOrRemove(element , addClass, removeClass) {
+  _addClassOrRemove(element, addClass, removeClass) {
     if (addClass) {
       element.classList.add(addClass);
     } else {
@@ -69,7 +66,7 @@ export default class СreateCard {
 
   _listenImg(linkImg, titleimg, subTitleImage, popupContentImage, popupImage) {
     const popup = new PopupWithImage('.popup-image', linkImg, titleimg);
-    
+    popup.setEventListeners();
     popup.open();
   }
 

@@ -1,11 +1,11 @@
-import СreateCard from '../components/create-card.js';
+import Card from '../components/create-card.js';
 import { setParamCard } from '../components/set-param-card.js';
 import { setParamsTemplateCards } from '../components/set-prams-template-card';
 import { cloneCardTemplate } from '../components/utils.js'
 const cardTemplate = document.querySelector('#card').content;
 
 export function renderCards(item, myId) {
-  const cardNew = new СreateCard(setParamCard(
+  const cardNew = new Card(setParamCard(
     item.link,
     item.name,
     item.owner._id,

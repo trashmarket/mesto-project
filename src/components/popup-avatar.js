@@ -10,19 +10,18 @@ const inputs = [...popupAvatar.querySelectorAll('.popup__input')];
 const popupLinkAvatar = popupAvatar.querySelector('.popup__link-new-avatar');
 const buttonAvatar = popupAvatar.querySelector('.popup__submit')
 
-const chengeAvatar = (profileAvatar) => {
-  buttonAvatar.textContent = 'Сохранение...'
-  reloadAvatar(popupLinkAvatar.value).then(res => {
-    profileAvatar.style.backgroundImage = `url(${res.avatar})`;
-    closePopup(popupAvatar);
-  }).catch(showError).finally(() => buttonAvatar.textContent = 'Сохранить');
-}
+
+const chengeAvatar = (api, profileAvatar, inp) => {
+    buttonAvatar.textContent = 'Сохранение...'
+    api.reloadAvatar(inp).then(res => {
+      profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+    }).catch(api.showError).finally(() => buttonAvatar.textContent = 'Сохранить');
+  }
 
 const enablePopupAatar = ({inactiveButton, selectorErrorInput}) => {
   restorInput();
   avatarFormValid.toggleButtonState(inputs, buttonAvatar);
   controlInputAvatarPopup(inputs, popupAvatar, selectorErrorInput);
-  openPopup(popupAvatar);
 }
 
 const restorInput = () => {
