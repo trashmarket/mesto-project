@@ -14,7 +14,7 @@ import { enablePopupAatar, chengeAvatar } from './components/popup-avatar.js';
 import Section from './components/section';
 import { renderCards } from './components/section.js';
 import PopupWithForm from './components/PopupWithForm';
-import UserInfo from './components/UserInfo'
+import UserInfo from './components/UserInfo';
 
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
