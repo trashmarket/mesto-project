@@ -1,4 +1,4 @@
-import {openPopup, closePopup} from './modal.js';
+
 import {controlInputAvatarPopup, getForm} from './utils.js';
 import FormValidator from './validate.js';
 import {setValidateForm} from './set-params-validate-form';

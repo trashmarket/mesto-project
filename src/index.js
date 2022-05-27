@@ -1,23 +1,21 @@
 import './pages/index.css';
 import FormValidator from './components/validate.js';
-import { enableProfilePopup, getUserId, profileAvatar, changeProfile } from './components/popupProfile.js';
+import { enableProfilePopup, profileAvatar} from './components/popupProfile.js';
 import { openPopupAddCard, handleCardFormSubmit } from './components/popup-add-card.js';
-import { clickLayout } from './components/click-layout.js';
-import { clickPopupCloseButton } from './components/click-popup-close-button.js';
+
 import { setParamsProfilePopup } from './components/set-params-profile-popup.js';
 import { setParamsPopupaddCards } from './components/set-params-popupadd-card';
 import { setValidateForm } from './components/set-params-validate-form';
 import { cloneCardTemplate, searchElementOfCurrentTarget, getForm } from './components/utils.js'
-// import {getCards, showError, addNewCard} from './components/api.js';
+
 import Api from './components/api.js';
-// import {removeCard, listenHeartButton} from './components/create-card.js';
-import { enablePopupAatar, popupAvatar, chengeAvatar } from './components/popup-avatar.js';
+
+import { enablePopupAatar, chengeAvatar } from './components/popup-avatar.js';
 import Section from './components/section';
 import { renderCards } from './components/section.js';
 import PopupWithForm from './components/PopupWithForm';
 import UserInfo from './components/UserInfo'
 
-const popups = document.querySelectorAll('.popup');
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
 //card
@@ -29,7 +27,9 @@ const buttonAddForm = document.querySelector('.profile__button');
 const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
 const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 // avatar
-
+const buttonProfile = popupProfile.querySelector('.popup__submit');
+const profileTitle = document.querySelector('.profile__title');
+const profileSubTitle = document.querySelector('.profile__sub-title');
 const api = new Api();
 
 
@@ -47,7 +47,6 @@ const avatarFormValid = new FormValidator(setValidateForm(), getForm('.popup_typ
 avatarFormValid.enableValidationForm();
 
 
-// enableValidationForm(setValidateForm());
 
 const popupAvatarClass = new PopupWithForm(
   '.popup_type_add-avatar',
@@ -65,7 +64,15 @@ popupAvatarClass.setEventListeners();
 
 const popupProfileClass = new PopupWithForm(
   '.profile-popup',
-  (inputs) => {changeProfile(api, inputs[0], inputs[1]); popupProfileClass.close()}
+  (inputs) => {
+    buttonProfile.textContent = 'Сохранение...';
+    const userInfo = new UserInfo({name:inputs[0],info:inputs[1]});
+    userInfo.setUserInfo(api.editingProfile.bind(api))
+    .then(res => {
+      profileTitle.textContent = res.name;
+      profileSubTitle.textContent = res.about;
+    }).catch(api.showError).finally(() => buttonProfile.textContent = 'Сохранить')
+     popupProfileClass.close()}
   );
 
 
@@ -81,16 +88,7 @@ profileUpdateButton.addEventListener('click', () => {
 
 popupProfileClass.setEventListeners();
 
-
-
-// popups.forEach(popup => {
-//   popup.addEventListener('click', clickLayout);
-//   popup.querySelector('.popup__close').addEventListener('click', (event) => {
-//     clickPopupCloseButton(event);
-//   })
-// });
-
-const userInfo = new UserInfo({}, api.getUser.bind(api));
+const userInfo = new UserInfo({});
 
 userInfo.getUserInfo(api.getUser.bind(api)).then(myId => {
   api.getCards().then((res => {
@@ -98,8 +96,6 @@ userInfo.getUserInfo(api.getUser.bind(api)).then(myId => {
     section.rendererCards();
   }))
 });
-
-
 
 const popupAddCardClass = new PopupWithForm(
   '.popup_type_add-card',
@@ -121,8 +117,7 @@ const popupAddCardClass = new PopupWithForm(
     popupAddCardClass.close()
   }
   );
-
-
+  
 buttonAddForm.addEventListener('click', () => {
   openPopupAddCard(popupAddCard, popupAddCardInputs);
   popupAddCardClass.open()

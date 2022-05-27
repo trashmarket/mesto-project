@@ -1,16 +1,7 @@
-import { openPopup } from './modal.js';
 import Api from './api.js';
 import PopupWithImage from './PopupWithImage'
 
 const request = new Api;
-const popupImage = document.querySelector('.popup_type_show-image');
-const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
-const popupContentImageCard = popupImage.querySelector('.popup__image');
-
-
-
-
-
 export default class Card {
   constructor(paramCard, templateCards) {
 
@@ -64,7 +55,7 @@ export default class Card {
     }
   }
 
-  _listenImg(linkImg, titleimg, subTitleImage, popupContentImage, popupImage) {
+  _listenImg(linkImg, titleimg) {
     const popup = new PopupWithImage('.popup-image', linkImg, titleimg);
     popup.setEventListeners();
     popup.open();
@@ -89,7 +80,7 @@ export default class Card {
       this._listenHeartButton(this.likeButton, this.idCard, this.selectorActiveLike, this.outputLikes);
     });
 
-    this.cardImg.addEventListener('click', (event) => this._listenImg(this.link, this.title, subTitleImageCard, popupContentImageCard, popupImage));
+    this.cardImg.addEventListener('click', (event) => this._listenImg(this.link, this.title));
 
     this.cardImg.alt = this.title;
     this.cardImg.src = this.link;
