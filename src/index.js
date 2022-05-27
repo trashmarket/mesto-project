@@ -15,6 +15,7 @@ import { enablePopupAatar, popupAvatar, chengeAvatar } from './components/popup-
 import Section from './components/section';
 import { renderCards } from './components/section.js';
 import PopupWithForm from './components/PopupWithForm';
+import UserInfo from './components/UserInfo'
 
 const popups = document.querySelectorAll('.popup');
 const profileUpdateButton = document.querySelector('.profile__update-profile');
@@ -89,9 +90,9 @@ popupProfileClass.setEventListeners();
 //   })
 // });
 
+const userInfo = new UserInfo({}, api.getUser.bind(api));
 
-
-getUserId(api.getUser.bind(api)).then(myId => {
+userInfo.getUserInfo(api.getUser.bind(api)).then(myId => {
   api.getCards().then((res => {
     const section = new Section({ data: res, id: myId, renderData: renderCards, }, photoCardsList)
     section.rendererCards();
