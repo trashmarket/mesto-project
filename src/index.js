@@ -1,6 +1,6 @@
 import './pages/index.css';
 import FormValidator from './components/validate.js';
-import { enableProfilePopup, profileAvatar} from './components/popupProfile.js';
+import { enableProfilePopup} from './components/popupProfile.js';
 import { openPopupAddCard, handleCardFormSubmit } from './components/popup-add-card.js';
 
 import { setParamsProfilePopup } from './components/set-params-profile-popup.js';
@@ -8,7 +8,7 @@ import { setParamsPopupaddCards } from './components/set-params-popupadd-card';
 import { setValidateForm } from './components/set-params-validate-form';
 import { cloneCardTemplate, searchElementOfCurrentTarget, getForm } from './components/utils.js'
 
-import Api from './components/api.js';
+import Api from './components/Api.js';
 
 import { enablePopupAatar, chengeAvatar } from './components/popup-avatar.js';
 import Section from './components/section';
@@ -30,6 +30,7 @@ const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 const buttonProfile = popupProfile.querySelector('.popup__submit');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubTitle = document.querySelector('.profile__sub-title');
+const profileAvatar = document.querySelector('.profile__avatar');
 const api = new Api();
 
 

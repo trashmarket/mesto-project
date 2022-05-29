@@ -1,4 +1,4 @@
-import Api from './api.js';
+import Api from './Api.js';
 import PopupWithImage from './PopupWithImage'
 
 const request = new Api;

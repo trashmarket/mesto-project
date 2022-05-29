@@ -1,4 +1,4 @@
-import Card from '../components/create-card.js';
+import Card from '../components/Card.js';
 import { setParamCard } from '../components/set-param-card.js';
 import { setParamsTemplateCards } from '../components/set-prams-template-card';
 import { cloneCardTemplate } from '../components/utils.js'
