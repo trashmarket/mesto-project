@@ -1,4 +1,4 @@
-import {checkInputValidity} from './validate.js'
+
  const cleaneInputs = function (inputs) {
   inputs.forEach(item => {
     item.value = '';

@@ -1,6 +1,6 @@
 
 import {controlInputsAfterclickAddCard, getForm} from './utils.js';
-import FormValidator from './validate.js';
+import FormValidator from './FormValidator';
 import {setValidateForm} from './set-params-validate-form';
 
 const cardFormValid = new FormValidator(setValidateForm(), getForm('.popup_type_add-card'));
