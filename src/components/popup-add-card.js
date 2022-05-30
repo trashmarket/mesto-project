@@ -1,23 +1,19 @@
-import {openPopup, closePopup} from './modal.js';
-import {cleaneInputs, controlInputsAfterclickAddCard} from './utils.js';
-import {toggleButtonState} from './validate.js';
+
+import {controlInputsAfterclickAddCard, getForm} from './utils.js';
+import FormValidator from './validate.js';
+import {setValidateForm} from './set-params-validate-form';
+
+const cardFormValid = new FormValidator(setValidateForm(), getForm('.popup_type_add-card'));
+
 const popupAddCardInputs = document.querySelectorAll('.popup__input');
 
 const openPopupAddCard = (popupAddCard, popupAddCardInputs) => {
-  openPopup(popupAddCard)
-  cleaneInputs(popupAddCardInputs);
   controlInputsAfterclickAddCard(popupAddCardInputs, popupAddCard);
 }
 
-const handleCardFormSubmit = ({
-  popupCard,
-  popupButton,
-  selectorActive,
-}, carde) => {
+const handleCardFormSubmit = ({ popupButton }) => {
 
-  closePopup(popupCard);
-  cleaneInputs(popupAddCardInputs);
-  toggleButtonState([...popupAddCardInputs], popupButton, selectorActive);
+  cardFormValid.toggleButtonState([...popupAddCardInputs], popupButton);
 }
 
 export {handleCardFormSubmit, openPopupAddCard};

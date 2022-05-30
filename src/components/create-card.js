@@ -1,90 +1,105 @@
-import {deleteCard, showError, putLike, deleteLike} from './api.js';
-import {openPopup} from './modal.js'
-const popupImage = document.querySelector('.popup_type_show-image');
-const subTitleImageCard = popupImage.querySelector('.popup__subtitle');
-const popupContentImageCard = popupImage.querySelector('.popup__image');
-export const createCard =
- ({ 
-    link,
-    title,
-    ownerId,
-    likes,
-    idCard,
-    selectorActiveLike,
-    myId
-  },
-  {
-    card,
-    cardImg,
-    cardTitle,
-    likeButton,
-    trashButton,
-    item,
-    outputLikes
-  }) => {
-  
-  if (!ownerId.includes(myId)) trashButton.remove();
+import Api from './api.js';
+import PopupWithImage from './PopupWithImage'
 
-  const booleMylike = likes.some(person => person._id.includes(myId));
-  (!booleMylike) ? addClassOrRemove(likeButton, null, selectorActiveLike) : addClassOrRemove(likeButton, selectorActiveLike, null)
+const request = new Api;
+export default class Card {
+  constructor(paramCard, templateCards, handleCardClick, api) {
+    this._link = paramCard.link;
+    this._title = paramCard.title;
+    this._ownerId = paramCard.ownerId;
+    this._likes = paramCard.likes;
+    this._idCard = paramCard.idCard;
+    this._selectorActiveLike = 'photo-cards__button_active';
+    this._myId = paramCard.myId;
 
-  outputLikes.textContent = (likes.length) ? likes.length : '';
-  
-  trashButton.addEventListener('click', () => {
-    removeCard(item, idCard);
-  });
+    this.templateCards = document.querySelector(templateCards).content;
+    this._card = this.templateCards.cloneNode(true);
+    this._cardImg = this._card.querySelector('.photo-cards__img');
+    this._cardTitle = this._card.querySelector('.photo-cards__title');
+    this._likeButton = this._card.querySelector('.photo-cards__button');
+    this._trashButton = this._card.querySelector('.photo-cards__trash-button');
+    this._item = this._card.querySelector('.photo-cards__item') ? this._card.querySelector('.photo-cards__item') : this._card ;
+    this._outputLikes = this._card.querySelector('.photo-cards__count')
 
-  likeButton.addEventListener('click', () => {
-    listenHeartButton(likeButton, idCard, selectorActiveLike, outputLikes);
-  });
-  
-  cardImg.addEventListener('click', (event) => listenImg(link, title, subTitleImageCard, popupContentImageCard, popupImage));
-
-  cardImg.alt = title;
-  cardImg.src = link;
-  cardTitle.textContent = title;
-
-  return card;
-};
-
-export const removeCard = (item, idCard) => {
-  deleteCard(idCard)
-  .then(()=>item.remove())
-  .catch(showError);
-} 
-
-const addClassOrRemove = (element , addClass, removeClass) => {
-  if (addClass) {
-    element.classList.add(addClass);
-  } else {
-    element.classList.remove(removeClass);
+    this._api = api;
+    // this._handleCardClick = handleCardClick // функция-колбек показа попап картинки
   }
-}
 
-
-export const listenHeartButton = (likeButton, idCard, selectorActiveLike, outputLikes) => {
-  if (!likeButton.classList.contains(selectorActiveLike)) {
-    putLike(idCard).then(card => {
-      likeButton.classList.add(selectorActiveLike);
-      outputLikes.textContent = card.likes.length ? card.likes.length : '';
-    }).catch(showError);
-  } else {
-    deleteLike(idCard).then(card => {
-      likeButton.classList.remove(selectorActiveLike);
-      outputLikes.textContent = card.likes.length ? card.likes.length : '';
-    }).catch(showError);
+  _creatCard() {
+    this._card = userTemplate.querySelector(this.templateSelectorCards).cloneNode(true);
   }
-}
 
-const makerPopupImg = (title, link , subTitleImage, popupContentImage) => {
-  subTitleImage.textContent = title;
-  popupContentImage.src = link;
-  popupContentImage.alt = title;
-}
+  _removeCard() {
+    request.deleteCard(this._idCard)
+      .then(() => this._item.remove())
+      .catch(this.showError)
 
-const listenImg = (linkImg, titleimg, subTitleImage, popupContentImage, popupImage) => {
-  const title = titleimg;
-  const link = linkImg;
-  makerPopupImg(title, link, subTitleImage, popupContentImage);
-  openPopup(popupImage);
+  }
+
+  _addClassOrRemove(addClass) {
+    if (addClass) {
+      this._likeButton.classList.add(null);
+    } else {
+      this._likeButton.classList.remove(this._selectorActiveLike);
+    }
+  }
+
+
+  _listenHeartButton() {
+    if (!this._likeButton.classList.contains(this._selectorActiveLike)) {
+      request.putLike(this._idCard).then(card => {
+        this._likeButton.classList.add(this._selectorActiveLike);
+        this._outputLikes.textContent = card.likes.length ? card.likes.length : '';
+      }).catch(this.showError);
+    } else {
+      request.deleteLike(this._idCard).then(card => {
+        this._likeButton.classList.remove(this._selectorActiveLike);
+        this._outputLikes.textContent = card.likes.length ? card.likes.length : '';
+      }).catch(this.showError);
+    }
+  }
+
+  //-------------  показ попап картинки -------------------
+  _listenImg() {
+    const popup = new PopupWithImage('.popup-image', this._link, this._title);
+    popup.setEventListeners();
+    popup.open();
+  }
+
+  // открывает попап картинки
+  // _listenImg() {
+  //   this._handleCardClick(this._link, this._title)
+  // }
+//========================================
+
+  _setEventListeners() {
+    this._trashButton.addEventListener('click', () => {
+      this._removeCard();
+    });
+
+    this._likeButton.addEventListener('click', () => {
+      this._listenHeartButton();
+    });
+
+    this._cardImg.addEventListener('click', (event) => this._listenImg());
+  }
+
+  create() {
+
+
+    this._setEventListeners();
+
+    if (!this._ownerId.includes(this._myId)) this._trashButton.remove();
+
+    const booleMylike = this._likes.some(person => person._id.includes(this._myId));
+    (!booleMylike) ? this._addClassOrRemove(true) : this._addClassOrRemove(false);
+
+    this._outputLikes.textContent = (this._likes.length) ? this._likes.length : '';
+    this._cardImg.alt = this._title;
+    this._cardImg.src = this._link;
+    this._cardTitle.textContent = this._title;
+
+    return this._card;
+  }
+
 }

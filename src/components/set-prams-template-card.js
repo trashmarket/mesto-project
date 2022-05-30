@@ -7,3 +7,5 @@ export const setParamsTemplateCards = (template) => ({
   item: template.querySelector('.photo-cards__item') ? template.querySelector('.photo-cards__item') : template,
   outputLikes: template.querySelector('.photo-cards__count')
 })
+
+// - удалить. больше не нужен
