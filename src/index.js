@@ -48,9 +48,23 @@ avatarFormValid.enableValidationForm();
 
 
 
+// const popupAvatarClass = new PopupWithForm(
+//   '.popup_type_add-avatar',
+//   (inputs) => {chengeAvatar(api, profileAvatar, inputs[0]); popupAvatarClass.close()}
+//   );
+
+
+const popupAvatar = document.querySelector('.popup_type_add-avatar');
+const buttonAvatar = popupAvatar.querySelector('.popup__submit')
+
 const popupAvatarClass = new PopupWithForm(
   '.popup_type_add-avatar',
-  (inputs) => {chengeAvatar(api, profileAvatar, inputs[0]); popupAvatarClass.close()}
+  (inputs) => {
+    buttonAvatar.textContent = 'Сохранение...'
+    api.reloadAvatar(inputs[0]).then(res => {
+      profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+    }).catch(api.showError).finally(() => buttonAvatar.textContent = 'Сохранить');;
+    popupAvatarClass.close()}
   );
 
 profileAvatar.addEventListener('click', () => {
@@ -131,6 +145,9 @@ const initCards = (cards, userData) => {
 
 const initUserInfo = (userData) => {
   userInfo = new UserInfo({name:userData.name, about:userData.about, userId:userData._id, userAvatar: userData.avatar});
+  console.log(userData.avatar)
+  userInfo.setUserInfo({name:userData.name, about:userData.about, userAvatar:userData.avatar})
+  console.log(userInfo)
   return userInfo;
 };
 
@@ -138,7 +155,7 @@ const initUserInfo = (userData) => {
 api.getUser().then((userData) => {
   api.getCards().then((res) => {
     cardsList = initCards(res, userData);
-    userInfo = initUserInfo(userData)
+    userInfo = initUserInfo(userData);
   })
 });
 

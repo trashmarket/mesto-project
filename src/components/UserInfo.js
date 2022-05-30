@@ -33,7 +33,7 @@ export default class UserInfo {
     this._profileSubTitle = document.querySelector('.profile__sub-title');
     this._profileAvatar = document.querySelector('.profile__avatar');
 
-    this.setUserInfo({name, about, userAvatar})
+    // this.setUserInfo({name, about, userAvatar})
   }
 
   getUserInfo () {
@@ -53,7 +53,7 @@ export default class UserInfo {
 
     this._profileTitle.textContent = this._nameUserSet;
     this._profileSubTitle.textContent = this._aboutUserSet;
-    this._profileAvatar.src = this._avatarUserSet;
+    this._profileAvatar.style.backgroundImage =`url(${this._avatarUserSet})`;
   }
 }
 
