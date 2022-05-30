@@ -37,14 +37,6 @@ export default class UserInfo {
   }
 
   getUserInfo () {
-  //  return api().then(
-  //     (res) => {
-  //      this.profileTitle.textContent = res.name;
-  //      this.profileSubTitle.textContent = res.about;
-  //      this.profileAvatar.style.backgroundImage = `url(${res.avatar})`;
-  //      return res._id;
-  //    }
-  //  );
   return {
     name: this._name,
     about: this._about,
@@ -53,9 +45,7 @@ export default class UserInfo {
   };
   }
 
-  // setUserInfo (api) {
-  //   return api(this.name, this.info);
-  // }
+
   setUserInfo ({name, about, userAvatar}) {
     this._nameUserSet = name;
     this._aboutUserSet = about;
