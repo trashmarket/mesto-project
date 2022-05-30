@@ -145,9 +145,7 @@ const initCards = (cards, userData) => {
 
 const initUserInfo = (userData) => {
   userInfo = new UserInfo({name:userData.name, about:userData.about, userId:userData._id, userAvatar: userData.avatar});
-  console.log(userData.avatar)
   userInfo.setUserInfo({name:userData.name, about:userData.about, userAvatar:userData.avatar})
-  console.log(userInfo)
   return userInfo;
 };
 
@@ -161,9 +159,26 @@ api.getUser().then((userData) => {
 
 
 
-
-
-
+// const popupAddCardClass = new PopupWithForm(
+//   '.popup_type_add-card',
+//   (inputs) => {
+//     {
+//       const title = inputs[0];
+//       const link = inputs[1];
+//       popupAddSubmit.textContent = 'Сохранение...';
+//       api.addNewCard(title, link)
+//         .then(item => {
+//           const section = new Section({ data: item, renderData: renderCards }, photoCardsList)
+//           section.addItem();
+//           handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
+//         }
+//         ).finally(() => {
+//           popupAddSubmit.textContent = 'Сохранить'
+//         })
+//     };
+//     popupAddCardClass.close()
+//   }
+//   );
 
 const popupAddCardClass = new PopupWithForm(
   '.popup_type_add-card',
@@ -174,9 +189,11 @@ const popupAddCardClass = new PopupWithForm(
       popupAddSubmit.textContent = 'Сохранение...';
       api.addNewCard(title, link)
         .then(item => {
-          const section = new Section({ data: item, renderData: renderCards }, photoCardsList)
-          section.addItem();
-          handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
+          // const section = new Section({ data: item, renderData: renderCards }, photoCardsList)
+          // section.addItem();
+          // handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
+          cardsList.addItem(item);
+
         }
         ).finally(() => {
           popupAddSubmit.textContent = 'Сохранить'
@@ -185,6 +202,7 @@ const popupAddCardClass = new PopupWithForm(
     popupAddCardClass.close()
   }
   );
+
 
 buttonAddForm.addEventListener('click', () => {
   openPopupAddCard(popupAddCard, popupAddCardInputs);

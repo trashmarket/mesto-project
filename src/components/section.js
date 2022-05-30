@@ -39,9 +39,9 @@ export default class Section {
   }
 
 
-  addItem() {
+  addItem(elem) {
     this.container.prepend(
-      this.renderer(this.items, this.items.owner._id)
+      this.renderer(elem, elem.owner._id)
     )
   }
 
