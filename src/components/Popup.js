@@ -10,9 +10,9 @@ export default class Popup {
       this.close();
     }
 
-      if (event.target === event.currentTarget) {
-        closePopup(event.currentTarget)
-      }
+    if (event.target === event.currentTarget) {
+      closePopup(event.currentTarget)
+    }
 
   }
 
@@ -28,7 +28,8 @@ export default class Popup {
 
 
   setEventListeners() {
-    document.querySelector(this.selector).addEventListener('click', clickLayout);
+    // document.querySelector(this.selector).addEventListener('click', clickLayout);
+    document.querySelector(this.selector).addEventListener('click', this._handleEscClose);
     document.querySelector(this.selector).querySelector('.popup__close').addEventListener('click', (event) => {
       if (event.target === event.currentTarget) {
         this.close()

@@ -12,9 +12,11 @@ import Api from './components/api.js';
 
 import { enablePopupAatar, chengeAvatar } from './components/popup-avatar.js';
 import Section from './components/section';
-import { renderCards } from './components/section.js';
+// import { renderCards } from './components/section.js';
 import PopupWithForm from './components/PopupWithForm';
 import UserInfo from './components/UserInfo';
+import Card from "./components/create-card.js"
+import PopupWithImage from './components/PopupWithImage.js'
 
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
@@ -48,11 +50,6 @@ avatarFormValid.enableValidationForm();
 
 
 
-// const popupAvatarClass = new PopupWithForm(
-//   '.popup_type_add-avatar',
-//   (inputs) => {chengeAvatar(api, profileAvatar, inputs[0]); popupAvatarClass.close()}
-//   );
-
 
 const popupAvatar = document.querySelector('.popup_type_add-avatar');
 const buttonAvatar = popupAvatar.querySelector('.popup__submit')
@@ -76,18 +73,6 @@ profileAvatar.addEventListener('click', () => {
 popupAvatarClass.setEventListeners();
 
 
-// const popupProfileClass = new PopupWithForm(
-//   '.profile-popup',
-//   (inputs) => {
-//     buttonProfile.textContent = 'Сохранение...';
-//     const userInfo = new UserInfo({name:inputs[0],info:inputs[1]});
-//     userInfo.setUserInfo(api.editingProfile.bind(api))
-//     .then(res => {
-//       profileTitle.textContent = res.name;
-//       profileSubTitle.textContent = res.about;
-//     }).catch(api.showError).finally(() => buttonProfile.textContent = 'Сохранить')
-//      popupProfileClass.close()}
-//   );
 
   const popupProfileClass = new PopupWithForm(
     '.profile-popup',
@@ -118,21 +103,6 @@ popupProfileClass.setEventListeners();
 
 
 
-
-// const userInfo = new UserInfo({});
-
-
-
-
-// userInfo.getUserInfo(api.getUser.bind(api)).then(myId => {
-//   api.getCards().then((res => {
-//     const section = new Section({ data: res, id: myId, renderData: renderCards, }, photoCardsList)
-//     section.rendererCards();
-//   }))
-// });
-
-
-
 let cardsList;
 let userInfo;
 
@@ -159,26 +129,6 @@ api.getUser().then((userData) => {
 
 
 
-// const popupAddCardClass = new PopupWithForm(
-//   '.popup_type_add-card',
-//   (inputs) => {
-//     {
-//       const title = inputs[0];
-//       const link = inputs[1];
-//       popupAddSubmit.textContent = 'Сохранение...';
-//       api.addNewCard(title, link)
-//         .then(item => {
-//           const section = new Section({ data: item, renderData: renderCards }, photoCardsList)
-//           section.addItem();
-//           handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
-//         }
-//         ).finally(() => {
-//           popupAddSubmit.textContent = 'Сохранить'
-//         })
-//     };
-//     popupAddCardClass.close()
-//   }
-//   );
 
 const popupAddCardClass = new PopupWithForm(
   '.popup_type_add-card',
@@ -189,11 +139,7 @@ const popupAddCardClass = new PopupWithForm(
       popupAddSubmit.textContent = 'Сохранение...';
       api.addNewCard(title, link)
         .then(item => {
-          // const section = new Section({ data: item, renderData: renderCards }, photoCardsList)
-          // section.addItem();
-          // handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
           cardsList.addItem(item);
-
         }
         ).finally(() => {
           popupAddSubmit.textContent = 'Сохранить'
@@ -214,5 +160,30 @@ popupAddCardClass.setEventListeners();
 
 
 
+const popup = new PopupWithImage ('.popup-image');
+popup.setEventListeners();
+
+function openPopupImage(srcImage, textImage) {
+  popup.open(srcImage, textImage);
+}
+
+
+export function renderCards(item, myId) {
+  const cardNew = new Card(
+    {
+      link: item.link,
+      title: item.name,
+      ownerId: item.owner._id,
+      likes: item.likes,
+      idCard: item._id,
+      selectorActiveLike: 'photo-cards__button_active',
+      myId: myId
+    },
+    '#card',
+    api,
+    openPopupImage
+  )
+  return cardNew.create()
+}
 
 

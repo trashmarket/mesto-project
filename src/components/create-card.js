@@ -1,9 +1,5 @@
-import Api from './api.js';
-import PopupWithImage from './PopupWithImage'
-
-const request = new Api;
 export default class Card {
-  constructor(paramCard, templateCards, handleCardClick, api) {
+  constructor(paramCard, templateCards, api, handleCardClick) {
     this._link = paramCard.link;
     this._title = paramCard.title;
     this._ownerId = paramCard.ownerId;
@@ -22,7 +18,7 @@ export default class Card {
     this._outputLikes = this._card.querySelector('.photo-cards__count')
 
     this._api = api;
-    // this._handleCardClick = handleCardClick // функция-колбек показа попап картинки
+    this._handleCardClick = handleCardClick // функция-колбек показа попап картинки
   }
 
   _creatCard() {
@@ -30,7 +26,7 @@ export default class Card {
   }
 
   _removeCard() {
-    request.deleteCard(this._idCard)
+    this._api.deleteCard(this._idCard)
       .then(() => this._item.remove())
       .catch(this.showError)
 
@@ -47,30 +43,22 @@ export default class Card {
 
   _listenHeartButton() {
     if (!this._likeButton.classList.contains(this._selectorActiveLike)) {
-      request.putLike(this._idCard).then(card => {
+      this._api.putLike(this._idCard).then(card => {
         this._likeButton.classList.add(this._selectorActiveLike);
         this._outputLikes.textContent = card.likes.length ? card.likes.length : '';
       }).catch(this.showError);
     } else {
-      request.deleteLike(this._idCard).then(card => {
+      this._api.deleteLike(this._idCard).then(card => {
         this._likeButton.classList.remove(this._selectorActiveLike);
         this._outputLikes.textContent = card.likes.length ? card.likes.length : '';
       }).catch(this.showError);
     }
   }
 
-  //-------------  показ попап картинки -------------------
-  _listenImg() {
-    const popup = new PopupWithImage('.popup-image', this._link, this._title);
-    popup.setEventListeners();
-    popup.open();
-  }
 
-  // открывает попап картинки
-  // _listenImg() {
-  //   this._handleCardClick(this._link, this._title)
-  // }
-//========================================
+  _listenImg() {
+    this._handleCardClick(this._link, this._title)
+  }
 
   _setEventListeners() {
     this._trashButton.addEventListener('click', () => {
