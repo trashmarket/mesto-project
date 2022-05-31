@@ -1,17 +1,3 @@
-import {checkInputValidity} from './validate.js'
- const cleaneInputs = function (inputs) {
-  inputs.forEach(item => {
-    item.value = '';
-  });
-}
-
-const controlInputsAfterclickProfile = (inputs, popup, selectorErrorInput) => {
-  inputs.forEach(input => {
-    const errorSection = popup.querySelector("." + input.id + "-error");
-    checkInputValidity(input, errorSection, 'popup__input_type_error_active')
-    input.classList.remove(selectorErrorInput)
-  })
-}
 
 const controlInputAvatarPopup = (inputs, popup, selectorErrorInput) => {
   inputs.forEach(input => {
@@ -29,23 +15,25 @@ const controlInputsAfterclickAddCard = (inputs, popup) => {
   })
 }
 
-const creatElement = (children, parentTag, parentSelector) => {
-  const elementDom = document.createElement(parentTag);
-  elementDom.className = parentSelector;
-  elementDom.append(children);
-  return elementDom;
+const getForm = (selector) => document.querySelector(selector).querySelector('.popup__form');
+
+const closePopup = function (popup) {
+  popup.classList.remove('popup_active');
+
+  document.removeEventListener('keydown', pressEscape)
 }
 
-const cloneCardTemplate = (card) => card.cloneNode(true);
+const pressEscape = (event) => {
+  if (event.key === 'Escape') {
+    const popup = document.querySelector('.popup_active');
+    closePopup(popup);
+  }
+}
 
-const searchElementOfCurrentTarget = (popupAddCard, selector) => popupAddCard.querySelector(selector);
 
 export {
-        cleaneInputs,
-        controlInputsAfterclickProfile,
-        controlInputsAfterclickAddCard,
-        cloneCardTemplate,
-        searchElementOfCurrentTarget,
-        controlInputAvatarPopup,
-        creatElement
-      }
+  controlInputsAfterclickAddCard,
+  controlInputAvatarPopup,
+  getForm,
+  closePopup
+}
