@@ -8,6 +8,9 @@ export default class FormValidator {
     this.buttonSelector = options.buttonSelector;
     this.inactiveButton = options.inactiveButton;
     this.popupErrorActive = options.popupErrorActive;
+
+    this._inputs = [...this.form.querySelectorAll(this.inputSelector)];
+    this._button = this.form.querySelector(this.buttonSelector);
   }
 
   _hideErrorMessage(errorSection, input) {
@@ -30,37 +33,35 @@ export default class FormValidator {
    }
   }
 
-  _hasInvalidInput(inputList) {
-   return inputList.some(input => !input.validity.valid)
-  }
-
-  toggleButtonState(inputs, button) {
-   if (this._hasInvalidInput(inputs)) {
-     button.classList.add(this.inactiveButton);
-     button.disabled = true;
-   } else {
-     button.classList.remove(this.inactiveButton);
-     button.disabled = false;
+  _hasInvalidInput() {
+    return this._inputs.some(input => !input.validity.valid)
    }
-  }
 
-  _setEventListener(inputs, button) {
+  toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._button.classList.add(this.inactiveButton);
+      this._button.disabled = true;
+    } else {
+      this._button.classList.remove(this.inactiveButton);
+      this._button.disabled = false;
+    }
+   }
 
-   this.toggleButtonState(inputs, button, this.inactiveButton);
+  _setEventListener() {
 
-   inputs.forEach(input => input.addEventListener('input', () => {
+    this.toggleButtonState();
 
-     this.toggleButtonState(inputs, button, this.inactiveButton);
+    this._inputs.forEach(input => input.addEventListener('input', () => {
 
-     const errorSection = this.form.querySelector("." + input.id + this.error);
-     this.checkInputValidity(input, errorSection);
-   }))
-  }
+      this.toggleButtonState();
+
+      const errorSection = this.form.querySelector("." + input.id + this.error);
+      this.checkInputValidity(input, errorSection);
+    }))
+   }
 
   enableValidationForm() {
-  const inputs = [...this.form.querySelectorAll(this.inputSelector)];
-  const button = this.form.querySelector(this.buttonSelector);
-
-  this._setEventListener(inputs, button);
-  }
+    this._setEventListener();
+    }
 }
+
