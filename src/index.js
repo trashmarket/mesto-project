@@ -1,10 +1,9 @@
 import './pages/index.css';
 import FormValidator from './components/FormValidator';
-import { enableProfilePopup, profileAvatar} from './components/popupProfile.js';
 
 import {setParams} from './components/setParams'
-import { setValidateForm } from './components/set-params-validate-form';
-import { getForm, controlInputAvatarPopup} from './components/utils.js'
+// import { setValidateForm } from './components/set-params-validate-form';
+import { getForm, controlInputAvatarPopup, controlInputsAfterclickProfile} from './components/utils.js'
 
 import Api from './components/api.js';
 import {controlInputsAfterclickAddCard} from './components/utils';  
@@ -29,19 +28,20 @@ const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 const buttonProfile = popupProfile.querySelector('.popup__submit');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubTitle = document.querySelector('.profile__sub-title');
+const profileAvatar = document.querySelector('.profile__avatar');
 const api = new Api();
 
 
 
-const profileFormValid = new FormValidator(setValidateForm(), getForm('.profile-popup'));
+const profileFormValid = new FormValidator(setParams.setValidateForm(), getForm('.profile-popup'));
 
 profileFormValid.enableValidationForm();
 
-const cardFormValid = new FormValidator(setValidateForm(), getForm('.popup_type_add-card'));
+const cardFormValid = new FormValidator(setParams.setValidateForm(), getForm('.popup_type_add-card'));
 
 cardFormValid.enableValidationForm();
 
-const avatarFormValid = new FormValidator(setValidateForm(), getForm('.popup_type_add-avatar'));
+const avatarFormValid = new FormValidator(setParams.setValidateForm(), getForm('.popup_type_add-avatar'));
 
 avatarFormValid.enableValidationForm();
 
@@ -69,14 +69,27 @@ const popupAvatarClass = new PopupWithForm(
   );
 
 profileAvatar.addEventListener('click', () => {
-  
   popupAvatarClass.open();
 });
 
 
 popupAvatarClass.setEventListeners();
 
+const profilePopupTitle = document.querySelector('.profile-popup-title');
+const profilePopupSubtitle = document.querySelector('.profile-popup-subtitle');
+const profilePopupInputs = [...popupProfile.querySelectorAll('.popup__input')]
 
+
+const restoreInputs = () => {
+  profilePopupTitle.value = profileTitle.textContent.trim();
+  profilePopupSubtitle.value = profileSubTitle.textContent.trim();
+}
+
+const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
+  // restoreInputs();
+  profileFormValid.toggleButtonState(profilePopupInputs, buttonProfile);
+  controlInputsAfterclickProfile(profilePopupInputs, popupProfile, selectorErrorInput, checkInputValidity);
+}
 
   const popupProfileClass = new PopupWithForm(
     '.profile-popup',
@@ -91,9 +104,8 @@ popupAvatarClass.setEventListeners();
        }
     );
 
-
-
 profileUpdateButton.addEventListener('click', () => {
+  restoreInputs();
   enableProfilePopup(
     setParams.setParamsProfilePopup(popupProfile),
     profileFormValid.checkInputValidity.bind(profileFormValid)
