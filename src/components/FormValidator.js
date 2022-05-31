@@ -14,15 +14,15 @@ export default class FormValidator {
   }
 
   _hideErrorMessage(errorSection, input) {
-   errorSection.classList.remove(this.popupErrorActive);
-   errorSection.textContent = '';
-   input.classList.remove(this.inputTypeError);
+    errorSection.classList.remove(this.popupErrorActive);
+    errorSection.textContent = '';
+    input.classList.remove(this.inputTypeError);
   }
 
   _showErrorMessage(errorSection, errorText, input) {
-   errorSection.classList.add(this.popupErrorActive);
-   errorSection.textContent = errorText;
-   input.classList.add(this.inputTypeError);
+    errorSection.classList.add(this.popupErrorActive);
+    errorSection.textContent = errorText;
+    input.classList.add(this.inputTypeError);
   }
 
   checkInputValidity(input, errorSection) {
@@ -64,4 +64,3 @@ export default class FormValidator {
     this._setEventListener();
     }
 }
-

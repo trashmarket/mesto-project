@@ -1,105 +1,187 @@
 import './pages/index.css';
-import {enableValidationForm} from './components/validate.js';
-import {enableProfilePopup, changeProfile, getUserId, profileAvatar} from './components/popupProfile.js'; 
-import {createCard} from './components/create-card.js';
-import {setParamCard} from './components/set-param-card.js';
-import {openPopupAddCard, handleCardFormSubmit} from './components/popup-add-card.js';
-import {clickLayout} from './components/click-layout.js';
-import {clickPopupCloseButton} from './components/click-popup-close-button.js';
-import {setParamsProfilePopup} from './components/set-params-profile-popup.js';
-import {setParamsPopupaddCards} from './components/set-params-popupadd-card';
-import {setValidateForm} from './components/set-params-validate-form';
-import {setParamsTemplateCards} from './components/set-prams-template-card';
-import {cloneCardTemplate, searchElementOfCurrentTarget, creatElement} from './components/utils.js'
-import {getCards, showError, addNewCard} from './components/api.js';
-import {removeCard, listenHeartButton} from './components/create-card.js';
-import {enablePopupAatar, popupAvatar, chengeAvatar} from './components/popup-avatar.js';
+import FormValidator from './components/FormValidator';
+import { enableProfilePopup, profileAvatar} from './components/popupProfile.js';
 
-const popups = document.querySelectorAll('.popup');
+import {setParams} from './components/setParams'
+import { setValidateForm } from './components/set-params-validate-form';
+import { getForm } from './components/utils.js'
+
+import Api from './components/api.js';
+import {controlInputsAfterclickAddCard} from './components/utils';  
+import { enablePopupAatar } from './components/popup-avatar.js';
+import Section from './components/section';
+import PopupWithForm from './components/PopupWithForm';
+import UserInfo from './components/UserInfo';
+import Card from "./components/card.js"
+import PopupWithImage from './components/PopupWithImage.js'
+
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
+
 //card
 const photoCardsList = document.querySelector('.photo-cards__list');
-const cardTemplate = document.querySelector('#card').content
+
 // new form
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const buttonAddForm = document.querySelector('.profile__button');
 const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
-const popupAddCardInputText = document.querySelector('.popup__name-new-card');
-const popupAddCardInputLink = document.querySelector('.popup__link-new-card');
 const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 // avatar
+const buttonProfile = popupProfile.querySelector('.popup__submit');
+const profileTitle = document.querySelector('.profile__title');
+const profileSubTitle = document.querySelector('.profile__sub-title');
+const api = new Api();
 
-enableValidationForm(setValidateForm());
+
+
+const profileFormValid = new FormValidator(setValidateForm(), getForm('.profile-popup'));
+
+profileFormValid.enableValidationForm();
+
+const cardFormValid = new FormValidator(setValidateForm(), getForm('.popup_type_add-card'));
+
+cardFormValid.enableValidationForm();
+
+const avatarFormValid = new FormValidator(setValidateForm(), getForm('.popup_type_add-avatar'));
+
+avatarFormValid.enableValidationForm();
+
+
+
+
+const popupAvatar = document.querySelector('.popup_type_add-avatar');
+const buttonAvatar = popupAvatar.querySelector('.popup__submit')
+
+const popupAvatarClass = new PopupWithForm(
+  '.popup_type_add-avatar',
+  (inputs) => {
+    buttonAvatar.textContent = 'Сохранение...'
+    api.reloadAvatar(inputs[0]).then(res => {
+      profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+    }).catch(api.showError).finally(() => buttonAvatar.textContent = 'Сохранить');;
+    popupAvatarClass.close()}
+  );
 
 profileAvatar.addEventListener('click', () => {
-  enablePopupAatar(setParamsProfilePopup());
-})
+  enablePopupAatar(setParams.setParamsProfilePopup());
+  popupAvatarClass.open();
+});
 
-popupAvatar.addEventListener('submit', (event) => {
-  event.preventDefault();
-  chengeAvatar(profileAvatar);
-})
+
+popupAvatarClass.setEventListeners();
+
+
+
+  const popupProfileClass = new PopupWithForm(
+    '.profile-popup',
+    (inputs) => {
+      buttonProfile.textContent = 'Сохранение...';
+      api.editingProfile(inputs[0],inputs[1])
+      .then(res => {
+        profileTitle.textContent = res.name;
+        profileSubTitle.textContent = res.about;
+      })
+      popupProfileClass.close()
+       }
+    );
+
+
 
 profileUpdateButton.addEventListener('click', () => {
-enableProfilePopup(setParamsProfilePopup(popupProfile))
+  enableProfilePopup(
+    setParams.setParamsProfilePopup(popupProfile),
+    profileFormValid.checkInputValidity.bind(profileFormValid)
+  )
+  popupProfileClass.open();
 })
 
-popupProfile.addEventListener('submit', (event) => {
-  event.preventDefault();
-  changeProfile();
- });
+popupProfileClass.setEventListeners();
 
-popups.forEach(popup => {
-  popup.addEventListener('click', clickLayout);
-  popup.querySelector('.popup__close').addEventListener('click', (event) => {
-    clickPopupCloseButton(event);
+
+
+
+
+let cardsList;
+let userInfo;
+
+const initCards = (cards, userData) => {
+  cardsList = new Section({ data: cards, id: userData._id, renderData: renderCards, }, photoCardsList);
+  cardsList.rendererCards();
+  return cardsList;
+};
+
+
+const initUserInfo = (userData) => {
+  userInfo = new UserInfo({name:userData.name, about:userData.about, userId:userData._id, userAvatar: userData.avatar});
+  userInfo.setUserInfo({name:userData.name, about:userData.about, userAvatar:userData.avatar})
+  return userInfo;
+};
+
+
+api.getUser().then((userData) => {
+  api.getCards().then((res) => {
+    cardsList = initCards(res, userData);
+    userInfo = initUserInfo(userData);
   })
 });
 
-getUserId().then(myId => {
-  getCards().then((res => {
-    res.forEach(item => {
-      photoCardsList.append(
-       createCard(setParamCard(
-         item.link,
-         item.name,
-         item.owner._id,
-         item.likes,
-         item._id,
-         myId
-       ),
-       setParamsTemplateCards(cloneCardTemplate(cardTemplate))
-       )
-       );
-    })
-  })).catch(showError);
-}).catch(showError);
 
-popupAddCard.addEventListener('submit',(event) => {
-  event.preventDefault();
-  const title = popupAddCardInputText.value;
-  const link = popupAddCardInputLink.value;
 
-  popupAddSubmit.textContent = 'Сохранение...';
-  addNewCard(title, link)
-  .then(item => {
-    photoCardsList.prepend(
-    createCard(setParamCard(
-      item.link,
-      item.name,
-      item.owner._id,
-      item.likes,
-      item._id,
-      item.owner._id
-    ),
-     setParamsTemplateCards(cloneCardTemplate(cardTemplate))
-    )); 
-    handleCardFormSubmit(setParamsPopupaddCards(popupAddCard, searchElementOfCurrentTarget(popupAddCard, '.popup__submit'), photoCardsList), cloneCardTemplate(cardTemplate));
+
+const popupAddCardClass = new PopupWithForm(
+  '.popup_type_add-card',
+  (inputs) => {
+    {
+      const title = inputs[0];
+      const link = inputs[1];
+      popupAddSubmit.textContent = 'Сохранение...';
+      api.addNewCard(title, link)
+        .then(item => {
+          cardsList.addItem(item);
+        }
+        ).finally(() => {
+          popupAddSubmit.textContent = 'Сохранить'
+        })
+    };
+    popupAddCardClass.close()
   }
-  ).catch(showError).finally(() => {
-    popupAddSubmit.textContent = 'Сохранить'
-  })
+  );
+
+
+buttonAddForm.addEventListener('click', () => {
+  controlInputsAfterclickAddCard(popupAddCardInputs, popupAddCard);
+  popupAddCardClass.open()
 });
 
-buttonAddForm.addEventListener('click',() => openPopupAddCard(popupAddCard, popupAddCardInputs));
+
+popupAddCardClass.setEventListeners();
+
+
+
+const popup = new PopupWithImage ('.popup-image');
+popup.setEventListeners();
+
+function openPopupImage(srcImage, textImage) {
+  popup.open(srcImage, textImage);
+}
+
+
+export function renderCards(item, myId) {
+  const cardNew = new Card(
+    {
+      link: item.link,
+      title: item.name,
+      ownerId: item.owner._id,
+      likes: item.likes,
+      idCard: item._id,
+      selectorActiveLike: 'photo-cards__button_active',
+      myId: myId
+    },
+    '#card',
+    api,
+    openPopupImage
+  )
+  return cardNew.create()
+}
+
+
