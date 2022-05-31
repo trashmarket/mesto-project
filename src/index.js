@@ -4,7 +4,7 @@ import { enableProfilePopup, profileAvatar} from './components/popupProfile.js';
 
 import {setParams} from './components/setParams'
 import { setValidateForm } from './components/set-params-validate-form';
-import { getForm } from './components/utils.js'
+import { getForm, controlInputAvatarPopup} from './components/utils.js'
 
 import Api from './components/api.js';
 import {controlInputsAfterclickAddCard} from './components/utils';  
@@ -166,7 +166,7 @@ function openPopupImage(srcImage, textImage) {
 }
 
 
-export function renderCards(item, myId) {
+ function renderCards(item, myId) {
   const cardNew = new Card(
     {
       link: item.link,
