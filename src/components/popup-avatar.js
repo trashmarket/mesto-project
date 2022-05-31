@@ -1,6 +1,6 @@
 
 import {controlInputAvatarPopup, getForm} from './utils.js';
-import FormValidator from './FormValidator';
+import FormValidator from './validate.js';
 import {setValidateForm} from './set-params-validate-form';
 // import {reloadAvatar, showError} from './api.js';
 

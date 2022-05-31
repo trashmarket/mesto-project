@@ -1,24 +1,3 @@
-import Card from '../components/Card.js';
-import { setParamCard } from '../components/set-param-card.js';
-import { setParamsTemplateCards } from '../components/set-prams-template-card';
-import { cloneCardTemplate } from '../components/utils.js'
-const cardTemplate = document.querySelector('#card').content;
-
-export function renderCards(item, myId) {
-  const cardNew = new Card(setParamCard(
-    item.link,
-    item.name,
-    item.owner._id,
-    item.likes,
-    item._id,
-    myId
-  ),
-    setParamsTemplateCards(cloneCardTemplate(cardTemplate))
-  )
-  return cardNew.create()
-}
-
-
 export default class Section {
   constructor(items, container) {
     this.items = items.data;
@@ -37,9 +16,9 @@ export default class Section {
   }
 
 
-  addItem() {
+  addItem(elem) {
     this.container.prepend(
-      this.renderer(this.items, this.items.owner._id)
+      this.renderer(elem, elem.owner._id)
     )
   }
 

@@ -36,19 +36,35 @@ const creatElement = (children, parentTag, parentSelector) => {
   return elementDom;
 }
 
-const cloneCardTemplate = (card) => card.cloneNode(true);
+const cloneCardTemplate = (card) => card.cloneNode(true); // - удалить. больше не нужен
 
 const searchElementOfCurrentTarget = (popupAddCard, selector) => popupAddCard.querySelector(selector);
 
 const getForm = (selector) => document.querySelector(selector).querySelector('.popup__form');
 
+const closePopup = function (popup) {
+  popup.classList.remove('popup_active');
+
+  document.removeEventListener('keydown', pressEscape)
+}
+
+const pressEscape = (event) => {
+  if (event.key === 'Escape') {
+    const popup = document.querySelector('.popup_active');
+
+    // popup.classList.remove('popup_active');
+    closePopup(popup);
+  }
+}
+
 export {
         cleaneInputs,
         controlInputsAfterclickProfile,
         controlInputsAfterclickAddCard,
-        cloneCardTemplate,
+        cloneCardTemplate, // - удалить. больше не нужен
         searchElementOfCurrentTarget,
         controlInputAvatarPopup,
         creatElement,
-        getForm
+        getForm,
+        closePopup
       }
