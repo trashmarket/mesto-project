@@ -42,20 +42,6 @@ const searchElementOfCurrentTarget = (popupAddCard, selector) => popupAddCard.qu
 
 const getForm = (selector) => document.querySelector(selector).querySelector('.popup__form');
 
-const closePopup = function (popup) {
-  popup.classList.remove('popup_active');
-
-  document.removeEventListener('keydown', pressEscape)
-}
-
-const pressEscape = (event) => {
-  if (event.key === 'Escape') {
-    const popup = document.querySelector('.popup_active');
-
-    // popup.classList.remove('popup_active');
-    closePopup(popup);
-  }
-}
 
 export {
         cleaneInputs,
@@ -66,5 +52,4 @@ export {
         controlInputAvatarPopup,
         creatElement,
         getForm,
-        closePopup
       }

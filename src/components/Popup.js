@@ -1,4 +1,3 @@
-import { clickLayout } from '../components/click-layout.js';
 
 export default class Popup {
   constructor (selector) {

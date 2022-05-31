@@ -1,30 +1,26 @@
 import './pages/index.css';
 import FormValidator from './components/FormValidator';
 import { enableProfilePopup, profileAvatar} from './components/popupProfile.js';
-import { openPopupAddCard, handleCardFormSubmit } from './components/popup-add-card.js';
 
-import { setParamsProfilePopup } from './components/set-params-profile-popup.js';
-import { setParamsPopupaddCards } from './components/set-params-popupadd-card';
+import {setParams} from './components/setParams'
 import { setValidateForm } from './components/set-params-validate-form';
-import { cloneCardTemplate, searchElementOfCurrentTarget, getForm } from './components/utils.js'
+import { getForm } from './components/utils.js'
 
 import Api from './components/api.js';
-
-import { enablePopupAatar, chengeAvatar } from './components/popup-avatar.js';
+import {controlInputsAfterclickAddCard} from './components/utils';  
+import { enablePopupAatar } from './components/popup-avatar.js';
 import Section from './components/section';
-// import { renderCards } from './components/section.js';
 import PopupWithForm from './components/PopupWithForm';
 import UserInfo from './components/UserInfo';
-import Card from "./components/create-card.js"
+import Card from "./components/card.js"
 import PopupWithImage from './components/PopupWithImage.js'
 
 const profileUpdateButton = document.querySelector('.profile__update-profile');
 const popupProfile = document.querySelector('.profile-popup');
-const profilePopupTitle = popupProfile.querySelector('.profile-popup-title');
-const profilePopupSubtitle = popupProfile.querySelector('.profile-popup-subtitle');
+
 //card
 const photoCardsList = document.querySelector('.photo-cards__list');
-const cardTemplate = document.querySelector('#card').content;
+
 // new form
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const buttonAddForm = document.querySelector('.profile__button');
@@ -67,7 +63,7 @@ const popupAvatarClass = new PopupWithForm(
   );
 
 profileAvatar.addEventListener('click', () => {
-  enablePopupAatar(setParamsProfilePopup());
+  enablePopupAatar(setParams.setParamsProfilePopup());
   popupAvatarClass.open();
 });
 
@@ -93,7 +89,7 @@ popupAvatarClass.setEventListeners();
 
 profileUpdateButton.addEventListener('click', () => {
   enableProfilePopup(
-    setParamsProfilePopup(popupProfile),
+    setParams.setParamsProfilePopup(popupProfile),
     profileFormValid.checkInputValidity.bind(profileFormValid)
   )
   popupProfileClass.open();
@@ -153,7 +149,7 @@ const popupAddCardClass = new PopupWithForm(
 
 
 buttonAddForm.addEventListener('click', () => {
-  openPopupAddCard(popupAddCard, popupAddCardInputs);
+  controlInputsAfterclickAddCard(popupAddCardInputs, popupAddCard);
   popupAddCardClass.open()
 });
 
