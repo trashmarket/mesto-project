@@ -8,7 +8,6 @@ import { getForm, controlInputAvatarPopup} from './components/utils.js'
 
 import Api from './components/api.js';
 import {controlInputsAfterclickAddCard} from './components/utils';  
-import { enablePopupAatar } from './components/popup-avatar.js';
 import Section from './components/section';
 import PopupWithForm from './components/PopupWithForm';
 import UserInfo from './components/UserInfo';
@@ -47,23 +46,30 @@ const avatarFormValid = new FormValidator(setValidateForm(), getForm('.popup_typ
 avatarFormValid.enableValidationForm();
 
 
-
-
 const popupAvatar = document.querySelector('.popup_type_add-avatar');
+const popupLinkAvatar = popupAvatar.querySelector('.popup__link-new-avatar');
+const inputs = [...popupAvatar.querySelectorAll('.popup__input')];
 const buttonAvatar = popupAvatar.querySelector('.popup__submit')
+const enablePopupAatar = ({ selectorErrorInput }) => {
+  avatarFormValid.toggleButtonState(inputs, buttonAvatar);
+  controlInputAvatarPopup(inputs, popupAvatar, selectorErrorInput);
+}
 
 const popupAvatarClass = new PopupWithForm(
   '.popup_type_add-avatar',
   (inputs) => {
+    enablePopupAatar(setParams.setParamsProfilePopup());
     buttonAvatar.textContent = 'Сохранение...'
     api.reloadAvatar(inputs[0]).then(res => {
       profileAvatar.style.backgroundImage = `url(${res.avatar})`;
     }).catch(api.showError).finally(() => buttonAvatar.textContent = 'Сохранить');;
-    popupAvatarClass.close()}
+    popupAvatarClass.close()
+    popupLinkAvatar.value = '';
+  }
   );
 
 profileAvatar.addEventListener('click', () => {
-  enablePopupAatar(setParams.setParamsProfilePopup());
+  
   popupAvatarClass.open();
 });
 
