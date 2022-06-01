@@ -69,8 +69,23 @@ const popupAvatarClass = new PopupWithForm(
     buttonAvatar.textContent = 'Сохранение...'
     api.reloadAvatar(inputs.descriptions).then(res => {
       profileAvatar.style.backgroundImage = `url(${res.avatar})`;
-    }).catch(api.showError).finally(() => buttonAvatar.textContent = 'Сохранить');;
-    popupAvatarClass.close()
+      popupAvatarClass.close()
+    }).catch(res => {
+      api.showError(res);
+      profileAvatar.style.backgroundImage = '';
+      profileAvatar.style.color = 'red';
+      buttonAvatar.style.backgroundColor = 'red';
+      popupAvatarClass.open()
+      return res;
+    }).then((res) =>{
+      if (res) {
+        buttonAvatar.textContent = res;
+        return;
+      }
+
+      buttonAvatar.textContent = 'Сохранить'
+    } 
+    );;
     popupLinkAvatar.value = '';
   }
   );
@@ -87,8 +102,8 @@ const profilePopupSubtitle = document.querySelector('.profile-popup-subtitle');
 const profilePopupInputs = [...popupProfile.querySelectorAll('.popup__input')]
 
 
-const restoreInputs = () => {
-  profilePopupTitle.value = userInfo.getUserInfo().name;
+const restoreInputs = (name, about) => {
+  profilePopupTitle.value = userInfo.getUserInfo(name, about).name;
   profilePopupSubtitle.value = userInfo.getUserInfo().about;
 }
 
@@ -106,9 +121,21 @@ const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
       .then(res => {
         profileTitle.textContent = res.name;
         profileSubTitle.textContent = res.about;
-      }).catch(api.showError)
-      popupProfileClass.close()
-       }
+        restoreInputs(res.name, res.about);
+        popupProfileClass.close();
+      }).catch(res => {
+        api.showError(res);
+        buttonProfile.style.backgroundColor = 'red'
+        popupProfileClass.open();
+        return res;
+      }).then((res) => {
+        if (res) {
+          buttonProfile.textContent = res;
+          return;
+        }
+        buttonProfile.textContent = 'Сохранить';
+      })
+      }
     );
 
 profileUpdateButton.addEventListener('click', () => {
@@ -161,8 +188,19 @@ const popupAddCardClass = new PopupWithForm(
       api.addNewCard(inputs.name, inputs.descriptions)
         .then(item => {
           cardsList.addItem(item);
+          popupAddCardClass.close()
         }
-        ).catch(api.showError).finally(() => {
+        ).catch(res => {
+          api.showError(res);
+          popupAddSubmit.textContent = res;
+          popupAddSubmit.style.backgroundColor = 'red';
+          popupAddCardClass.open()
+          return res
+        }).then((res) => {
+          if (res) {
+            popupAddSubmit.textContent = res ;
+            return; 
+          }
           popupAddSubmit.textContent = 'Сохранить'
         })
     };

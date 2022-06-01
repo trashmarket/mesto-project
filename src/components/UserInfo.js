@@ -36,7 +36,11 @@ export default class UserInfo {
     // this.setUserInfo({name, about, userAvatar})
   }
 
-  getUserInfo () {
+  getUserInfo (name, about) {
+    if (name !== undefined && about !== undefined) {
+      this._name = name;
+      this._about = about;
+    }
   return {
     name: this._name,
     about: this._about,
