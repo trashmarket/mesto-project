@@ -1,12 +1,6 @@
 export default class Api {
-  constructor () {
-    this._option = {
-      baseUrl: 'https://nomoreparties.co/v1/plus-cohort-9',
-      headers: {
-                authorization: '269d00fb-9633-4d7c-a362-c3582f6daca7',
-                'Content-Type': 'application/json'
-              }
-    }
+  constructor (option) {
+    this._option = option;
   }
 
   _checkRes(res) {
@@ -32,21 +26,21 @@ export default class Api {
    return fetch(`${this._option.baseUrl}/cards/likes/${cardId}`,{
      method: 'DELETE',
      headers: this._option.headers
-   }).then(this._checkRes).catch(this.showError)
+   }).then(this._checkRes)
   }
 
   putLike(cardId) {
    return fetch(`${this._option.baseUrl}/cards/likes/${cardId}`,{
      method: 'PUT',
      headers: this._option.headers
-   }).then(this._checkRes).catch(this.showError)
+   }).then(this._checkRes)
   }
 
   deleteCard(id) {
    return fetch(`${this._option.baseUrl}/cards/${id}`,{
      method: 'DELETE',
      headers: this._option.headers
-   }).then(this._checkRes).catch(this.showError)
+   }).then(this._checkRes)
   }
 
   addNewCard(name, link) {
@@ -58,7 +52,7 @@ export default class Api {
        link: link
      })
    })
-   .then(this._checkRes).catch(this.showError)
+   .then(this._checkRes)
   }
 
   editingProfile(name, about) {
@@ -70,20 +64,20 @@ export default class Api {
        about: about
      })
    })
-   .then(this._checkRes).catch(this.showError)
+   .then(this._checkRes)
   }
 
   getUser() {
    return fetch(`${this._option.baseUrl}/users/me`, {
      headers: this._option.headers
    })
-    .then(this._checkRes).catch(this.showError)
+    .then(this._checkRes)
   }
 
   getCards() {
    return fetch(`${this._option.baseUrl}/cards`, {
      headers: this._option.headers
    })
-   .then(this._checkRes).catch(this.showError)
+   .then(this._checkRes)
   }
 }

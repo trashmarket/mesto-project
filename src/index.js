@@ -5,7 +5,7 @@ import {setParams} from './components/setParams'
 // import { setValidateForm } from './components/set-params-validate-form';
 import { getForm, controlInputAvatarPopup, controlInputsAfterclickProfile} from './components/utils.js'
 
-import Api from './components/Api.js';
+import Api from './components/api.js';
 import {controlInputsAfterclickAddCard} from './components/utils';
 import Section from './components/section';
 import PopupWithForm from './components/PopupWithForm';
@@ -29,7 +29,14 @@ const buttonProfile = popupProfile.querySelector('.popup__submit');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubTitle = document.querySelector('.profile__sub-title');
 const profileAvatar = document.querySelector('.profile__avatar');
-const api = new Api();
+
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-9',
+  headers: {
+            authorization: '269d00fb-9633-4d7c-a362-c3582f6daca7',
+            'Content-Type': 'application/json'
+          }
+});
 
 
 
@@ -99,7 +106,7 @@ const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
       .then(res => {
         profileTitle.textContent = res.name;
         profileSubTitle.textContent = res.about;
-      })
+      }).catch(api.showError)
       popupProfileClass.close()
        }
     );
@@ -140,8 +147,8 @@ api.getUser().then((userData) => {
   api.getCards().then((res) => {
     cardsList = initCards(res, userData);
     userInfo = initUserInfo(userData);
-  })
-});
+  }).catch(api.showError)
+}).catch(api.showError);
 
 
 
@@ -155,7 +162,7 @@ const popupAddCardClass = new PopupWithForm(
         .then(item => {
           cardsList.addItem(item);
         }
-        ).finally(() => {
+        ).catch(api.showError).finally(() => {
           popupAddSubmit.textContent = 'Сохранить'
         })
     };
