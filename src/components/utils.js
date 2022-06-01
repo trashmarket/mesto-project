@@ -1,10 +1,3 @@
-
- const cleaneInputs = function (inputs) {
-  inputs.forEach(item => {
-    item.value = '';
-  });
-}
-
 const controlInputsAfterclickProfile = (inputs, popup, selectorErrorInput, checkInputValidity) => {
   inputs.forEach(input => {
     const errorSection = popup.querySelector("." + input.id + "-error");
@@ -36,18 +29,13 @@ const creatElement = (children, parentTag, parentSelector) => {
   return elementDom;
 }
 
-const cloneCardTemplate = (card) => card.cloneNode(true); // - удалить. больше не нужен
-
 const searchElementOfCurrentTarget = (popupAddCard, selector) => popupAddCard.querySelector(selector);
 
 const getForm = (selector) => document.querySelector(selector).querySelector('.popup__form');
 
-
 export {
-        cleaneInputs,
         controlInputsAfterclickProfile,
         controlInputsAfterclickAddCard,
-        cloneCardTemplate, // - удалить. больше не нужен
         searchElementOfCurrentTarget,
         controlInputAvatarPopup,
         creatElement,

@@ -5,8 +5,8 @@ import {setParams} from './components/setParams'
 // import { setValidateForm } from './components/set-params-validate-form';
 import { getForm, controlInputAvatarPopup, controlInputsAfterclickProfile} from './components/utils.js'
 
-import Api from './components/api.js';
-import {controlInputsAfterclickAddCard} from './components/utils';  
+import Api from './components/Api.js';
+import {controlInputsAfterclickAddCard} from './components/utils';
 import Section from './components/section';
 import PopupWithForm from './components/PopupWithForm';
 import UserInfo from './components/UserInfo';
@@ -60,7 +60,7 @@ const popupAvatarClass = new PopupWithForm(
   (inputs) => {
     enablePopupAatar(setParams.setParamsProfilePopup());
     buttonAvatar.textContent = 'Сохранение...'
-    api.reloadAvatar(inputs[0]).then(res => {
+    api.reloadAvatar(inputs.descriptions).then(res => {
       profileAvatar.style.backgroundImage = `url(${res.avatar})`;
     }).catch(api.showError).finally(() => buttonAvatar.textContent = 'Сохранить');;
     popupAvatarClass.close()
@@ -95,7 +95,7 @@ const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
     '.profile-popup',
     (inputs) => {
       buttonProfile.textContent = 'Сохранение...';
-      api.editingProfile(inputs[0],inputs[1])
+      api.editingProfile(inputs.name,inputs.descriptions)
       .then(res => {
         profileTitle.textContent = res.name;
         profileSubTitle.textContent = res.about;
@@ -150,10 +150,8 @@ const popupAddCardClass = new PopupWithForm(
   '.popup_type_add-card',
   (inputs) => {
     {
-      const title = inputs[0];
-      const link = inputs[1];
       popupAddSubmit.textContent = 'Сохранение...';
-      api.addNewCard(title, link)
+      api.addNewCard(inputs.name, inputs.descriptions)
         .then(item => {
           cardsList.addItem(item);
         }
