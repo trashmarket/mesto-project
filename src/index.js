@@ -88,8 +88,8 @@ const profilePopupInputs = [...popupProfile.querySelectorAll('.popup__input')]
 
 
 const restoreInputs = () => {
-  profilePopupTitle.value = profileTitle.textContent.trim();
-  profilePopupSubtitle.value = profileSubTitle.textContent.trim();
+  profilePopupTitle.value = userInfo.getUserInfo().name;
+  profilePopupSubtitle.value = userInfo.getUserInfo().about;
 }
 
 const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
