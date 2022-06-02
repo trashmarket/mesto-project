@@ -1,13 +1,9 @@
 import './pages/index.css';
 import FormValidator from './components/FormValidator';
-
 import {setParams} from './components/setParams'
-// import { setValidateForm } from './components/set-params-validate-form';
 import { getForm, controlInputAvatarPopup, controlInputsAfterclickProfile} from './components/utils.js'
-
-import Api from './components/api.js';
-import {controlInputsAfterclickAddCard} from './components/utils';
-import Section from './components/section';
+import Api from './components/Api.js';
+import Section from './components/Section';
 import PopupWithForm from './components/PopupWithForm';
 import UserInfo from './components/UserInfo';
 import Card from "./components/card.js"
@@ -84,7 +80,7 @@ const popupAvatarClass = new PopupWithForm(
       }
 
       buttonAvatar.textContent = 'Сохранить'
-    } 
+    }
     );;
     popupLinkAvatar.value = '';
   }
@@ -150,9 +146,6 @@ profileUpdateButton.addEventListener('click', () => {
 popupProfileClass.setEventListeners();
 
 
-
-
-
 let cardsList;
 let userInfo;
 
@@ -199,7 +192,7 @@ const popupAddCardClass = new PopupWithForm(
         }).then((res) => {
           if (res) {
             popupAddSubmit.textContent = res ;
-            return; 
+            return;
           }
           popupAddSubmit.textContent = 'Сохранить'
         })
@@ -210,7 +203,6 @@ const popupAddCardClass = new PopupWithForm(
 
 
 buttonAddForm.addEventListener('click', () => {
-  controlInputsAfterclickAddCard(popupAddCardInputs, popupAddCard);
   popupAddCardClass.open()
 });
 

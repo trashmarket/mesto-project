@@ -14,13 +14,6 @@ const controlInputAvatarPopup = (inputs, popup, selectorErrorInput) => {
   })
 }
 
-const controlInputsAfterclickAddCard = (inputs, popup) => {
-  inputs.forEach(input => {
-    const errorSection = popup.querySelector("." + input.id + "-error");
-    input.classList.remove('popup__input_type_error');
-    errorSection.classList.remove('popup__input_type_error_active');
-  })
-}
 
 const creatElement = (children, parentTag, parentSelector) => {
   const elementDom = document.createElement(parentTag);
@@ -35,7 +28,6 @@ const getForm = (selector) => document.querySelector(selector).querySelector('.p
 
 export {
         controlInputsAfterclickProfile,
-        controlInputsAfterclickAddCard,
         searchElementOfCurrentTarget,
         controlInputAvatarPopup,
         creatElement,
