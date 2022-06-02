@@ -15,7 +15,7 @@ export default class Api {
      body: JSON.stringify({
        avatar: link
      })
-   }).then(this._checkRes).catch(this.showError)
+   }).then(this._checkRes)
   }
 
   showError(rej) {
