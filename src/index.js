@@ -64,7 +64,8 @@ const popupAvatarClass = new PopupWithForm(
     enablePopupAatar(setParams.setParamsProfilePopup());
     buttonAvatar.textContent = 'Сохранение...'
     api.reloadAvatar(inputs.descriptions).then(res => {
-      profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+      // profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+      restoreInputs(res.name, res.about, res.avatar, res._id);
       popupAvatarClass.close()
     }).catch(res => {
       api.showError(res);
@@ -98,9 +99,11 @@ const profilePopupSubtitle = document.querySelector('.profile-popup-subtitle');
 const profilePopupInputs = [...popupProfile.querySelectorAll('.popup__input')]
 
 
-const restoreInputs = (name, about) => {
-  profilePopupTitle.value = userInfo.getUserInfo(name, about).name;
+const restoreInputs = (name, about, avatar, id) => {
+  profilePopupTitle.value = userInfo.getUserInfo(name, about, avatar, id).name;
   profilePopupSubtitle.value = userInfo.getUserInfo().about;
+  profileAvatar.style.backgroundImage = `url(${userInfo.getUserInfo().avatar})`;
+  profileAvatar.id = userInfo.getUserInfo().id
 }
 
 const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
@@ -117,7 +120,7 @@ const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
       .then(res => {
         profileTitle.textContent = res.name;
         profileSubTitle.textContent = res.about;
-        restoreInputs(res.name, res.about);
+        restoreInputs(res.name, res.about, res.avatar, res._id);
         popupProfileClass.close();
       }).catch(res => {
         api.showError(res);

@@ -9,28 +9,27 @@ export default class UserInfo {
     this._profileAvatar = document.querySelector('.profile__avatar');
   }
 
-  getUserInfo (name, about) {
-    if (name !== undefined && about !== undefined) {
+  getUserInfo (name, about, avatar, id) {
+    if (name && about && avatar && id) {
       this._name = name;
       this._about = about;
+      this._userAvatar = avatar;
+      this._userId = id;
     }
   return {
     name: this._name,
     about: this._about,
-    id: this._id,
-    avatar: this._avatar,
+    id: this._userId,
+    avatar: this._userAvatar,
   };
   }
 
 
-  setUserInfo ({name, about, userAvatar}) {
-    this._nameUserSet = name;
-    this._aboutUserSet = about;
-    this._avatarUserSet = userAvatar;
-
-    this._profileTitle.textContent = this._nameUserSet;
-    this._profileSubTitle.textContent = this._aboutUserSet;
-    this._profileAvatar.style.backgroundImage =`url(${this._avatarUserSet})`;
+  setUserInfo () {
+    this._profileTitle.textContent = this._name
+    this._profileSubTitle.textContent = this._about;
+    this._profileAvatar.style.backgroundImage =`url(${this._userAvatar})`;
+    this._profileAvatar.id = this._userId;
   }
 }
 
