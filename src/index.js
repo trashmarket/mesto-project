@@ -1,7 +1,9 @@
 import './pages/index.css';
 import FormValidator from './components/FormValidator';
 import {setParams} from './components/setParams'
+
 import { getForm} from './components/utils.js'
+
 import Api from './components/Api.js';
 import Section from './components/Section';
 import PopupWithForm from './components/PopupWithForm';
@@ -18,6 +20,7 @@ const photoCardsList = document.querySelector('.photo-cards__list');
 // new form
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const buttonAddForm = document.querySelector('.profile__button');
+
 const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 // avatar
 const buttonProfile = popupProfile.querySelector('.popup__submit');
@@ -45,6 +48,7 @@ cardFormValid.enableValidationForm();
 
 const avatarFormValid = new FormValidator(setParams.setValidateForm(), getForm('.popup_type_add-avatar'));
 
+
 avatarFormValid.enableValidationForm();
 
 
@@ -52,12 +56,14 @@ const popupAvatar = document.querySelector('.popup_type_add-avatar');
 const popupLinkAvatar = popupAvatar.querySelector('.popup__link-new-avatar');
 const buttonAvatar = popupAvatar.querySelector('.popup__submit')
 
+
 const popupAvatarClass = new PopupWithForm(
   '.popup_type_add-avatar',
   (inputs) => {
     avatarFormValid.toggleButtonState();
     buttonAvatar.textContent = 'Сохранение...'
     api.reloadAvatar(inputs.descriptions).then(res => {
+
       restoreInputs(res.name, res.about, res.avatar, res._id);
       popupAvatarClass.close()
     }).catch(res => {
@@ -85,6 +91,7 @@ profileAvatar.addEventListener('click', () => {
 });
 
 
+
 popupAvatarClass.setEventListeners();
 
 const profilePopupTitle = document.querySelector('.profile-popup-title');
@@ -99,6 +106,7 @@ const restoreInputs = (name, about, avatar, id) => {
 }
 
 
+
   const popupProfileClass = new PopupWithForm(
     '.profile-popup',
     (inputs) => {
@@ -108,6 +116,8 @@ const restoreInputs = (name, about, avatar, id) => {
         profileTitle.textContent = res.name;
         profileSubTitle.textContent = res.about;
         restoreInputs(res.name, res.about, res.avatar, res._id);
+
+
 
         popupProfileClass.close();
       }).catch(res => {
@@ -127,6 +137,8 @@ const restoreInputs = (name, about, avatar, id) => {
 
 profileUpdateButton.addEventListener('click', () => {
   restoreInputs();
+
+
   popupProfileClass.open();
 })
 
@@ -184,6 +196,8 @@ const popupAddCardClass = new PopupWithForm(
           popupAddSubmit.textContent = 'Сохранить'
         })
     };
+
+
 
   }
   );
