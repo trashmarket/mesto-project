@@ -65,8 +65,8 @@ const popupAvatarClass = new PopupWithForm(
     avatarFormValid.toggleButtonState();
     buttonAvatar.textContent = 'Сохранение...'
     api.reloadAvatar(inputs.descriptions).then(res => {
-
-      restoreInputs(res.name, res.about, res.avatar, res._id);
+      userInfo.setUserInfo(res._id, res.name, res.about, res.avatar);
+      
       popupAvatarClass.close()
     }).catch(res => {
       api.showError(res);
@@ -101,28 +101,13 @@ popupAvatarClass.setEventListeners();
 const profilePopupTitle = document.querySelector('.profile-popup-title');
 const profilePopupSubtitle = document.querySelector('.profile-popup-subtitle');
 
-
-const restoreInputs = (name, about, avatar, id) => {
-  profilePopupTitle.value = userInfo.getUserInfo(name, about, avatar, id).name;
-  profilePopupSubtitle.value = userInfo.getUserInfo().about;
-  profileAvatar.style.backgroundImage = `url(${userInfo.getUserInfo().avatar})`;
-  profileAvatar.id = userInfo.getUserInfo().id
-}
-
-
-
-
   const popupProfileClass = new PopupWithForm(
     '.profile-popup',
     (inputs) => {
       buttonProfile.textContent = 'Сохранение...';
       api.editingProfile(inputs.name,inputs.descriptions)
       .then(res => {
-        profileTitle.textContent = res.name;
-        profileSubTitle.textContent = res.about;
-        restoreInputs(res.name, res.about, res.avatar, res._id);
-
-
+        userInfo.setUserInfo(res._id, res.name, res.about, res.avatar);
 
         popupProfileClass.close();
       }).catch(res => {
@@ -141,7 +126,8 @@ const restoreInputs = (name, about, avatar, id) => {
     );
 
 profileUpdateButton.addEventListener('click', () => {
-  restoreInputs();
+  profilePopupTitle.value = userInfo.getUserInfo().name;
+  profilePopupSubtitle.value = userInfo.getUserInfo().about;
 
   popupProfileClass.open();
 })
@@ -151,7 +137,7 @@ popupProfileClass.setEventListeners();
 
 
 let cardsList;
-let userInfo;
+
 
 const initCards = (cards, userData) => {
   cardsList = new Section({ data: cards, id: userData._id, renderData: renderCards, }, photoCardsList);
@@ -160,17 +146,15 @@ const initCards = (cards, userData) => {
 };
 
 
-const initUserInfo = (userData) => {
-  userInfo = new UserInfo({name:userData.name, about:userData.about, userId:userData._id, userAvatar: userData.avatar});
-  userInfo.setUserInfo({name:userData.name, about:userData.about, userAvatar:userData.avatar})
-  return userInfo;
-};
+
+const userInfo = new UserInfo({name: profileTitle, about: profileSubTitle, avatar: profileAvatar});
+
 
 
 api.getUser().then((userData) => {
   api.getCards().then((res) => {
     cardsList = initCards(res, userData);
-    userInfo = initUserInfo(userData);
+    userInfo.setUserInfo(userData._id, userData.name, userData.about, userData.avatar);
   }).catch(api.showError)
 }).catch(api.showError);
 

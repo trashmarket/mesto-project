@@ -1,35 +1,28 @@
 export default class UserInfo {
-  constructor({name, about, userId, userAvatar}) {
+  constructor({id, name, about, avatar}) {
+    this._id = id;
     this._name = name;
     this._about = about;
-    this._userId = userId;
-    this._userAvatar = userAvatar;
-    this._profileTitle = document.querySelector('.profile__title');
-    this._profileSubTitle = document.querySelector('.profile__sub-title');
-    this._profileAvatar = document.querySelector('.profile__avatar');
+    this._avatar = avatar;
+    
   }
 
-  getUserInfo (name, about, avatar, id) {
-    if (name && about && avatar && id) {
-      this._name = name;
-      this._about = about;
-      this._userAvatar = avatar;
-      this._userId = id;
+  getUserInfo () {
+    return {
+      id: this._id,
+      name: this._name.textContent,
+      about: this._about.textContent,
+      avatar: this._avatarImage
     }
-  return {
-    name: this._name,
-    about: this._about,
-    id: this._userId,
-    avatar: this._userAvatar,
-  };
   }
 
 
-  setUserInfo () {
-    this._profileTitle.textContent = this._name
-    this._profileSubTitle.textContent = this._about;
-    this._profileAvatar.style.backgroundImage =`url(${this._userAvatar})`;
-    this._profileAvatar.id = this._userId;
+  setUserInfo (id, name, about, avatar) {
+    this._id = id;
+    this._name.textContent = name;
+    this._about.textContent = about;
+    this._avatar.style.backgroundImage = `url(${avatar})`;
+    this._avatarImage = avatar;
   }
 }
 
