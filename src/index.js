@@ -49,6 +49,8 @@ cardFormValid.enableValidationForm();
 const avatarFormValid = new FormValidator(setParams.setValidateForm(), getForm('.popup_type_add-avatar'));
 
 
+
+
 avatarFormValid.enableValidationForm();
 
 
@@ -87,6 +89,7 @@ const popupAvatarClass = new PopupWithForm(
   );
 
 profileAvatar.addEventListener('click', () => {
+
   avatarFormValid.toggleButtonState();
   popupAvatarClass.open();
 });
@@ -105,6 +108,7 @@ const restoreInputs = (name, about, avatar, id) => {
   profileAvatar.style.backgroundImage = `url(${userInfo.getUserInfo().avatar})`;
   profileAvatar.id = userInfo.getUserInfo().id
 }
+
 
 
 
@@ -138,10 +142,12 @@ const restoreInputs = (name, about, avatar, id) => {
 
 profileUpdateButton.addEventListener('click', () => {
   restoreInputs();
+
   popupProfileClass.open();
 })
 
 popupProfileClass.setEventListeners();
+
 
 
 let cardsList;
@@ -195,13 +201,16 @@ const popupAddCardClass = new PopupWithForm(
           popupAddSubmit.textContent = 'Сохранить'
         })
     };
+
   }
   );
 
 
 buttonAddForm.addEventListener('click', () => {
+
   cardFormValid.toggleButtonState();
   popupAddCardClass.open();
+
 });
 
 
