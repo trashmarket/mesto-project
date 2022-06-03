@@ -1,7 +1,9 @@
 import './pages/index.css';
 import FormValidator from './components/FormValidator';
 import {setParams} from './components/setParams'
-import { getForm, controlInputAvatarPopup, controlInputsAfterclickProfile} from './components/utils.js'
+
+import { getForm} from './components/utils.js'
+
 import Api from './components/Api.js';
 import Section from './components/Section';
 import PopupWithForm from './components/PopupWithForm';
@@ -18,7 +20,7 @@ const photoCardsList = document.querySelector('.photo-cards__list');
 // new form
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const buttonAddForm = document.querySelector('.profile__button');
-const popupAddCardInputs = popupAddCard.querySelectorAll('.popup__input');
+
 const popupAddSubmit = popupAddCard.querySelector('.popup__submit');
 // avatar
 const buttonProfile = popupProfile.querySelector('.popup__submit');
@@ -46,25 +48,22 @@ cardFormValid.enableValidationForm();
 
 const avatarFormValid = new FormValidator(setParams.setValidateForm(), getForm('.popup_type_add-avatar'));
 
+
 avatarFormValid.enableValidationForm();
 
 
 const popupAvatar = document.querySelector('.popup_type_add-avatar');
 const popupLinkAvatar = popupAvatar.querySelector('.popup__link-new-avatar');
-const inputs = [...popupAvatar.querySelectorAll('.popup__input')];
 const buttonAvatar = popupAvatar.querySelector('.popup__submit')
-const enablePopupAatar = ({ selectorErrorInput }) => {
-  avatarFormValid.toggleButtonState(inputs, buttonAvatar);
-  controlInputAvatarPopup(inputs, popupAvatar, selectorErrorInput);
-}
+
 
 const popupAvatarClass = new PopupWithForm(
   '.popup_type_add-avatar',
   (inputs) => {
-    enablePopupAatar(setParams.setParamsProfilePopup());
+    avatarFormValid.toggleButtonState();
     buttonAvatar.textContent = 'Сохранение...'
     api.reloadAvatar(inputs.descriptions).then(res => {
-      // profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+
       restoreInputs(res.name, res.about, res.avatar, res._id);
       popupAvatarClass.close()
     }).catch(res => {
@@ -92,11 +91,11 @@ profileAvatar.addEventListener('click', () => {
 });
 
 
+
 popupAvatarClass.setEventListeners();
 
 const profilePopupTitle = document.querySelector('.profile-popup-title');
 const profilePopupSubtitle = document.querySelector('.profile-popup-subtitle');
-const profilePopupInputs = [...popupProfile.querySelectorAll('.popup__input')]
 
 
 const restoreInputs = (name, about, avatar, id) => {
@@ -106,11 +105,7 @@ const restoreInputs = (name, about, avatar, id) => {
   profileAvatar.id = userInfo.getUserInfo().id
 }
 
-const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
-  // restoreInputs();
-  profileFormValid.toggleButtonState(profilePopupInputs, buttonProfile);
-  controlInputsAfterclickProfile(profilePopupInputs, popupProfile, selectorErrorInput, checkInputValidity);
-}
+
 
   const popupProfileClass = new PopupWithForm(
     '.profile-popup',
@@ -121,6 +116,9 @@ const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
         profileTitle.textContent = res.name;
         profileSubTitle.textContent = res.about;
         restoreInputs(res.name, res.about, res.avatar, res._id);
+
+
+
         popupProfileClass.close();
       }).catch(res => {
         api.showError(res);
@@ -139,10 +137,8 @@ const enableProfilePopup = ({ selectorErrorInput}, checkInputValidity) => {
 
 profileUpdateButton.addEventListener('click', () => {
   restoreInputs();
-  enableProfilePopup(
-    setParams.setParamsProfilePopup(popupProfile),
-    profileFormValid.checkInputValidity.bind(profileFormValid)
-  )
+
+
   popupProfileClass.open();
 })
 
@@ -200,7 +196,9 @@ const popupAddCardClass = new PopupWithForm(
           popupAddSubmit.textContent = 'Сохранить'
         })
     };
-    popupAddCardClass.close()
+
+
+
   }
   );
 
