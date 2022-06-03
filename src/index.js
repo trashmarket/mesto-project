@@ -5,10 +5,10 @@ import {setParams} from './components/setParams'
 import { getForm} from './components/utils.js'
 
 import Api from './components/Api.js';
-import Section from './components/Section';
+import Section from './components/Section.js';
 import PopupWithForm from './components/PopupWithForm';
 import UserInfo from './components/UserInfo';
-import Card from "./components/card.js"
+import Card from "./components/Card.js"
 import PopupWithImage from './components/PopupWithImage.js'
 
 const profileUpdateButton = document.querySelector('.profile__update-profile');
