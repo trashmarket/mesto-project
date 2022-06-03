@@ -1,85 +1,83 @@
-const config = {
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-9',
-  headers: {
-    authorization: '269d00fb-9633-4d7c-a362-c3582f6daca7',
-    'Content-Type': 'application/json'
+export default class Api {
+  constructor (option) {
+    this._option = option;
   }
-}
 
-const checkRes = (res) => {
-  if (res.ok) return res.json();
-   return Promise.reject(`Ошибка: ${res.status}`);
-}
+  _checkRes(res) {
+    if (res.ok) return res.json();
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
 
-export const reloadAvatar = (link) => {
-  return fetch(`${config.baseUrl}/users/me/avatar`,{
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar: link
-    })
-  }).then(checkRes)
-}
+  reloadAvatar(link) {
+   return fetch(`${this._option.baseUrl}/users/me/avatar`,{
+     method: 'PATCH',
+     headers: this._option.headers,
+     body: JSON.stringify({
+       avatar: link
+     })
+   }).then(this._checkRes)
+  }
 
-export const showError = (rej) => {
-  console.log(rej)
-}
+  showError(rej) {
+    console.log(rej)
+  }
 
-export const deleteLike = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`,{
-    method: 'DELETE',
-    headers: config.headers
-  }).then(checkRes)
-}
+  deleteLike(cardId) {
+   return fetch(`${this._option.baseUrl}/cards/likes/${cardId}`,{
+     method: 'DELETE',
+     headers: this._option.headers
+   }).then(this._checkRes)
+  }
 
-export const putLike = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`,{
-    method: 'PUT',
-    headers: config.headers
-  }).then(checkRes)
-}
+  putLike(cardId) {
+   return fetch(`${this._option.baseUrl}/cards/likes/${cardId}`,{
+     method: 'PUT',
+     headers: this._option.headers
+   }).then(this._checkRes)
+  }
 
-export const deleteCard = (id) => {
-  return fetch(`${config.baseUrl}/cards/${id}`,{
-    method: 'DELETE',
-    headers: config.headers
-  }).then(checkRes)
-}
+  deleteCard(id) {
+   return fetch(`${this._option.baseUrl}/cards/${id}`,{
+     method: 'DELETE',
+     headers: this._option.headers
+   }).then(this._checkRes)
+  }
 
-export const addNewCard = (name, link) => {
-  return fetch(`${config.baseUrl}/cards`,{
-    method: 'POST',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: name,
-      link: link
-    })
-  })
-  .then(checkRes)
-}
+  addNewCard(name, link) {
+   return fetch(`${this._option.baseUrl}/cards`,{
+     method: 'POST',
+     headers: this._option.headers,
+     body: JSON.stringify({
+       name: name,
+       link: link
+     })
+   })
+   .then(this._checkRes)
+  }
 
-export const editingProfile = (name, about) => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: name,
-      about: about
-    })
-  })
-  .then(checkRes)
-}
+  editingProfile(name, about) {
+   return fetch(`${this._option.baseUrl}/users/me`, {
+     method: 'PATCH',
+     headers: this._option.headers,
+     body: JSON.stringify({
+       name: name,
+       about: about
+     })
+   })
+   .then(this._checkRes)
+  }
 
-export const getUser = () => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers
-  })
-    .then(checkRes)
-}
+  getUser() {
+   return fetch(`${this._option.baseUrl}/users/me`, {
+     headers: this._option.headers
+   })
+    .then(this._checkRes)
+  }
 
-export const getCards = () => {
-  return fetch(`${config.baseUrl}/cards`, {
-    headers: config.headers
-  })
-  .then(checkRes)
+  getCards() {
+   return fetch(`${this._option.baseUrl}/cards`, {
+     headers: this._option.headers
+   })
+   .then(this._checkRes)
+  }
 }
