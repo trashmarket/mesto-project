@@ -8,7 +8,7 @@
     "build": "webpack --mode production",
     "dev": "webpack --mode development",
     "start": "webpack serve --live-reload",
-    "predeploy": "npm run built",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "repository": {
