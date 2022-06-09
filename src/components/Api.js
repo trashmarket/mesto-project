@@ -1,3 +1,4 @@
+import { axios } from "./axiosBluebird";
 export default class Api {
   constructor (option) {
     this._option = option;
