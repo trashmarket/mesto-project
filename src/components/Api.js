@@ -1,10 +1,13 @@
+import { axiosBluebird } from "./axiosBluebird";
+import {axios} from "axios";
 export default class Api {
   constructor (option) {
     this._option = option;
   }
 
   _checkRes(res) {
-    if (res.ok) return res.json();
+    console.log(res);
+    if (res.status === 200) return res.data;
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
@@ -37,15 +40,13 @@ export default class Api {
   }
 
   deleteCard(id) {
-   return fetch(`${this._option.baseUrl}/cards/${id}`,{
-     method: 'DELETE',
+   return axiosBluebird.delete(`${this._option.baseUrl}/cards/${id}`,{
      headers: this._option.headers
    }).then(this._checkRes)
   }
 
   addNewCard(name, link) {
-   return fetch(`${this._option.baseUrl}/cards`,{
-     method: 'POST',
+   return axiosBluebird.post(`${this._option.baseUrl}/cards`,{
      headers: this._option.headers,
      body: JSON.stringify({
        name: name,
@@ -68,14 +69,14 @@ export default class Api {
   }
 
   getUser() {
-   return fetch(`${this._option.baseUrl}/users/me`, {
+   return axiosBluebird.get(`${this._option.baseUrl}/users/me`, {
      headers: this._option.headers
    })
     .then(this._checkRes)
   }
 
   getCards() {
-   return fetch(`${this._option.baseUrl}/cards`, {
+   return axiosBluebird.get(`${this._option.baseUrl}/cards`, {
      headers: this._option.headers
    })
    .then(this._checkRes)
