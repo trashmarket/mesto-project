@@ -1,4 +1,5 @@
 import './pages/index.css';
+import "core-js/actual";
 import FormValidator from './components/FormValidator';
 import {setParams} from './components/setParams'
 
